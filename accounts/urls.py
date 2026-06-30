@@ -14,3 +14,8 @@ urlpatterns = [
     path('hse/user/my/account/page', views.my_account, name='my_account'),
     
 ]
+
+# Health check for Sevalla
+urlpatterns += [
+    path('ht/', views.health_check, name='health_check'),
+]

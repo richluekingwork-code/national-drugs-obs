@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .models import*
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 
 # Create your views here.
 User = get_user_model()
@@ -174,10 +176,15 @@ def my_account(request):
         return redirect("login")
 
     user = request.user
-    profile = user.get_profile()  # ✅ this is key
+    profile = user.get_profile()
 
     context = {
         "user": user,
         "profile": profile,
     }
     return render(request, "accounts_pages/profile/my_account.html", context)
+
+
+@require_GET
+def health_check(request):
+    return JsonResponse({"status": "healthy", "service": "national-drug-observatory"})

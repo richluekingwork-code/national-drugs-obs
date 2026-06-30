@@ -43,6 +43,11 @@ ENV/
 *.sqlite3
 *.db
 
+# Django
+staticfiles/
+media/
+*.pot
+
 # OS files
 .DS_Store
 Thumbs.db
