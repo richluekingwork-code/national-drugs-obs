@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Edit Seizure Page{% endblock %}</title>
+    <style>
+        /* FORCE STYLE APPLY */
+        .drug-form .card {
+            border-radius: 10px !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* LABEL */
+        .drug-form .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+        }
+
+        /* INPUT */
+        .drug-form .form-control,
+        .drug-form .form-select {
+            border-radius: 8px !important;
+            border: 1px solid #d0d5dd;
+            padding: 10px 12px;
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        /* INPUT FOCUS */
+        .drug-form .form-control:focus,
+        .drug-form .form-select:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.15);
+            transform: scale(1.01);
+        }
+
+        /* BUTTON */
+        .drug-form .btn-primary {
+            border-radius: 8px !important;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.25s ease;
+        }
+
+        /* BUTTON HOVER */
+        .drug-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CARD HEADER */
+        .drug-form .card-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4">
+                                <form action="{% url 'edit_drug_seizure' seizure.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <!-- HEADER -->
+        <div class="card-header bg-white">
+            <h4 class="mb-0 fw-bold text-primary">Edit Drug Seizure</h4>
+            <small class="text-muted">Update seizure record details</small>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <!-- DATE -->
+                <div class="col-md-4">
+                    <label>Seizure Date</label>
+                    <input type="date" name="seizure_date"
+                           class="form-control"
+                           value="{{ seizure.seizure_date|date:'Y-m-d' }}">
+                </div>
+
+                <!-- TIME -->
+                <div class="col-md-4">
+                    <label>Seizure Time</label>
+                    <input type="time" name="seizure_time"
+                           class="form-control"
+                           value="{{ seizure.seizure_time|time:'H:i' }}">
+                </div>
+
+                <!-- DRUG TYPE -->
+                <div class="col-md-4">
+                    <label>Drug Type</label>
+                    <select name="drug_type" class="form-select">
+
+                        {% for d in drug_types %}
+                        <option value="{{ d.id }}"
+                            {% if seizure.drug_type and seizure.drug_type.id == d.id %}selected{% endif %}>
+                            {{ d.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="col-md-4">
+                    <label>Quantity</label>
+                    <input type="number" step="0.01" name="quantity"
+                           class="form-control"
+                           value="{{ seizure.quantity }}">
+                </div>
+
+                <!-- UNIT -->
+                <div class="col-md-4">
+                    <label>Unit</label>
+                    <input type="text" name="unit"
+                           class="form-control"
+                           value="{{ seizure.unit }}">
+                </div>
+
+                <!-- STATUS -->
+                <div class="col-md-4">
+                    <label>Status</label>
+                    <select name="status" class="form-select">
+
+                        <option value="stored"
+                            {% if seizure.status == "stored" %}selected{% endif %}>
+                            Stored
+                        </option>
+
+                        <option value="destroyed"
+                            {% if seizure.status == "destroyed" %}selected{% endif %}>
+                            Destroyed
+                        </option>
+
+                        <option value="used_for_analysis"
+                            {% if seizure.status == "used_for_analysis" %}selected{% endif %}>
+                            Used for Analysis
+                        </option>
+
+                        <option value="transferred"
+                            {% if seizure.status == "transferred" %}selected{% endif %}>
+                            Transferred
+                        </option>
+
+                    </select>
+                </div>
+
+                <!-- COUNTY -->
+                <div class="col-md-4">
+                    <label>County</label>
+                    <input type="text" name="county"
+                           class="form-control"
+                           value="{{ seizure.county }}">
+                </div>
+
+                <!-- DISTRICT -->
+                <div class="col-md-4">
+                    <label>District</label>
+                    <input type="text" name="district"
+                           class="form-control"
+                           value="{{ seizure.district }}">
+                </div>
+
+                <!-- SEIZED BY -->
+                <div class="col-md-4">
+                    <label>Seized By</label>
+                    <input type="text" name="seized_by"
+                           class="form-control"
+                           value="{{ seizure.seized_by }}">
+                </div>
+
+                <!-- BADGE -->
+                <div class="col-md-4">
+                    <label>Badge Number</label>
+                    <input type="text" name="badge_number"
+                           class="form-control"
+                           value="{{ seizure.badge_number }}">
+                </div>
+
+                <!-- PHOTO -->
+                <div class="col-md-6">
+                    <label>Update Photo</label>
+                    <input type="file" name="photo" class="form-control">
+                </div>
+
+                <!-- CURRENT PHOTO -->
+                <div class="col-md-6">
+                    {% if seizure.photo %}
+                        <img src="{{ seizure.photo.url }}"
+                             style="width:120px;height:120px;object-fit:cover;border-radius:10px;">
+                    {% endif %}
+                </div>
+
+                <!-- LOCATION -->
+                <div class="col-12">
+                    <label>Location Description</label>
+                    <textarea name="location_description" class="form-control">
+                        {{ seizure.location_description }}
+                    </textarea>
+                </div>
+
+                <!-- REMARKS -->
+                <div class="col-12">
+                    <label>Remarks</label>
+                    <textarea name="remarks" class="form-control">
+                        {{ seizure.remarks }}
+                    </textarea>
+                </div>
+
+                <!-- BUTTON -->
+                <div class="col-12 text-end">
+                    <button class="btn btn-primary px-4">
+                        Update Seizure
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
+
+                                                    

@@ -1,0 +1,1640 @@
+<script>
+      var options = {
+          series: [{
+          name: 'Inflation',
+          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return val + "%";
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ["#304758"]
+          }
+        },
+        
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          position: 'top',
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+          }
+        },
+        yaxis: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter: function (val) {
+              return val + "%";
+            }
+          }
+        
+        },
+        title: {
+          text: 'Monthly Inflation in Argentina, 2002',
+          floating: true,
+          offsetY: 330,
+          align: 'center',
+          style: {
+            color: '#444'
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+
+    var colors = [
+        "#008FFB", "#00E396", "#FEB019", "#FF4560",
+        "#775DD0", "#546E7A", "#26a69a", "#D10CE8"
+    ];
+
+    var options = {
+        series: [{
+            data: {{ totals|safe }}
+        }],
+        chart: {
+            height: 350,
+            type: 'bar'
+        },
+        colors: colors,
+        plotOptions: {
+            bar: {
+                columnWidth: '45%',
+                distributed: true
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        legend: {
+            show: false
+        },
+        xaxis: {
+            categories: {{ counties|safe }},
+            labels: {
+                style: {
+                    colors: colors,
+                    fontSize: '12px'
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#Second"), options);
+    chart.render();
+  });
+        
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var options = {
+          series: [{
+              data: {{ hotspot_values|safe }}
+          }],
+          chart: {
+              type: 'bar',
+              height: 350
+          },
+          plotOptions: {
+              bar: {
+                  borderRadius: 4,
+                  borderRadiusApplication: 'end',
+                  horizontal: true,
+              }
+          },
+          dataLabels: {
+              enabled: false
+          },
+          xaxis: {
+              categories: {{ hotspot_labels|safe }},
+          }
+      };
+
+      var chart = new ApexCharts(document.querySelector("#Substances"), options);
+      chart.render();
+  });
+</script>  
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var seriesData = {{ substance_series|safe }};
+
+      var options = {
+          series: seriesData,
+          chart: {
+              type: 'area',
+              height: 350,
+              stacked: true,
+          },
+          colors: ['#008FFB', '#00E396', '#CED4DC', '#FEB019', '#FF4560', '#775DD0'],
+          dataLabels: { enabled: false },
+          stroke: { curve: 'smooth' },
+          fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.8 } },
+          xaxis: { type: 'datetime' },
+          legend: { position: 'top', horizontalAlign: 'left' }
+      };
+
+      var chart = new ApexCharts(document.querySelector("#NewSubstancesChart"), options);
+      chart.render();
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var options = {
+          series: {{ drug_values|safe }},
+          chart: {
+              width: 550,
+              type: 'pie',
+          },
+          labels: {{ drug_labels|safe }},
+          responsive: [{
+              breakpoint: 480,
+              options: {
+                  chart: {
+                      width: 200
+                  },
+                  legend: {
+                      position: 'bottom'
+                  }
+              }
+          }]
+      };
+
+      var chart = new ApexCharts(document.querySelector("#Trafficked"), options);
+      chart.render();
+  });
+</script> 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+      var chartData = {{ effectiveness_data|safe }};
+
+      var options = {
+          series: [{
+              name: "Effectiveness (%)",
+              data: chartData
+          }],
+          chart: {
+              id: 'area-datetime',
+              type: 'area',
+              height: 350,
+              zoom: {
+                  autoScaleYaxis: true
+              }
+          },
+          dataLabels: {
+              enabled: false
+          },
+          markers: {
+              size: 4
+          },
+          xaxis: {
+              type: 'datetime',
+              title: {
+                  text: "Date"
+              }
+          },
+          yaxis: {
+              max: 100,
+              title: {
+                  text: "Effectiveness (%)"
+              }
+          },
+          tooltip: {
+              x: {
+                  format: 'dd MMM yyyy'
+              }
+          },
+          fill: {
+              type: 'gradient',
+              gradient: {
+                  shadeIntensity: 1,
+                  opacityFrom: 0.6,
+                  opacityTo: 0.9,
+                  stops: [0, 100]
+              }
+          }
+      };
+
+      var chart = new ApexCharts(document.querySelector("#Effectiveness"), options);
+      chart.render();
+
+  });
+</script>
+
+<!-- The County Reporting the most Suspects -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var counties = {{ counties|safe }};
+        var totals = {{ totals|safe }};
+
+        var options = {
+            series: [{
+                name: "Suspects",
+                data: totals
+            }],
+            chart: {
+                height: 350,
+                type: 'line',
+                dropShadow: {
+                    enabled: true,
+                    color: '#000',
+                    top: 10,
+                    left: 5,
+                    blur: 6,
+                    opacity: 0.2
+                },
+                zoom: { enabled: false },
+                toolbar: { show: false }
+            },
+            colors: ['#dc3545'], // red for suspects
+            dataLabels: {
+                enabled: true
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 3
+            },
+            title: {
+                text: 'County Reporting - Suspects',
+                align: 'left'
+            },
+            grid: {
+                borderColor: '#e7e7e7'
+            },
+            markers: {
+                size: 5
+            },
+            xaxis: {
+                categories: counties,
+                title: {
+                    text: 'County'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Number of Suspects'
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " suspects";
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#suspects"), options);
+        chart.render();
+
+    });
+</script>
+
+<!-- The County with the Highest Number of Victims -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var counties = {{ victim_counties|safe }};
+        var totals = {{ victim_totals|safe }};
+
+        var options = {
+            series: [{
+                data: totals
+            }],
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: { enabled: false }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            title: {
+                text: 'Victims by County (Highest Reporting)',
+                align: 'left'
+            },
+            xaxis: {
+                categories: counties
+            },
+            stroke: {
+                width: 5,
+                curve: "monotoneCubic"
+            },
+            plotOptions: {
+                line: {
+                    colors: {
+                        threshold: 0,
+                        colorAboveThreshold: '#0088ee',
+                        colorBelowThreshold: '#ff0000'
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#victims"), options);
+        chart.render();
+
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    const labels = {{ labels|safe }};
+    const values = {{ values|safe }};
+    const highest = "{{ highest }}";
+    const lowest = "{{ lowest }}";
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: [{
+                data: values
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 6,
+                    horizontal: true,
+                    distributed: true
+                }
+            },
+            colors: values.map((val, index) => {
+                if (labels[index] === highest) return "#28a745";
+                if (labels[index] === lowest) return "#dc3545";
+                return "#0d6efd";
+            }),
+            dataLabels: {
+                enabled: true
+            },
+            xaxis: {
+                categories: labels
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart2"), options);
+        chart.render();
+
+    });
+</script>
+
+<!-- ================================= MoH =================================== -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const male = Number("{{ male_count|default:0 }}");
+        const female = Number("{{ female_count|default:0 }}");
+        const other = Number("{{ other_count|default:0 }}");
+
+        console.log("DATA:", male, female, other); // debug
+
+        var options = {
+            series: [male, female, other],
+            chart: {
+                type: 'pie',
+                height: 250
+            },
+            labels: ['Male', 'Female', 'Other']
+        };
+
+        var chartEl = document.querySelector("#Gender");
+
+        if (chartEl) {
+            var chart = new ApexCharts(chartEl, options);
+            chart.render();
+        } else {
+            console.error("Chart container #Gender not found");
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const counties = {{ prevention_county_labels|safe }};
+        const totals = {{ prevention_county_totals|safe }};
+
+        var options = {
+            series: [{
+                data: totals
+            }],
+            chart: {
+                type: 'bar',
+                height: 400
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    borderRadius: 4,
+                    borderRadiusApplication: 'end'
+                }
+            },
+            dataLabels: {
+                enabled: true
+            },
+            xaxis: {
+                categories: counties
+            },
+            title: {
+                text: 'Prevention Activities by County'
+            }
+        };
+
+        var chart = new ApexCharts(
+            document.querySelector("#preventionCountyChart"),
+            options
+        );
+
+        chart.render();
+    });
+</script>
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const counties = {{ hl_counties|safe }};
+    const totals = {{ hl_totals|safe }};
+
+    console.log("HL Counties:", counties);
+    console.log("HL Totals:", totals);
+
+    var options = {
+        series: [{
+            name: 'Cases',
+            data: totals
+        }],
+        chart: {
+            height: 350,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 10,
+                columnWidth: '50%',
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        xaxis: {
+            categories: counties,
+        },
+        yaxis: {
+            title: {
+                text: 'Number of Cases',
+            },
+        },
+        title: {
+            text: "Highest vs Lowest DemandReduction by County"
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#HighBeneficiary"), options);
+    chart.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var options = {
+          series: [44, 55, 41, 17, 15],
+          chart: {
+          type: 'donut',
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#HightPrevention"), options);
+        chart.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var options = {
+          series: [{
+          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            borderRadiusApplication: 'end',
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+            'United States', 'China', 'Germany'
+          ],
+        }
+        };
+
+        
+        var chart = new ApexCharts(document.querySelector("#TreatmentFacility"), options);
+        chart.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: {{ facility_county_totals|safe }},
+
+            chart: {
+                height: 400,
+                type: 'donut'
+            },
+
+            labels: {{ facility_county_labels|safe }},
+
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Facilities',
+                            }
+                        }
+                    }
+                }
+            },
+
+            legend: {
+                position: 'bottom'
+            },
+
+            title: {
+                text: 'Treatment Facilities by County'
+            }
+        };
+
+        var chart = new ApexCharts(
+            document.querySelector("#chart3"),
+            options
+        );
+
+        chart.render();
+
+    });
+</script>
+
+<!-- ================================= MoG =================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: [{
+                name: "Assessments",
+                data: {{ assessment_counts|safe }}
+            }],
+
+            chart: {
+                type: 'area',
+                height: 380,
+                toolbar: { show: true },
+                zoom: { enabled: false },
+                fontFamily: 'Inter, sans-serif'
+            },
+
+            colors: ['#3b82f6'],
+
+            dataLabels: { enabled: false },
+
+            stroke: {
+                curve: 'smooth',
+                width: 3
+            },
+
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.35,
+                    opacityTo: 0.05
+                }
+            },
+
+            grid: {
+                borderColor: '#e9ecef',
+                strokeDashArray: 5
+            },
+
+            markers: {
+                size: 4,
+                colors: ['#3b82f6'],
+                strokeColors: '#fff',
+                strokeWidth: 2,
+                hover: { size: 6 }
+            },
+
+            xaxis: {
+                categories: {{ assessment_labels|safe }},
+                labels: {
+                    style: {
+                        colors: '#6c757d'
+                    }
+                }
+            },
+
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: '#6c757d'
+                    }
+                }
+            },
+
+            tooltip: {
+                theme: 'light',
+                y: {
+                    formatter: val => val + " assessments"
+                }
+            }
+        };
+
+        new ApexCharts(document.querySelector("#assessmentChart"), options).render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: [
+                {
+                    name: 'Beneficiary Handover',
+                    type: 'column',
+                    data: {{ handover_counts|safe }}
+                },
+                {
+                    name: 'Trend',
+                    type: 'line',
+                    data: {{ handover_counts|safe }}
+                }
+            ],
+
+            chart: {
+                height: 360,
+                type: 'line',
+                stacked: false,
+                toolbar: {
+                    show: true
+                },
+                fontFamily: 'Inter, sans-serif'
+            },
+
+            colors: ['#3b82f6', '#ef4444'],
+
+            stroke: {
+                width: [0, 3],
+                curve: 'smooth'
+            },
+
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    borderRadius: 6
+                }
+            },
+
+            dataLabels: {
+                enabled: false
+            },
+
+            xaxis: {
+                categories: {{ handover_labels|safe }},
+                labels: {
+                    style: {
+                        colors: '#6c757d'
+                    }
+                }
+            },
+
+            yaxis: {
+                title: {
+                    text: 'Total Handovers'
+                },
+                labels: {
+                    style: {
+                        colors: '#6c757d'
+                    }
+                }
+            },
+
+            grid: {
+                borderColor: '#e9ecef',
+                strokeDashArray: 5
+            },
+
+            tooltip: {
+                shared: true,
+                intersect: false,
+                y: {
+                    formatter: val => val + " records"
+                }
+            },
+
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            },
+
+            responsive: [{
+                breakpoint: 768,
+                options: {
+                    chart: {
+                        height: 300
+                    }
+                }
+            }]
+        };
+
+        new ApexCharts(document.querySelector("#chart2"), options).render();
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var options = {
+            series: {{ county_counts|safe }},
+
+            chart: {
+                type: 'donut',
+                height: 350,
+                fontFamily: 'Inter, sans-serif'
+            },
+
+            labels: {{ county_labels|safe }},
+
+            colors: [
+                '#3b82f6', '#10b981', '#f59e0b',
+                '#ef4444', '#8b5cf6', '#14b8a6',
+                '#f97316', '#06b6d4'
+            ],
+
+            stroke: {
+                width: 2,
+                colors: ['#fff']
+            },
+
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '65%',
+                        labels: {
+                            show: true,
+                            name: {
+                                show: true,
+                                fontSize: '14px',
+                                color: '#6c757d'
+                            },
+                            value: {
+                                show: true,
+                                fontSize: '20px',
+                                fontWeight: 700
+                            },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                fontSize: '14px',
+                                color: '#6c757d',
+                                formatter: function (w) {
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            dataLabels: {
+                enabled: true
+            },
+
+            legend: {
+                position: 'bottom',
+                fontSize: '13px',
+                markers: {
+                    radius: 12
+                }
+            },
+
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " cases";
+                    }
+                }
+            },
+
+            responsive: [{
+                breakpoint: 768,
+                options: {
+                    chart: {
+                        height: 300
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        new ApexCharts(document.querySelector("#chart3"), options).render();
+
+    });
+</script>
+
+<!-- ================================= Chart Reports =================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [44, 55, 41, 17, 15],
+            chart: {
+                width: 350,
+                type: 'donut',
+                dropShadow: {
+                enabled: true,
+                color: '#111',
+                top: -1,
+                left: 3,
+                blur: 3,
+                opacity: 0.5,
+                },
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                donut: {
+                    labels: {
+                    show: true,
+                    total: {
+                        showAlways: true,
+                        show: true,
+                    },
+                    },
+                },
+                },
+            },
+            labels: ['Comedy', 'Action', 'SciFi', 'Drama', 'Horror'],
+            dataLabels: {
+                dropShadow: {
+                blur: 3,
+                opacity: 1,
+                },
+            },
+            fill: {
+                type: 'pattern',
+                opacity: 1,
+                pattern: {
+                enabled: true,
+                style: [
+                    'verticalLines',
+                    'squares',
+                    'horizontalLines',
+                    'circles',
+                    'slantedLines',
+                ],
+                },
+            },
+            states: {
+                hover: {
+                filter: 'none',
+                },
+            },
+            theme: {
+                palette: 'palette2',
+            },
+            title: {
+                text: 'Favourite Movie Type',
+            },
+            responsive: [
+                {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200,
+                    },
+                    legend: {
+                    position: 'bottom',
+                    },
+                },
+                },
+            ],
+            }
+
+            var chart = new ApexCharts(document.querySelector('#chart1'), options)
+            chart.render()
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [{
+                name: 'Cases',
+                data: {{ totals|safe }}
+            }],
+            chart: {
+                type: 'bar',
+                height: 220,
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: false
+                }
+            },
+            dataLabels: {
+                enabled: true
+            },
+            xaxis: {
+                categories: {{ counties|safe }}
+            },
+            yaxis: {
+                title: {
+                    text: 'Total Cases'
+                }
+            }
+        };
+        var chart = new ApexCharts(document.querySelector('#chart2'), options)
+        chart.render()
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [{
+                name: 'Prevention Activities',
+                data: {{ prevention_totals|safe }}
+            }],
+            chart: {
+                height: 250,
+                type: 'line',
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: true
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            title: {
+                text: 'Prevention Activities by County',
+                align: 'left'
+            },
+            xaxis: {
+                categories: {{ prevention_counties|safe }}
+            }
+        };
+        var chart = new ApexCharts(document.querySelector('#chart03'), options)
+        chart.render()
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: {{ facility_totals|safe }},
+            chart: {
+                width: 360,
+                type: 'pie',
+            },
+            labels: {{ facility_counties|safe }},
+            responsive: [
+                {
+                    breakpoint: 300,
+                    options: {
+                        chart: {
+                            width: 220,
+                        },
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+            ],
+        };
+        var chart = new ApexCharts(document.querySelector('#chart4'), options)
+        chart.render()        
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: {{ assessment_totals|safe }},
+            chart: {
+                width: 400,
+                type: 'donut',
+                dropShadow: {
+                    enabled: true,
+                    color: '#111',
+                    top: -1,
+                    left: 3,
+                    blur: 3,
+                    opacity: 0.3,
+                },
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: "Total Cases"
+                            }
+                        }
+                    }
+                }
+            },
+            labels: {{ assessment_counties|safe }},
+            dataLabels: {
+                dropShadow: {
+                    blur: 3,
+                    opacity: 1,
+                },
+            },
+            states: {
+                hover: {
+                    filter: 'none',
+                },
+            },
+            theme: {
+                palette: 'palette2',
+            },
+            title: {
+                text: 'Child & Adult Assessments by County',
+            },
+            responsive: [
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 220,
+                        },
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+            ],
+        };
+        var chart = new ApexCharts(document.querySelector('#chart5'), options)
+        chart.render()
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [{
+                name: 'Verified Cases',
+                data: {{ verification_totals|safe }}
+            }],
+            chart: {
+                height: 200,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 8,
+                    columnWidth: '50%',
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            xaxis: {
+                categories: {{ verification_counties|safe }},
+                labels: {
+                    rotate: -45,
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Verified Cases',
+                },
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: 'horizontal',
+                    opacityFrom: 0.85,
+                    opacityTo: 0.85,
+                },
+            },
+        };
+        var chart = new ApexCharts(document.querySelector('#chart6'), options)
+        chart.render()
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [{
+                name: 'Beneficiary Handover',
+                data: {{ handover_totals|safe }}
+            }],
+            chart: {
+                height: 220,
+                type: 'line',
+                zoom: {
+                    enabled: false,
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            title: {
+                text: 'Beneficiary Handover Trends by County',
+                align: 'left',
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5,
+                },
+            },
+            xaxis: {
+                categories: {{ handover_counties|safe }},
+            },
+        };
+        var chart = new ApexCharts(document.querySelector('#chart7'), options)
+        chart.render()
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: {{ caseclosure_totals|safe }},
+            chart: {
+                width: 400,
+                type: 'donut',
+                dropShadow: {
+                    enabled: true,
+                    color: '#111',
+                    top: -1,
+                    left: 3,
+                    blur: 3,
+                    opacity: 0.3,
+                },
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: "Total Closed Cases"
+                            }
+                        }
+                    }
+                }
+            },
+            labels: {{ caseclosure_counties|safe }},
+            dataLabels: {
+                dropShadow: {
+                    blur: 3,
+                    opacity: 1,
+                },
+            },
+            states: {
+                hover: {
+                    filter: 'none',
+                },
+            },
+            theme: {
+                palette: 'palette2',
+            },
+            title: {
+                text: 'Case Closure by County',
+            },
+            responsive: [
+                {
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 220,
+                        },
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+            ],
+        };
+        var chart = new ApexCharts(document.querySelector('#chart8'), options)
+        chart.render()
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [44, 55, 41, 17, 15],
+            chart: {
+                width: 350,
+                type: 'donut',
+                dropShadow: {
+                enabled: true,
+                color: '#111',
+                top: -1,
+                left: 3,
+                blur: 3,
+                opacity: 0.5,
+                },
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                donut: {
+                    labels: {
+                    show: true,
+                    total: {
+                        showAlways: true,
+                        show: true,
+                    },
+                    },
+                },
+                },
+            },
+            labels: ['Comedy', 'Action', 'SciFi', 'Drama', 'Horror'],
+            dataLabels: {
+                dropShadow: {
+                blur: 3,
+                opacity: 1,
+                },
+            },
+            fill: {
+                type: 'pattern',
+                opacity: 1,
+                pattern: {
+                enabled: true,
+                style: [
+                    'verticalLines',
+                    'squares',
+                    'horizontalLines',
+                    'circles',
+                    'slantedLines',
+                ],
+                },
+            },
+            states: {
+                hover: {
+                filter: 'none',
+                },
+            },
+            theme: {
+                palette: 'palette2',
+            },
+            title: {
+                text: 'Favourite Movie Type',
+            },
+            responsive: [
+                {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200,
+                    },
+                    legend: {
+                    position: 'bottom',
+                    },
+                },
+                },
+            ],
+            }
+
+            var chart = new ApexCharts(document.querySelector('#chart9'), options)
+            chart.render()
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [
+                {
+                name: 'Servings',
+                data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35],
+                },
+            ],
+            annotations: {
+                points: [
+                {
+                    x: 'Bananas',
+                    seriesIndex: 0,
+                    label: {
+                    borderColor: '#775DD0',
+                    offsetY: 0,
+                    style: {
+                        color: '#fff',
+                        background: '#775DD0',
+                    },
+                    text: 'Bananas are good',
+                    },
+                },
+                ],
+            },
+            chart: {
+                height: 230,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                borderRadius: 10,
+                columnWidth: '50%',
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                width: 0,
+            },
+            grid: {
+                row: {
+                colors: ['#fff', '#f2f2f2'],
+                },
+            },
+            xaxis: {
+                labels: {
+                rotate: -45,
+                },
+                categories: [
+                'Apples',
+                'Oranges',
+                'Strawberries',
+                'Pineapples',
+                'Mangoes',
+                'Bananas',
+                'Blackberries',
+                'Pears',
+                'Watermelons',
+                'Cherries',
+                'Pomegranates',
+                'Tangerines',
+                'Papayas',
+                ],
+                tickPlacement: 'on',
+            },
+            yaxis: {
+                title: {
+                text: 'Servings',
+                },
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                shade: 'light',
+                type: 'horizontal',
+                shadeIntensity: 0.25,
+                gradientToColors: undefined,
+                inverseColors: true,
+                opacityFrom: 0.85,
+                opacityTo: 0.85,
+                stops: [50, 0, 100],
+                },
+            },
+            }
+
+        var chart = new ApexCharts(document.querySelector('#chart10'), options)
+        chart.render()
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [
+                {
+                name: 'Desktops',
+                data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+                },
+            ],
+            chart: {
+                height: 230,
+                type: 'line',
+                zoom: {
+                enabled: false,
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: 'straight',
+            },
+            title: {
+                text: 'Product Trends by Month',
+                align: 'left',
+            },
+            grid: {
+                row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5,
+                },
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            },
+            }
+
+        var chart = new ApexCharts(document.querySelector('#chart11'), options)
+        chart.render()
+
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [44, 55, 41, 17, 15],
+            chart: {
+                width: 300,
+                type: 'donut',
+                dropShadow: {
+                enabled: true,
+                color: '#111',
+                top: -1,
+                left: 3,
+                blur: 3,
+                opacity: 0.5,
+                },
+            },
+            stroke: {
+                width: 0,
+            },
+            plotOptions: {
+                pie: {
+                donut: {
+                    labels: {
+                    show: true,
+                    total: {
+                        showAlways: true,
+                        show: true,
+                    },
+                    },
+                },
+                },
+            },
+            labels: ['Comedy', 'Action', 'SciFi', 'Drama', 'Horror'],
+            dataLabels: {
+                dropShadow: {
+                blur: 3,
+                opacity: 1,
+                },
+            },
+            fill: {
+                type: 'pattern',
+                opacity: 1,
+                pattern: {
+                enabled: true,
+                style: [
+                    'verticalLines',
+                    'squares',
+                    'horizontalLines',
+                    'circles',
+                    'slantedLines',
+                ],
+                },
+            },
+            states: {
+                hover: {
+                filter: 'none',
+                },
+            },
+            theme: {
+                palette: 'palette2',
+            },
+            title: {
+                text: 'Favourite Movie Type',
+            },
+            responsive: [
+                {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200,
+                    },
+                    legend: {
+                    position: 'bottom',
+                    },
+                },
+                },
+            ],
+            }
+
+            var chart = new ApexCharts(document.querySelector('#chart12'), options)
+            chart.render()
+
+    });
+</script>

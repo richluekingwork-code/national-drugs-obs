@@ -1,0 +1,601 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Detail Beneficiary Handover Page{% endblock %}</title>
+
+    <div class="container my-5">
+
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Handover Detail Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+      
+            <!-- 2 PERSONAL INFORMATION -->
+            <div class="mb-2">
+                <div class="card-header">
+                    1. Beneficiary Personal Information
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label>Surname</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.last_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.first_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Middle Name</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.middle_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Nickname</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.other_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Sex</label>
+                                    <select class="form-select" disabled>
+                                        <option value="Male" {% if beneficiar_handover.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                        <option value="Female" {% if beneficiar_handover.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Date of Birth</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.date_of_birth}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Age</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.age}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Marital St..</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.marital_status}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>County of Birth</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.county}}" disabled>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Professional Status</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.professional_status}}" disabled>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Educational Level</label>
+                                    <input type="text" class="form-control" value="{{beneficiar_handover.person.educational_level}}" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 text-center">
+                            <div class="photo-box d-flex align-items-center justify-content-center">
+                                {% if beneficiar_handover.person.photo %}
+                                    <img src="{{beneficiar_handover.person.photo.url}}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                {% else %}
+                                    No Photo Available
+                                {% endif %}
+                            </div>
+                            <style>
+                                .photo-box {
+                                    border: 1px solid #ccc;
+                                    height: 160px;   /* fixed height keeps alignment */
+                                    width: 100%;
+                                    overflow: hidden;
+                                }
+                            </style>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3 mt-2">  
+                        
+                        <div class="col-md-3">
+                            <label>Nationality</label>
+                            <input type="text" class="form-control" value="{{beneficiar_handover.person.nationality}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>District</label>
+                            <input type="text" class="form-control" value="{{beneficiar_handover.person.district}}" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Current Address</label>
+                            <input type="text" class="form-control" value="{{beneficiar_handover.person.address}}" disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- REUNIFICATION DETAILS -->
+            <div class="mb-1">
+                <div class="card-header">
+                    1. Details of Reunification
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-2">
+
+                        <!-- TYPE OF REUNIFICATION -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Type of Reunification</label>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"
+                                    name="reunification_type"
+                                    value="Spontaneous"
+                                    disabled
+                                    {% if beneficiar_handover.reunification_type == "Spontaneous" %}checked{% endif %}>
+                                <label class="form-check-label">Spontaneous</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"
+                                    name="reunification_type"
+                                    value="Agency Facilitated"
+                                    disabled
+                                    {% if beneficiar_handover.reunification_type == "Agency Facilitated" %}checked{% endif %}>
+                                <label class="form-check-label">Agency Facilitated</label>
+                            </div>
+                        </div>
+
+                        <!-- COUNTY -->
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">County</label>
+                            <select name="follow_county" class="form-control" disabled>
+                                <option>Select County</option>
+
+                                <option value="Bomi County" {% if beneficiar_handover.follow_county == "Bomi County" %}selected{% endif %}>Bomi County</option>
+                                <option value="Bong County" {% if beneficiar_handover.follow_county == "Bong County" %}selected{% endif %}>Bong County</option>
+                                <option value="Gbarpolu County" {% if beneficiar_handover.follow_county == "Gbarpolu County" %}selected{% endif %}>Gbarpolu County</option>
+                                <option value="Grand Bassa County" {% if beneficiar_handover.follow_county == "Grand Bassa County" %}selected{% endif %}>Grand Bassa County</option>
+                                <option value="Grand Cape Mount County" {% if beneficiar_handover.follow_county == "Grand Cape Mount County" %}selected{% endif %}>Grand Cape Mount County</option>
+                                <option value="Grand Gedeh County" {% if beneficiar_handover.follow_county == "Grand Gedeh County" %}selected{% endif %}>Grand Gedeh County</option>
+                                <option value="Grand Kru County" {% if beneficiar_handover.follow_county == "Grand Kru County" %}selected{% endif %}>Grand Kru County</option>
+                                <option value="Lofa County" {% if beneficiar_handover.follow_county == "Lofa County" %}selected{% endif %}>Lofa County</option>
+                                <option value="Margibi County" {% if beneficiar_handover.follow_county == "Margibi County" %}selected{% endif %}>Margibi County</option>
+                                <option value="Maryland County" {% if beneficiar_handover.follow_county == "Maryland County" %}selected{% endif %}>Maryland County</option>
+                                <option value="Montserrado County" {% if beneficiar_handover.follow_county == "Montserrado County" %}selected{% endif %}>Montserrado County</option>
+                                <option value="Nimba County" {% if beneficiar_handover.follow_county == "Nimba County" %}selected{% endif %}>Nimba County</option>
+                                <option value="Rivercess County" {% if beneficiar_handover.follow_county == "Rivercess County" %}selected{% endif %}>Rivercess County</option>
+                                <option value="River Gee County" {% if beneficiar_handover.follow_county == "River Gee County" %}selected{% endif %}>River Gee County</option>
+                                <option value="Sinoe County" {% if beneficiar_handover.follow_county == "Sinoe County" %}selected{% endif %}>Sinoe County</option>
+                            </select>
+                        </div>
+
+                        <!-- ADULT VERIFICATION -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Adult Verification Completed?</label>
+                            <select name="adult_verification" class="form-select" disabled>
+                                <option value="">Select</option>
+                                <option value="Yes" {% if beneficiar_handover.adult_verification == "Yes" %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if beneficiar_handover.adult_verification == "No" %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+
+                        <!-- CHILD VERIFICATION -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Child Verification Completed?</label>
+                            <select name="child_verification" class="form-select" disabled>
+                                <option value="">Select</option>
+                                <option value="Yes" {% if beneficiar_handover.child_verification == "Yes" %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if beneficiar_handover.child_verification == "No" %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+
+                        <!-- RELATIONSHIP VERIFIED -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Relationship Between Child and Adult Verified?</label>
+                            <select name="relationship_verified" class="form-select" disabled>
+                                <option value="">Select</option>
+                                <option value="Yes" {% if beneficiar_handover.relationship_verified == "Yes" %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if beneficiar_handover.relationship_verified == "No" %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+
+                        <!-- ONGOING SUPPORT -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Ongoing Support Needed?</label>
+                            <select name="ongoing_support_needed" class="form-select" disabled>
+                                <option value="">Select</option>
+                                <option value="Yes" {% if beneficiar_handover.ongoing_support_needed == "Yes" %}selected{% endif %}>Yes</option>
+                                <option value="No" {% if beneficiar_handover.ongoing_support_needed == "No" %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- HANDING OVER -->
+            <div class="mb-1">
+                <div class="card-header">
+                    2. Handing Over the Child
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <!-- CASEWORKER -->
+                        <div class="col-md-6">
+                            <label class="form-label">Tracing/Caseworker Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caseworker_name }}"
+                                disabled>
+                        </div>
+
+                        <!-- ORGANIZATION -->
+                        <div class="col-md-6">
+                            <label class="form-label">Organization</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.organization }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="section-title mb-3">Receiving Caregiver 1</h5>
+
+                    <div class="row g-3">
+
+                        <!-- CAREGIVER 1 NAME -->
+                        <div class="col-md-4">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caregiver1_name }}"
+                                disabled>
+                        </div>
+
+                        <!-- CAREGIVER 1 SEX -->
+                        <div class="col-md-2">
+                            <label class="form-label">Sex</label>
+                            <select class="form-select" disabled>
+                                <option value="Male"
+                                    {% if beneficiar_handover.caregiver1_sex == "Male" %}selected{% endif %}>
+                                    Male
+                                </option>
+                                <option value="Female"
+                                    {% if beneficiar_handover.caregiver1_sex == "Female" %}selected{% endif %}>
+                                    Female
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- CAREGIVER 1 RELATIONSHIP -->
+                        <div class="col-md-6">
+                            <label class="form-label">Relationship to Child</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caregiver1_relationship }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="section-title mb-3">Receiving Caregiver 2</h5>
+
+                    <div class="row g-3">
+
+                        <!-- CAREGIVER 2 NAME -->
+                        <div class="col-md-4">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caregiver2_name }}"
+                                disabled>
+                        </div>
+
+                        <!-- CAREGIVER 2 SEX -->
+                        <div class="col-md-2">
+                            <label class="form-label">Sex</label>
+                            <select class="form-select" disabled>
+                                <option value="Male"
+                                    {% if beneficiar_handover.caregiver2_sex == "Male" %}selected{% endif %}>
+                                    Male
+                                </option>
+                                <option value="Female"
+                                    {% if beneficiar_handover.caregiver2_sex == "Female" %}selected{% endif %}>
+                                    Female
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- CAREGIVER 2 RELATIONSHIP -->
+                        <div class="col-md-6">
+                            <label class="form-label">Relationship to Child</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caregiver2_relationship }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row g-3">
+
+                        <!-- ADDRESS -->
+                        <div class="col-md-8">
+                            <label class="form-label">Street Address / Landmark</label>
+                            <textarea class="form-control" rows="2" disabled>
+                                {{ beneficiar_handover.address }}
+                            </textarea>
+                        </div>
+
+                        <!-- PHONE -->
+                        <div class="col-md-4">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.phone }}"
+                                disabled>
+                        </div>
+
+                        <!-- TOWN -->
+                        <div class="col-md-3">
+                            <label class="form-label">Town/Village</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.town_village }}"
+                                disabled>
+                        </div>
+
+                        <!-- CLAN -->
+                        <div class="col-md-3">
+                            <label class="form-label">Clan</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.clan }}"
+                                disabled>
+                        </div>
+
+                        <!-- DISTRICT -->
+                        <div class="col-md-2">
+                            <label class="form-label">District</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.district }}"
+                                disabled>
+                        </div>
+
+                        <!-- COUNTY -->
+                        <div class="col-md-2">
+                            <label class="form-label">County</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.county }}"
+                                disabled>
+                        </div>
+
+                        <!-- COUNTRY -->
+                        <div class="col-md-2">
+                            <label class="form-label">Country</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.country }}"
+                                disabled>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- AGREEMENT -->
+            <div class="mb-1">
+                <div class="card-header">
+                    3. Agreement to Take the Child
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <!-- DATE -->
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Reunification</label>
+                            <input type="date" class="form-control"
+                                value="{{ beneficiar_handover.reunification_date }}"
+                                disabled>
+                        </div>
+
+                        <!-- PLACE -->
+                        <div class="col-md-8">
+                            <label class="form-label">Place of Reunification</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.reunification_place }}"
+                                disabled>
+                        </div>
+
+                        <!-- CONSENT PERSON -->
+                        <div class="col-md-6">
+                            <label class="form-label">Person Giving Consent</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.consent_person }}"
+                                disabled>
+                        </div>
+
+                        <!-- CHILD NAME -->
+                        <div class="col-md-6">
+                            <label class="form-label">Child Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.child_name }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                    <!-- AGREEMENT STATEMENT -->
+                    <div class="mt-4">
+                        <label class="form-label">Agreement Statement</label>
+
+                        <textarea class="form-control" rows="10" disabled>
+                            {{ beneficiar_handover.agreement_statement }}
+                        </textarea>
+                    </div>
+
+                    <div class="row mt-4 g-3">
+
+                        <!-- CASEWORKER SIGNATURE -->
+                        <div class="col-md-4">
+                            <label class="form-label">Caseworker Signature</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.caseworker_signature }}"
+                                disabled>
+                        </div>
+
+                        <!-- RECEIVER SIGNATURE -->
+                        <div class="col-md-4">
+                            <label class="form-label">Receiving Person Signature/Thumbprint</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.receiver_signature }}"
+                                disabled>
+                        </div>
+
+                        <!-- WITNESS SIGNATURE -->
+                        <div class="col-md-4">
+                            <label class="form-label">Witness Signature/Thumbprint</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.witness_signature }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ADDITIONAL INFORMATION -->
+            <div class="mb-1">
+                <div class="card-header">
+                    4. Additional Information & Ongoing Support
+                </div>
+
+                <div class="card-body">
+
+                    <label class="form-label">
+                        Additional information about the reunification and details on the ongoing support needed (if answered ‘yes’ above)
+                    </label>
+
+                    <textarea class="form-control" rows="10" disabled>
+                        {{beneficiar_handover.additional_information}}
+                    </textarea>
+
+                </div>
+            </div>
+
+            <!-- 5. NEW ADDRESS / LOCATION -->
+            <div class="mb-1">
+                <div class="card-header">
+                    5. New Address / Location After Reunification
+                </div>
+
+                <div class="card-body">
+
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Provide as much detail as possible about the location
+                        </label>
+
+                        <textarea class="form-control" rows="2" disabled>
+                            {{ beneficiar_handover.new_address_location }}
+                        </textarea>
+                    </div>
+
+                    <div class="row mt-3 g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Signature</label>
+                            <input type="date" class="form-control"
+                                value="{{ beneficiar_handover.signature_date }}"
+                                disabled>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Place of Signature</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.signature_place }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- SIBLINGS -->
+            <div class="mb-1">
+                <div class="card-header">
+                    Siblings Reunified During Same Occasion
+                </div>
+
+                <div class="card-body">
+
+                    <label class="form-label">
+                        Names and Code numbers of siblings reunified during the same occasion
+                    </label>
+
+                    <textarea class="form-control" rows="10" disabled>
+                            {{ beneficiar_handover.siblings_reunified }}
+                    </textarea>
+
+                </div>
+            </div>
+
+
+            <!-- SUPERVISOR APPROVAL -->
+            <div class="mb-1">
+                <div class="card-header">
+                    Supervisor Approval
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Supervisor Name</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.supervisor_name }}"
+                                disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Position</label>
+                            <input type="text" class="form-control"
+                                value="{{ beneficiar_handover.supervisor_position }}"
+                                disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}

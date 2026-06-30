@@ -1,0 +1,489 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Community Outreach Report Page{% endblock %}</title>
+   
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Community Outreach Reporting Form
+                </div>
+                {% include 'includes/error.html' %}
+
+            </div>
+
+            <div method="POST" action="{% url 'creat_community_Level_report' %}">
+                <!--  1. BASIC INFORMATION -->
+                <div class="mb-1">
+                    <div class="card-header bg-light fw-bold">1. Basic Information</div>
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- Reporting Date -->
+                            <div class="col-md-4">
+                                <label class="form-label">Reporting Date</label>
+                                <input type="date" name="reporting_date" class="form-control" value="{{ community_level_report.reporting_date|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                            <!-- Reporting Period -->
+                            <div class="col-md-4">
+                                <label class="form-label">Reporting Period</label>
+                                <input type="text" name="reporting_period" class="form-control" value="{{ community_level_report.reporting_period }}" disabled>
+                            </div>
+
+                            <!-- Organization -->
+                            <div class="col-md-4">
+                                <label class="form-label">Organization</label>
+                                <input type="text" name="organization" class="form-control" value="{{ community_level_report.organization }}" disabled>
+                            </div>
+
+                            <!-- County -->
+                            <div class="col-md-3">
+                                <label class="form-label">County <span class="text-danger">*</span></label>
+
+                                <select name="follow_county" class="form-control" disabled>
+                                    <option disabled>Select County</option>
+
+                                    <option value="Bomi County" {% if community_level_report.follow_county == "Bomi County" %}selected{% endif %}>Bomi County</option>
+                                    <option value="Bong County" {% if community_level_report.follow_county == "Bong County" %}selected{% endif %}>Bong County</option>
+                                    <option value="Gbarpolu County" {% if community_level_report.follow_county == "Gbarpolu County" %}selected{% endif %}>Gbarpolu County</option>
+                                    <option value="Grand Bassa County" {% if community_level_report.follow_county == "Grand Bassa County" %}selected{% endif %}>Grand Bassa County</option>
+                                    <option value="Grand Cape Mount County" {% if community_level_report.follow_county == "Grand Cape Mount County" %}selected{% endif %}>Grand Cape Mount County</option>
+                                    <option value="Grand Gedeh County" {% if community_level_report.follow_county == "Grand Gedeh County" %}selected{% endif %}>Grand Gedeh County</option>
+                                    <option value="Grand Kru County" {% if community_level_report.follow_county == "Grand Kru County" %}selected{% endif %}>Grand Kru County</option>
+                                    <option value="Lofa County" {% if community_level_report.follow_county == "Lofa County" %}selected{% endif %}>Lofa County</option>
+                                    <option value="Margibi County" {% if community_level_report.follow_county == "Margibi County" %}selected{% endif %}>Margibi County</option>
+                                    <option value="Maryland County" {% if community_level_report.follow_county == "Maryland County" %}selected{% endif %}>Maryland County</option>
+                                    <option value="Montserrado County" {% if community_level_report.follow_county == "Montserrado County" %}selected{% endif %}>Montserrado County</option>
+                                    <option value="Nimba County" {% if community_level_report.follow_county == "Nimba County" %}selected{% endif %}>Nimba County</option>
+                                    <option value="Rivercess County" {% if community_level_report.follow_county == "Rivercess County" %}selected{% endif %}>Rivercess County</option>
+                                    <option value="River Gee County" {% if community_level_report.follow_county == "River Gee County" %}selected{% endif %}>River Gee County</option>
+                                    <option value="Sinoe County" {% if community_level_report.follow_county == "Sinoe County" %}selected{% endif %}>Sinoe County</option>
+                                </select>
+                            </div>
+
+                            <!-- District -->
+                            <div class="col-md-3">
+                                <label class="form-label">District / Community</label>
+                                <input type="text" name="county_district_community" class="form-control" value="{{ community_level_report.county_district_community }}" disabled>
+                            </div>
+
+                            <!-- Outreach Officer -->
+                            <div class="col-md-3">
+                                <label class="form-label">Outreach Officer</label>
+                                <input type="text" name="outreach_officer" class="form-control" value="{{ community_level_report.outreach_officer }}" disabled>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="col-md-3">
+                                <label class="form-label">Contact Information</label>
+                                <input type="text" name="contact_information" class="form-control" value="{{ community_level_report.contact_information }}" disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. OUTREACH ACTIVITY  -->
+                <div class="mb-1">
+                    <div class="card-header bg-light fw-bold">2. Outreach Activity</div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- Activity Date -->
+                            <div class="col-md-4">
+                                <label class="form-label">Activity Date</label>
+                                <input type="date" class="form-control" value="{{ community_level_report.activity_date|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                            <!-- Community Location -->
+                            <div class="col-md-4">
+                                <label class="form-label">Community Location</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.community_location }}" disabled>
+                            </div>
+
+                            <!-- Activity Type -->
+                            <div class="col-md-4">
+                                <label class="form-label">Activity Type</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.activity_type }}" disabled>
+                            </div>
+
+                            <!-- Target Group -->
+                            <div class="col-md-4">
+                                <label class="form-label">Target Group</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.target_group }}" disabled>
+                            </div>
+
+                            <!-- Number Reached -->
+                            <div class="col-md-4">
+                                <label class="form-label">Number Reached</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.number_reached }}" disabled>
+                            </div>
+
+                            <!-- Key Issues Identified -->
+                            <div class="col-md-12">
+                                <label class="form-label">Key Issues Identified</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.key_issues_identified }}</textarea>
+                            </div>
+
+                            <!-- Topics Discussed -->
+                            <div class="col-md-12">
+                                <label class="form-label">Topics Discussed</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.topics_discussed }}</textarea>
+                            </div>
+
+                            <!-- Community Concerns -->
+                            <div class="col-md-12">
+                                <label class="form-label">Community Concerns</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.community_concerns }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2 PERSONAL INFORMATION -->
+                <div class="mb-4">
+                    <div class="card-header bg-light fw-bold">
+                        Personal Information
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label>Surname</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.last_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.first_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Middle Name</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.middle_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Nickname</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.other_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Sex</label>
+                                        <select class="form-select" disabled>
+                                            <option value="Male" {% if community_level_report.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                            <option value="Female" {% if community_level_report.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Date of Birth</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.date_of_birth}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Age</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.age}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Marital St..</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.marital_status}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>County of Birth</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.county}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Professional Status</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.professional_status}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Educational Level</label>
+                                        <input type="text" class="form-control" value="{{community_level_report.person.educational_level}}" disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 text-center">
+                                <div class="photo-box d-flex align-items-center justify-content-center">
+                                    {% if community_level_report.person.photo %}
+                                        <img src="{{ community_level_report.person.photo.url }}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                    {% else %}
+                                        No Photo Available
+                                    {% endif %}
+                                </div>
+                                <style>
+                                    .photo-box {
+                                        border: 1px solid #ccc;
+                                        height: 160px;   /* fixed height keeps alignment */
+                                        width: 100%;
+                                        overflow: hidden;
+                                    }
+                                </style>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3 mt-2">  
+                            
+                            <div class="col-md-3">
+                                <label>Nationality</label>
+                                <input type="text" class="form-control" value="{{community_level_report.person.nationality}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>District</label>
+                                <input type="text" class="form-control" value="{{community_level_report.person.district}}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Current Address</label>
+                                <input type="text" class="form-control" value="{{community_level_report.person.address}}" disabled>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--  4. FOLLOW-UP -->
+                <div class="mb-1">
+                    <div class="card-header bg-light fw-bold">4. Follow-up</div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- Follow-up Type -->
+                            <div class="col-md-6">
+                                <label class="form-label">Follow-up Type</label>
+                                <input type="text"
+                                    class="form-control"
+                                    value="{{ community_level_report.followup_type }}"
+                                    disabled>
+                            </div>
+
+                            <!-- Next Follow-up Date -->
+                            <div class="col-md-6">
+                                <label class="form-label">Next Follow-up Date</label>
+                                <input type="date"
+                                    class="form-control"
+                                    value="{{ community_level_report.next_followup_date|date:'Y-m-d' }}"
+                                    disabled>
+                            </div>
+
+                            <!-- Follow-up Details -->
+                            <div class="col-md-12">
+                                <label class="form-label">Follow-up Details</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.followup_details }}</textarea>
+                            </div>
+
+                            <!-- Progress Observed -->
+                            <div class="col-md-12">
+                                <label class="form-label">Progress Observed</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.progress_observed }}</textarea>
+                            </div>
+
+                            <!-- Challenges Identified -->
+                            <div class="col-md-12">
+                                <label class="form-label">Challenges Identified</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.challenges_identified }}</textarea>
+                            </div>
+
+                            <!-- Action Taken -->
+                            <div class="col-md-12">
+                                <label class="form-label">Action Taken</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.action_taken }}</textarea>
+                            </div>
+
+                            <!-- Risk Factors -->
+                            <div class="col-md-12">
+                                <label class="form-label">Risk Factors</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.risk_factors }}</textarea>
+                            </div>
+
+                            <!-- Immediate Needs -->
+                            <div class="col-md-12">
+                                <label class="form-label">Immediate Needs</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.immediate_needs }}</textarea>
+                            </div>
+
+                            <!-- Emotional Condition -->
+                            <div class="col-md-12">
+                                <label class="form-label">Emotional Condition</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.emotional_condition }}</textarea>
+                            </div>
+
+                            <!-- Family Support Status -->
+                            <div class="col-md-12">
+                                <label class="form-label">Family Support Status</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.family_support_status }}</textarea>
+                            </div>
+
+                            <!-- School Attendance -->
+                            <div class="col-md-12">
+                                <label class="form-label">School Attendance</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.school_attendance }}</textarea>
+                            </div>
+
+                            <!-- Behavioral Improvement -->
+                            <div class="col-md-12">
+                                <label class="form-label">Behavioral Improvement</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.behavioral_improvement }}</textarea>
+                            </div>
+
+                            <!-- Additional Support Needed -->
+                            <div class="col-md-12">
+                                <label class="form-label">Additional Support Needed</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.additional_support_needed }}</textarea>
+                            </div>
+
+                            <!-- Services Accessed -->
+                            <div class="col-md-12">
+                                <label class="form-label">Services Accessed</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.services_accessed }}</textarea>
+                            </div>
+
+                            <!-- Feedback From Provider -->
+                            <div class="col-md-12">
+                                <label class="form-label">Feedback From Provider</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.feedback_from_provider }}</textarea>
+                            </div>
+
+                            <!-- Outcome -->
+                            <div class="col-md-12">
+                                <label class="form-label">Outcome</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.outcome }}</textarea>
+                            </div>
+
+                            <!-- Follow-up Needed -->
+                            <div class="col-md-12">
+                                <label class="form-label">Follow-up Needed</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.followup_needed }}</textarea>
+                            </div>
+
+                            <!-- Challenges -->
+                            <div class="col-md-12">
+                                <label class="form-label">Challenges</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.challenges }}</textarea>
+                            </div>
+
+                            <!-- Recommendation -->
+                            <div class="col-md-12">
+                                <label class="form-label">Recommendation</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.recommendation }}</textarea>
+                            </div>
+
+                            <!-- Assessment Date & Time -->
+                            <div class="col-md-4">
+                                <label class="form-label">Assessment Date & Time</label>
+                                <input type="datetime-local"
+                                    class="form-control"
+                                    value="{{ community_level_report.assessment_datetime|date:'Y-m-d\\TH:i' }}"
+                                    disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. REFERRAL  -->
+                <div class="mb-1">
+                    <div class="card-header bg-light fw-bold">5. Referral</div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- Referral Date -->
+                            <div class="col-md-4">
+                                <label class="form-label">Referral Date</label>
+                                <input type="date" class="form-control" value="{{ community_level_report.referral_date|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                            <!-- Referred By -->
+                            <div class="col-md-4">
+                                <label class="form-label">Referred By</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.referred_by }}" disabled>
+                            </div>
+
+                            <!-- Receiving Institution -->
+                            <div class="col-md-4">
+                                <label class="form-label">Receiving Institution</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.receiving_institution }}" disabled>
+                            </div>
+
+                            <!-- Contact Person -->
+                            <div class="col-md-4">
+                                <label class="form-label">Contact Person</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.contact_person }}" disabled>
+                            </div>
+
+                            <!-- Contact Number -->
+                            <div class="col-md-4">
+                                <label class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.contact_number }}" disabled>
+                            </div>
+
+                            <!-- Reason for Referral -->
+                            <div class="col-md-12">
+                                <label class="form-label">Reason for Referral</label>
+                                <textarea class="form-control" disabled>{{ community_level_report.reason_for_referral }}</textarea>
+                            </div>
+
+                            <!-- Institution Name -->
+                            <div class="col-md-12">
+                                <label class="form-label">Institution Name</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.institution_name }}" disabled>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="col-md-12">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.location }}" disabled>
+                            </div>
+
+                            <!-- Interviewee Name -->
+                            <div class="col-md-4">
+                                <label class="form-label">Interviewee Name</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.interviewee_name }}" disabled>
+                            </div>
+
+                            <!-- Interviewee Position -->
+                            <div class="col-md-4">
+                                <label class="form-label">Interviewee Position</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.interviewee_position }}" disabled>
+                            </div>
+
+                            <!-- Interviewee Contact -->
+                            <div class="col-md-4">
+                                <label class="form-label">Interviewee Contact</label>
+                                <input type="text" class="form-control" value="{{ community_level_report.interviewee_contact }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> 
+
+{% endblock content %}

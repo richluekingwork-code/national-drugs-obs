@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Detaile Tracing Actiona Page{% endblock %}</title>
+
+    <div class="container my-5">
+
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Handover Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+        
+     
+            <div method="POST">
+
+                <!-- 2 PERSONAL INFORMATION -->
+                <div class="mb-4">
+                    <div class="card-header">
+                        Child / Adult Personal Information
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label>Surname</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.last_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.first_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Middle Name</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.middle_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Nickname</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.other_name}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Sex</label>
+                                        <select class="form-select" disabled>
+                                            <option value="Male" {% if tracing_action.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                            <option value="Female" {% if tracing_action.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>Date of Birth</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.date_of_birth}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Age</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.age}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Marital St..</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.marital_status}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>County of Birth</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.county}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Professional Status</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.professional_status}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>Educational Level</label>
+                                        <input type="text" class="form-control" value="{{tracing_action.person.educational_level}}" disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 text-center">
+                                <div class="photo-box d-flex align-items-center justify-content-center">
+                                    {% if tracing_action.person.photo %}
+                                        <img src="{{ tracing_action.person.photo.url }}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                    {% else %}
+                                        No Photo Available
+                                    {% endif %}
+                                </div>
+                                <style>
+                                    .photo-box {
+                                        border: 1px solid #ccc;
+                                        height: 160px;   /* fixed height keeps alignment */
+                                        width: 100%;
+                                        overflow: hidden;
+                                    }
+                                </style>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3 mt-2">  
+                            
+                            <div class="col-md-3">
+                                <label>Nationality</label>
+                                <input type="text" class="form-control" value="{{tracing_action.person.nationality}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>District</label>
+                                <input type="text" class="form-control" value="{{tracing_action.person.district}}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Current Address</label>
+                                <input type="text" class="form-control" value="{{tracing_action.person.address}}" disabled>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                
+                <!-- TRACING NOTES -->
+                <div class="mb-1">
+                    <div class="card-header">
+                        <h5 class="mb-0">Tracing Information</h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <label class="form-label">
+                            Please enter details of all tracing actions taken and the outcome of the action.
+                            Include additional information gathered during tracing, comments on the child's
+                            well-being and home life if visited. <span class="text-danger">*</span>
+                        </label>
+
+                        <textarea class="form-control" rows="15" disabled>{{tracing_action.tracing_notes}}</textarea>
+                    </div>
+                </div>
+
+                <!-- TRACING ACTIONS -->
+                {% for tracing_action in tracing_actions %}
+                <div class="mb-1">
+                    <div class="card-header">
+                        <h6 class="mb-0">Tracing Action {{ forloop.counter }}</h6>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">Action Taken</label>
+                                <input type="text" class="form-control" value="{{ tracing_action.action_taken }}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Referral Provider / Other Details</label>
+                                <input type="text" class="form-control" value="{{ tracing_action.provider_details }}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Individual Being Traced</label>
+                                <input type="text" class="form-control" value="{{ tracing_action.individual_traced }}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Location of Tracing (Country, Province, District, City/Village)
+                                </label>
+                                <input type="text" class="form-control" value="{{ tracing_action.tracing_location }}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Tracing Outcome</label>
+                                <input type="text" class="form-control" value="{{ tracing_action.tracing_outcome }}" disabled>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Details of Tracing Action</label>
+                                <textarea class="form-control" rows="3" disabled>{{ tracing_action.tracing_details }}</textarea>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label">Next Steps / Action</label>
+                                <textarea class="form-control" rows="10" disabled>{{ tracing_action.next_steps }}</textarea>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Due Date</label>
+                                <input type="date" class="form-control" value="{{ tracing_action.due_date|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-info">
+                    No tracing actions recorded.
+                </div>
+                {% endfor %}
+
+                <!-- CASEWORKER INFORMATION -->
+                <div class="mb-1">
+                    <div class="card-header">
+                        <h5 class="mb-0">Caseworker Information</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Name of Caseworker <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{tracing_action.caseworker_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Date <span class="text-danger">*</span></label>
+                                <input class="form-control" value="{{tracing_action.caseworker_date}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Signature <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{tracing_action.caseworker_signature}}" disabled>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

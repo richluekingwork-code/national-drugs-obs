@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>{% block title %} Prevention Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                   <h3 class="mb-3">Beneficiary medical Registration number (BMRN)</h3>
+                                    
+                                    <form action="{% url 'creat_prevention' %}" method="POST" class="drug-form">
+                                        {% csrf_token %}
+
+                                        <div class="card shadow-sm border-0">
+
+                                            <!-- HEADER -->
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="mb-0">Institution Prevention Report</h5>
+                                            </div>
+
+                                            <div class="card-body">
+
+                                                <div class="row g-4">
+
+                                                    <!-- INSTITUTION NAME -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Institution Name *</label>
+                                                        <input type="text" name="institution_name" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- DATE -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Date *</label>
+                                                        <input type="date" name="date" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- COUNTY -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">County *</label>
+                                                        <select name="county" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>Bomi County</option>
+                                                            <option>Bong County</option>
+                                                            <option>Gbarpolu County</option>
+                                                            <option>Grand Bassa County</option>
+                                                            <option>Grand Cape Mount County</option>
+                                                            <option>Grand Gedeh County</option>
+                                                            <option>Grand Kru County</option>
+                                                            <option>Lofa County</option>
+                                                            <option>Margibi County</option>
+                                                            <option>Maryland County</option>
+                                                            <option>Montserrado County</option>
+                                                            <option>Nimba County</option>
+                                                            <option>Rivercess County</option>
+                                                            <option>River Gee County</option>
+                                                            <option>Sinoe County</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- DISTRICT -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">District *</label>
+                                                        <input type="text" name="district" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- ADDRESS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Address *</label>
+                                                        <textarea name="address" class="form-control" rows="1" required></textarea>
+                                                    </div>
+
+                                                </div>
+
+                                                <hr class="my-4">
+
+                                                <!-- ACTIVITIES -->
+
+                                                <!-- SUD AWARENESS -->
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="sud_awareness" id="sud_awareness">
+                                                    <label class="form-check-label fw-bold" for="sud_awareness">
+                                                        SUD Awareness & Education Campaign
+                                                    </label>
+                                                </div>
+
+                                                <textarea name="sud_communities" class="form-control mb-3" placeholder="Enter community names separated by commas"></textarea>
+
+                                                <!-- SCHOOL HEALTH CLUB -->
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="school_health_club" id="school_health_club">
+                                                    <label class="form-check-label fw-bold" for="school_health_club">
+                                                        School Health Club Established
+                                                    </label>
+                                                </div>
+
+                                                <textarea name="school_names" class="form-control mb-3" placeholder="Enter school names separated by commas"></textarea>
+
+                                                <!-- MEDIA CAMPAIGN -->
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="media_campaign" id="media_campaign">
+                                                    <label class="form-check-label fw-bold" for="media_campaign">
+                                                        Media Campaign Conducted
+                                                    </label>
+                                                </div>
+
+                                                <textarea name="media_details" class="form-control mb-3" placeholder="Media campaign details"></textarea>
+
+                                                <!-- HARM REDUCTION -->
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="harm_reduction" id="harm_reduction">
+                                                    <label class="form-check-label fw-bold" for="harm_reduction">
+                                                        Harm Reduction Strategies
+                                                    </label>
+                                                </div>
+
+                                                <textarea name="harm_reduction_details" class="form-control mb-3" placeholder="Details"></textarea>
+
+                                                <!-- RADIO TALK SHOW -->
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="radio_talk_show" id="radio_talk_show">
+                                                    <label class="form-check-label fw-bold" for="radio_talk_show">
+                                                        Radio Talk Show Conducted
+                                                    </label>
+                                                </div>
+
+                                                <textarea name="radio_details" class="form-control mb-3" placeholder="Radio talk show details"></textarea>
+
+                                                <!-- SUBMIT -->
+                                                <div class="d-flex justify-content-end mt-3">
+                                                    <button type="submit" class="btn btn-primary px-4">
+                                                        Save Report
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </form>                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+{% endblock %}

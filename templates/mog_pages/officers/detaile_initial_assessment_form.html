@@ -1,0 +1,776 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Detaile Initial Assessment Form Page{% endblock %}</title>
+
+    <style>
+        body{
+            background:#f5f7fa;
+        }
+        .card{
+            border:none;
+            box-shadow:0 0.125rem 0.25rem rgba(0,0,0,.075);
+        }
+        .section-title{
+            background:#0d6efd;
+            color:white;
+            padding:10px 15px;
+            font-weight:bold;
+        }
+        .photo-box{
+            width:150px;
+            height:180px;
+            border:2px dashed #999;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+        }
+    </style>
+
+    <div class="container py-4">
+
+        <!-- HEADER -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class=" text-center">
+                    <h3 class="fw-bold">MINISTRY OF GENDER, CHILDREN AND SOCIAL PROTECTION</h3>
+                    <h5>CASE REGISTRATION & INITIAL ASSESSMENT FORM ({{assessments.created_at}})</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1 ELIGIBILITY -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Eligibility & Consent / Assent
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">
+                            Case Meets Eligibility Criteria
+                        </label>
+
+                        <div>
+                            <input type="radio" class="ms-3" {% if assessments.case_meets_eligibility %}checked{% endif %}>
+                            {% if assessments.case_meets_eligibility %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">
+                            Consent & Assent Form Completed
+                        </label>
+
+                        <div>
+                            <input type="radio" class="ms-3" {% if assessments.consent_assent_completed %}checked{% endif %}>
+                            {% if assessments.consent_assent_completed %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                   <div class="col-md-4">
+                        <label>Child / Adult Code</label>
+                        <input type="text" class="form-control" value="{{assessments.child_adult_code}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Date of Registration</label>
+                        <input type="text" class="form-control" value="{{assessments.registration_date}}" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>County</label>
+                        <input type="text" class="form-control" value="{{assessments.county}}" readonly>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2 PERSONAL INFORMATION -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Child / Adult Personal Information
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label>Surname</label>
+                                <input type="text" class="form-control" value="{{assessments.person.last_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" value="{{assessments.person.first_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Middle Name</label>
+                                <input type="text" class="form-control" value="{{assessments.person.middle_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Nickname</label>
+                                <input type="text" class="form-control" value="{{assessments.person.other_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Sex</label>
+                                <select class="form-select" disabled>
+                                    <option value="Male" {% if assessments.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                    <option value="Female" {% if assessments.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Date of Birth</label>
+                                <input type="text" class="form-control" value="{{assessments.person.date_of_birth}}" disabled>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Age</label>
+                                <input type="text" class="form-control" value="{{assessments.person.age}}" disabled>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Marital St..</label>
+                                <input type="text" class="form-control" value="{{assessments.person.marital_status}}" disabled>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>County of Birth</label>
+                                <input type="text" class="form-control" value="{{assessments.person.county}}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Professional Status</label>
+                                <input type="text" class="form-control" value="{{assessments.person.professional_status}}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Educational Level</label>
+                                <input type="text" class="form-control" value="{{assessments.person.educational_level}}" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3 text-center">
+                        <div class="photo-box d-flex align-items-center justify-content-center">
+                            {% if assessments.person.photo %}
+                                <img src="{{ assessments.person.photo.url }}" 
+                                    style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                            {% else %}
+                                No Photo Available
+                            {% endif %}
+                        </div>
+                        <style>
+                            .photo-box {
+                                border: 1px solid #ccc;
+                                height: 160px;   /* fixed height keeps alignment */
+                                width: 100%;
+                                overflow: hidden;
+                            }
+                        </style>
+                    </div>
+
+                </div>
+
+                <div class="row g-3 mt-2">  
+                    
+                    <div class="col-md-3">
+                        <label>Nationality</label>
+                        <input type="text" class="form-control" value="{{assessments.person.nationality}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>District</label>
+                        <input type="text" class="form-control" value="{{assessments.person.district}}" disabled>
+                    </div>
+                 
+                    <div class="col-md-3">
+                        <label>Languages Spoken</label>
+                        <input type="text" class="form-control" value="{{assessments.languages_spoken}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Special Communication</label>
+                        <input type="text" class="form-control" value="{{assessments.special_communication_needs}}" disabled>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Current Address</label>
+                        <input type="text" class="form-control" value="{{assessments.person.address}}" disabled>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 4 BIOLOGICAL PARENTS -->
+        <div class="card mb-4">
+            <div class="section-title">
+               Child / Adult Family Information (Biological Parents)
+            </div>
+
+            <div class="card-body">
+                <h5 class="mb-3">Father Information</h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label>Father's Name</label>
+                        <input type="text" class="form-control" value="{{assessments.father_name}}" disabled>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Date of Birth</label>
+                        <input type="text" class="form-control" value="{{assessments.father_date_of_birth}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Nationality</label>
+                        <input type="text" class="form-control" value="{{assessments.father_nationality}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>County of Origin</label>
+                        <input type="text" class="form-control" value="{{assessments.father_county_origin}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Father Status</label>
+                        <input type="text" class="form-control" value="{{assessments.father_status}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Father Contact</label>
+                        <input type="text" class="form-control" value="{{assessments.father_contact}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>District Origin</label>
+                        <input type="text" class="form-control" value="{{assessments.father_district_origin}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Current Father Address</label>
+                        <input type="text" class="form-control" value="{{assessments.father_address}}" disabled>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">Mother Information</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label>Mother's Name</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_name}}" disabled>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Date of Birth</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_date_of_birth}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Nationality</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_nationality}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>County of Origin</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_county_origin}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Mother Status</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_status}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Mother Contact</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_contact}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>District Origin</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_district_origin}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Current Father Address</label>
+                        <input type="text" class="form-control" value="{{assessments.mother_address}}" disabled>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 5 CARE ARRANGEMENT -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Current Care / Living Arrangement
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Living with Parent(s)" %}checked{% endif %}>
+                                <label>Living with Parent(s)</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Living with Step Parent" %}checked{% endif %}>
+                                <label>Living with Step Parent</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Living with Customary Caregiver(s)" %}checked{% endif %}>
+                                <label>Living with Caregiver(s)</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Living with Adult Sibling" %}checked{% endif %}>
+                                <label>Living with Adult Sibling</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Kinship Care / Extended Family" %}checked{% endif %}>
+                                <label>Kinship Care / Extended Family</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Residential Care" %}checked{% endif %}>
+                                <label>Residential Care</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Living Independently" %}checked{% endif %}>
+                                <label>Living Independently</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Foster Care" %}checked{% endif %}>
+                                <label>Foster Care</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Child-Headed Household" %}checked{% endif %}>
+                                <label>Child-Headed Household</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Unrelated adult" %}checked{% endif %}>
+                                <label>Unrelated Adult</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "No care arrangement" %}checked{% endif %}>
+                                <label>No Care Arrangement</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if assessments.care_arrangement == "Other, please specify" or assessments.care_arrangement == "Other" %}checked{% endif %}>
+                                <label>Other</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+        </div>
+
+        <!-- 6 CAREGIVER -->
+        <div class="card mb-4">
+            <div class="section-title">
+              Caregiver Information
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" value="{{assessments.care_full_names}}" disabled>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Date of Birth</label>
+                        <input type="text" class="form-control" value="{{assessments.care_date_birth}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Nationality</label>
+                        <input type="text" class="form-control" value="{{assessments.care_nationality}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>County of Origin</label>
+                        <input type="text" class="form-control" value="{{assessments.town_of_origin}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Marital Status</label>
+                        <select class="form-select" disabled>
+                            <option value="Single" {% if assessments.person.marital_status == "Single" %}selected{% endif %}>Single</option>
+                            <option value="Married" {% if assessments.person.marital_status == "Married" %}selected{% endif %}>Married</option>
+                            <option value="Divorced" {% if assessments.person.marital_status == "Divorced" %}selected{% endif %}>Divorced</option>
+                            <option value="Widow" {% if assessments.person.marital_status == "Widow" %}selected{% endif %}>Widow</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label>Address</label> 
+                        <input type="text" class="form-control" value="{{assessments.cear_current_address}}" disabled>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Contact Number</label>
+                        <input type="text" class="form-control" value="{{assessments.care_contact_number}}" disabled>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 7 PROTECTION CONCERNS -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Initial Assessment - Protection Concerns
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled {% if assessments.protection_concerns == "Physical abuse / violence" %}checked{% endif %}>
+                            Physical abuse / violence
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Sexual abuse / violence" %}checked{% endif %}>
+                            Sexual abuse / violence
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Rape" %}checked{% endif %}>
+                            Rape
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Emotional or psychological abuse / violence" %}checked{% endif %}>
+                            Emotional or psychological abuse / violence
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Neglect" %}checked{% endif %}>
+                            Neglect
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Abandonment" %}checked{% endif %}>
+                            Abandonment
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Child labour (not Worst Forms)" %}checked{% endif %}>
+                            Child labour (not Worst Forms)
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Hazardous work" %}checked{% endif %}>
+                            Hazardous work
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Sexual exploitation" %}checked{% endif %}>
+                            Sexual exploitation
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Slavery / sale / abduction / trafficking / forced labour" %}checked{% endif %}>
+                            Slavery / sale / abduction / trafficking / forced labour
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Serious medical condition" %}checked{% endif %}>
+                            Serious medical condition
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Psychosocial distress" %}checked{% endif %}>
+                            Psychosocial distress
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Mental disorder" %}checked{% endif %}>
+                            Mental disorder
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Substance abuse and addiction (child)" %}checked{% endif %}>
+                            Substance abuse and addiction (child)
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Child marriage" %}checked{% endif %}>
+                            Child marriage
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Female genital mutilation (FGM)" %}checked{% endif %}>
+                            Female genital mutilation (FGM)
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Pregnancy / child-parent" %}checked{% endif %}>
+                            Pregnancy / child-parent
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Child in the street" %}checked{% endif %}>
+                            Child in the street
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Internally displaced" %}checked{% endif %}>
+                            Internally displaced
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" disabled
+                                {% if assessments.protection_concerns == "Other, please specify" %}checked{% endif %}>
+                            Other, please specify
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8 WISHES -->
+       
+        <!-- 9 RISK LEVEL -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Risk Level Assessment
+            </div>
+
+            <div class="card-body">
+                <label>Risk Level</label>
+                <select class="form-select mb-0" disabled>
+                    <option value="HIGH" {% if assessments.risk_level == "HIGH" %}selected{% endif %}>HIGH</option>
+                    <option value="MEDIUM" {% if assessments.risk_level == "MEDIUM" %}selected{% endif %}>MEDIUM</option>
+                    <option value="LOW" {% if assessments.risk_level == "LOW" %}selected{% endif %}>LOW</option>
+                    <option value="NO RISK" {% if assessments.risk_level == "NO RISK" %}selected{% endif %}>NO RISK</option>
+                </select>
+            </div>
+
+            <div class="card-body">
+                <label>Risk Summary</label>
+                <textarea class="form-control" rows="4"placeholder="Summary of reasons" disabled>{{assessments.risk_summary}}</textarea>
+            </div>
+            
+        </div>
+
+        <!-- 10 IMMEDIATE CONCERNS -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Immediate Concerns
+            </div>
+
+            <div class="card-body">
+                <textarea class="form-control" rows="10" disabled>{{assessments.immediate_reason}}</textarea>
+            </div>
+        </div>
+
+        <!-- 11 CASE HISTORY -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Case History & Referrals
+            </div>
+
+            <div class="card-body">
+
+                <label>Additional Information / Recommended Next Steps</label>
+                <textarea class="form-control mb-3" rows="5" disabled>{{assessments.immediate_action_taken}}</textarea>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="checkbox" class="form-check-input" disabled {% if "GBV Services" in assessments.immediate_concern %}checked{% endif %}>
+                        GBV Services
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="checkbox" class="form-check-input" disabled {% if "Health" in assessments.immediate_concern %}checked{% endif %}>
+                        Health
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="checkbox" class="form-check-input" disabled {% if "Mental Health" in assessments.immediate_concern %}checked{% endif %}>
+                        Mental Health
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="checkbox" class="form-check-input" disabled {% if "FTR" in assessments.immediate_concern %}checked{% endif %}>
+                        FTR
+                    </div>
+
+                    <div class="col-md-3">
+                        <input type="checkbox" class="form-check-input" disabled {% if "Alternative Care" in assessments.immediate_concern %}checked{% endif %}>
+                        Alternative Care
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="section-title">
+                Case History
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label>Case History</label>
+                        <textarea class="form-control" rows="20" disabled>{{assessments.case_history}}</textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Recommended Next Steps</label>
+                        <textarea class="form-control" rows="4" disabled>{{assessments.recommended_next_steps}}</textarea>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>First Documented</label>
+                        <input type="text" class="form-control" value="{{assessments.first_documented}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Location Status</label>
+                        <input type="text" class="form-control" value="{{assessments.location_status}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Supervisor Cell</label>
+                        <input type="text" class="form-control" value="{{assessments.supervisor_cell}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Social Worker Signature</label>
+                        <input type="text" class="form-control" value="{{assessments.social_workersignature}}" disabled>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 12 REPORTING -->
+        <div class="card mb-4">
+            <div class="section-title">
+                Reporting Information
+            </div>
+
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label>Next Follow-up Date</label>
+                        <input type="text" class="form-control" value="{{assessments.next_up_date}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Reporting Agency</label>
+                        <input type="text" class="form-control" value="{{assessments.reporting_agency}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Professional Name</label>
+                        <input type="text" class="form-control" value="{{assessments.professional_name}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Supervisor Name</label>
+                        <input type="text" class="form-control" value="{{assessments.supervisor_name}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Supervisor Cell</label>
+                        <input type="text" class="form-control" value="{{assessments.supervisor_cell}}" disabled>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Social Worker Signature</label>
+                        <input type="text" class="form-control" value="{{assessments.social_workersignature}}" disabled>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

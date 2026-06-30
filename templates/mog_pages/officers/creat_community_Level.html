@@ -1,0 +1,551 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Community Outreach Report Page{% endblock %}</title>
+    <style>
+
+        /* LABELS */
+        .form-label{
+            font-weight:600;
+            color:#374151;
+            margin-bottom:8px;
+        }
+
+        /* INPUTS + NORMAL SELECTS + TEXTAREA */
+        .form-control,
+        .form-select,
+        textarea{
+
+            height:56px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+
+            background:#fff;
+            padding:12px 18px;
+
+            font-size:15px;
+            font-weight:500;
+
+            transition:.25s ease;
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        /* TEXTAREA */
+        textarea.form-control{
+            min-height:120px;
+            padding-top:15px;
+        }
+
+        /* FOCUS EFFECT */
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+
+            outline:none;
+        }
+
+        /* PLACEHOLDER */
+
+        .form-control::placeholder,
+        textarea::placeholder{
+            color:#9ca3af;
+        }
+
+        /* CARD LOOK */
+
+        .card{
+            border-radius:22px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            padding:20px 24px;
+        }
+
+        .card-body{
+            padding:30px;
+        }
+
+        /* BUTTON */
+
+        .btn-primary{
+
+            border-radius:14px;
+            padding:14px 30px;
+
+            font-weight:600;
+
+            box-shadow:
+                0 8px 20px rgba(13,110,253,.20);
+
+            transition:.25s ease;
+        }
+
+        .btn-primary:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(13,110,253,.28);
+        }
+
+
+        /* SELECT2 MATCHING STYLE */
+
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+
+            height:56px !important;
+
+            border-radius:14px !important;
+
+            border:1px solid #d1d5db !important;
+
+            display:flex !important;
+
+            align-items:center !important;
+
+            padding:0 12px !important;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        .select2-container--focus .select2-selection{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+        }
+
+        .select2-dropdown{
+
+            border:none;
+
+            border-radius:16px;
+
+            overflow:hidden;
+
+            box-shadow:0 12px 35px rgba(0,0,0,.12);
+        }
+
+        .select2-results__option{
+            padding:12px 15px;
+        }
+
+    </style>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Community Outreach Reporting Form
+                </div>
+                {% include 'includes/error.html' %}
+
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'creat_community_Level_report' %}">
+            {% csrf_token %}
+
+            <!-- =========================
+            1. BASIC INFORMATION
+            ========================= -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-light fw-bold">1. Basic Information</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Reporting Date</label>
+                            <input type="date" name="reporting_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Reporting Period</label>
+                            <input type="text" name="reporting_period" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Organization</label>
+                            <input type="text" name="organization" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">County <span class="text-danger">*</span></label>
+                            <select name="follow_county" class="form-control" required>
+                                <option disabled selected>Select Countyy</option>
+                                <option value="">Select County</option>
+                                <option>Bomi County</option>
+                                <option>Bong County</option>
+                                <option>Gbarpolu County</option>
+                                <option>Grand Bassa County</option>
+                                <option>Grand Cape Mount County</option>
+                                
+                                <option>Grand Gedeh County</option>
+                                <option>Grand Kru County</option>
+                                <option>Lofa County</option>
+                                <option>Margibi County</option>
+                                <option>Maryland County</option>
+
+                                <option>Montserrado County</option>
+                                <option>Nimba County</option>
+                                <option>Rivercess County</option>
+                                <option>River Gee County</option>
+                                <option>Sinoe County</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">District / Community</label>
+                            <input type="text" name="county_district_community" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Outreach Officer</label>
+                            <input type="text" name="outreach_officer" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Contact Information</label>
+                            <input type="text" name="contact_information" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================
+            2. OUTREACH ACTIVITY
+            ========================= -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-light fw-bold">2. Outreach Activity</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Activity Date</label>
+                            <input type="date" name="activity_date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Community Location</label>
+                            <input type="text" name="community_location" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Activity Type</label>
+                            <input type="text" name="activity_type" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Target Group</label>
+                            <input type="text" name="target_group" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Number Reached</label>
+                            <input type="text" name="number_reached" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Key Issues Identified</label>
+                            <textarea name="key_issues_identified" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Topics Discussed</label>
+                            <textarea name="topics_discussed" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Community Concerns</label>
+                            <textarea name="community_concerns" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================
+            3. YOUTH IDENTIFICATION
+            ========================= -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-light fw-bold">3. Youth Identification</div>
+
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <label class="form-label">Related Arrest</label>
+                            <select name="person" class="form-select select2" required>
+                                <option disabled selected>Select Arrest</option>
+
+                                {% for a in get_persons %}
+                                <option
+                                    value="{{ a.id }}"
+                                    data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                    {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- =========================
+            4. FOLLOW-UP
+            ========================= -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-light fw-bold">4. Follow-up</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Follow-up Type</label>
+                            <input type="text" name="followup_type" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Next Follow-up Date</label>
+                            <input type="date" name="next_followup_date" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Follow-up Details</label>
+                            <textarea name="followup_details" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Progress Observed</label>
+                            <textarea name="progress_observed" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Challenges Identified</label>
+                            <textarea name="challenges_identified" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Action Taken</label>
+                            <textarea name="action_taken" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Risk Factors</label>
+                            <textarea name="risk_factors" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Immediate Needs</label>
+                            <textarea name="immediate_needs" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Emotional Condition</label>
+                            <textarea name="emotional_condition" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Family Support Status</label>
+                            <textarea name="family_support_status" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">School Attendance</label>
+                            <textarea name="school_attendance" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Behavioral Improvement</label>
+                            <textarea name="behavioral_improvement" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Additional Support Needed</label>
+                            <textarea name="additional_support_needed" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Services Accessed</label>
+                            <textarea name="services_accessed" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Feedback From Provider</label>
+                            <textarea name="feedback_from_provider" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Outcome</label>
+                            <textarea name="outcome" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Follow-up Needed</label>
+                            <textarea name="followup_needed" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Challenges</label>
+                            <textarea name="challenges" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Recommendation</label>
+                            <textarea name="recommendation" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Assessment Date & Time</label>
+                            <input type="datetime-local" name="assessment_datetime" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================
+            5. REFERRAL
+            ========================= -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-light fw-bold">5. Referral</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Referral Date</label>
+                            <input type="date" name="referral_date" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Referred By</label>
+                            <input type="text" name="referred_by" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Receiving Institution</label>
+                            <input type="text" name="receiving_institution" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Contact Person</label>
+                            <input type="text" name="contact_person" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Contact Number</label>
+                            <input type="text" name="contact_number" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Reason for Referral</label>
+                            <textarea name="reason_for_referral" class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Institution Name</label>
+                            <input type="text" name="institution_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="location" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Interviewee Name</label>
+                            <input type="text" name="interviewee_name" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Interviewee Position</label>
+                            <input type="text" name="interviewee_position" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Interviewee Contact</label>
+                            <input type="text" name="interviewee_contact" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    Submit Report
+                </button>
+            </div>
+
+        </form>
+
+    </div> 
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

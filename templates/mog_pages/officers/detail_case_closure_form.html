@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Case Closure Report Page{% endblock %}</title>
+    
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Case Closure Form
+                </div>
+                {% include 'includes/error.html' %}
+
+            </div>
+
+            <div>
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <!-- CHILD INFORMATION -->
+                        <h5 class="border-bottom pb-2 mb-3">1. Beneficiary Information</h5>
+                        <div class="row border-bottom">    
+                            <div class="col-md-3 mb-2">
+                                <label class="form-label">Case ID Number</label>
+                                <input type="number" class="form-control" value="{{ case_closure_form.case_id_number }}" disabled>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Date Case Closed</label>
+                                <input type="date" class="form-control" value="{{ case_closure_form.date_case_closed|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label class="form-label">County</label>
+                                <select class="form-control" disabled>
+                                    <option selected>
+                                        {{ case_closure_form.follow_county }}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="row g-3">
+                                            <div class="col-md-3">
+                                                <label>Surname</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.last_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.first_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Middle Name</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.middle_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Nickname</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.other_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Sex</label>
+                                                <select class="form-select" disabled>
+                                                    <option value="Male" {% if case_closure_form.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                                    <option value="Female" {% if case_closure_form.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Date of Birth</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.date_of_birth}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Age</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.age}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Marital St..</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.marital_status}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>County of Birth</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.county}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Professional Status</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.professional_status}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Educational Level</label>
+                                                <input type="text" class="form-control" value="{{case_closure_form.person.educational_level}}" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-3 text-center">
+                                        <div class="photo-box d-flex align-items-center justify-content-center">
+                                            {% if case_closure_form.person.photo %}
+                                                <img src="{{ case_closure_form.person.photo.url }}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                            {% else %}
+                                                No Photo Available
+                                            {% endif %}
+                                        </div>
+                                        <style>
+                                            .photo-box {
+                                                border: 1px solid #ccc;
+                                                height: 160px;   /* fixed height keeps alignment */
+                                                width: 100%;
+                                                overflow: hidden;
+                                            }
+                                        </style>
+                                    </div>
+
+                                </div>
+
+                                <div class="row g-3 mt-2">  
+                                    
+                                    <div class="col-md-3">
+                                        <label>Nationality</label>
+                                        <input type="text" class="form-control" value="{{case_closure_form.person.nationality}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>District</label>
+                                        <input type="text" class="form-control" value="{{case_closure_form.person.district}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Current Address</label>
+                                        <input type="text" class="form-control" value="{{case_closure_form.person.address}}" disabled>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- REASON FOR CASE CLOSURE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">2. Reason for Case Closure</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Primary Reason</label>
+                            <select class="form-select" disabled>
+                                <option selected>
+                                    {{ case_closure_form.primary_reason }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Further Details</label>
+                            <textarea class="form-control" rows="15" readonly>{{ case_closure_form.closure_reason_details }}</textarea>
+                        </div>
+
+                        <!-- CURRENT CASE SITUATION -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">3. Situation of Child at Case Closure</h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Case Opened (Weeks)</label>
+                                <input type="number" class="form-control" value="{{ case_closure_form.case_opened_weeks }}" disabled>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Current Situation Summary</label>
+                                <textarea rows="20" class="form-control" readonly>{{ case_closure_form.current_case_summary }}</textarea>
+                            </div>
+                        </div>
+
+                        <!-- CASE ARRANGEMENT -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">Case Arrangement at Closure </h5>
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Caregiver Name</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caregiver_name }}" disabled>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Relationship to Child</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caregiver_relationship }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">County</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.county }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">District</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.district }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Community</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.community }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Street</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.street }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Telephone</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caregiver_phone }}" disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- ARRANGEMENTS MADE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">4. Arrangements Made to Support Successful Closure </h5>
+                        <div class="mb-3">
+                            <label class="form-label">Describe the Case Closure Process</label>
+                            <textarea rows="6" class="form-control" readonly>{{ case_closure_form.closure_process }}</textarea>
+                        </div>
+
+                        <!-- CHILD AGREEMENT -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Child Agreed?</label>
+                                <select class="form-select" disabled>
+                                    <option value="True" {% if case_closure_form.child_agreed %}selected{% endif %}>Yes</option>
+                                    <option value="False" {% if not case_closure_form.child_agreed %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.child_reason }}" disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- CAREGIVER AGREEMENT -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Caregiver Agreed?</label>
+                                <select class="form-select" disabled>
+                                    <option value="True" {% if case_closure_form.caregiver_agreed %}selected{% endif %}>Yes</option>
+                                    <option value="False" {% if not case_closure_form.caregiver_agreed %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text"
+                                    class="form-control"
+                                    value="{{ case_closure_form.caregiver_reason }}"
+                                    disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- FOLLOW UP -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Final Follow-Up Planned?</label>
+                                <select class="form-select" disabled>
+                                    <option value="True" {% if case_closure_form.followup_planned %}selected{% endif %}>Yes</option>
+                                    <option value="False" {% if not case_closure_form.followup_planned %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.followup_reason }}" disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- FILE COMPLETE -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Case File Complete?</label>
+                                <select class="form-select" disabled>
+                                    <option value="True" {% if case_closure_form.file_complete %}selected{% endif %}>Yes</option>
+                                    <option value="False" {% if not case_closure_form.file_complete %}selected{% endif %}>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.file_complete_reason }}" disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- STORAGE -->
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Storage Method</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.storage_method }}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Store Until</label>
+                                <input type="date" class="form-control" value="{{ case_closure_form.file_storage_until|date:'Y-m-d' }}" disabled>
+                            </div>
+
+                        </div>
+
+                        <!-- CONTACT PERSON -->
+                        <div class="mb-3">
+                            <label class="form-label">Contact Person Details</label>
+                            <textarea rows="10" class="form-control" readonly>{{ case_closure_form.contact_person_details }}</textarea>
+                        </div>
+
+                        <!-- APPROVAL TABLE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">5. Approval & Agreements Before Closure</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Name</th>
+                                        <th>Agency</th>
+                                        <th>Contact Details</th>
+                                        <th>Signature</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for approval in case_closure_form.approvals.all %}
+                                        <tr>
+                                            <td>{{ approval.get_role_display }}</td>
+
+                                            <td>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    value="{{ approval.name }}"
+                                                    disabled>
+                                            </td>
+
+                                            <td>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    value="{{ approval.agency }}"
+                                                    disabled>
+                                            </td>
+
+                                            <td>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    value="{{ approval.contact_details }}"
+                                                    disabled>
+                                            </td>
+
+                                            <td>
+                                                <input type="text"
+                                                    class="form-control"
+                                                    value="{{ approval.signature }}"
+                                                    disabled>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">
+                                                No approvals found
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <!-- CASEWORKER -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">Caseworker Approval</h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Caseworker Name</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caseworker_name }}" disabled>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caseworker_phone }}" disabled>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Signature</label>
+                                <input type="text" class="form-control" value="{{ case_closure_form.caseworker_signature }}" disabled>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

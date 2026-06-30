@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Create Seizure Page{% endblock %}</title>
+    <style>
+        /* FORCE STYLE APPLY */
+        .drug-form .card {
+            border-radius: 10px !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* LABEL */
+        .drug-form .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+        }
+
+        /* INPUT */
+        .drug-form .form-control,
+        .drug-form .form-select {
+            border-radius: 8px !important;
+            border: 1px solid #d0d5dd;
+            padding: 10px 12px;
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        /* INPUT FOCUS */
+        .drug-form .form-control:focus,
+        .drug-form .form-select:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.15);
+            transform: scale(1.01);
+        }
+
+        /* BUTTON */
+        .drug-form .btn-primary {
+            border-radius: 8px !important;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.25s ease;
+        }
+
+        /* BUTTON HOVER */
+        .drug-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CARD HEADER */
+        .drug-form .card-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4">
+                                <form action="{% url 'crate_drug_seizure' %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="card shadow-sm border-0">
+                                        <div class="card-header bg-white border-bottom">
+                                            <h5 class="mb-0 fw-semibold">Log Drug Seizure</h5>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="row g-4">
+
+                                                <!-- Seizure Date -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Seizure Date <span class="text-danger">*</span></label>
+                                                    <input name="seizure_date" type="date" class="form-control" required>
+                                                </div>
+
+                                                <!-- Seizure Time -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Seizure Time</label>
+                                                    <input name="seizure_time" type="time" class="form-control">
+                                                </div>
+
+                                                <!-- Drug Type -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Drug Type</label>
+                                                    <select name="drug_type" class="form-select"required>
+                                                        <option selected disabled>Select Drug</option>
+                                                        {% for d in drug_types %}
+                                                        <option value="{{ d.id }}">{{ d.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <!-- Quantity -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Quantity</label>
+                                                    <input name="quantity" type="number" step="0.01" class="form-control">
+                                                </div>
+
+                                                <!-- Unit -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Unit</label>
+                                                    <input name="unit" type="text" class="form-control" placeholder="e.g. kg, grams">
+                                                </div>
+
+                                                <!-- Status -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Status</label>
+                                                    <select name="status" class="form-select">
+                                                        <option selected disabled>Select Status</option>
+                                                        <option value="stored">Stored in Evidence Room</option>
+                                                        <option value="destroyed">Destroyed</option>
+                                                        <option value="used_for_analysis">Used for Analysis</option>
+                                                        <option value="transferred">Transferred to Court</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- County -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">County</label>
+                                                    <select name="county" class="form-control" required>
+                                                        <option value="">Select County</option>
+                                                        <option>Bomi County</option>
+                                                        <option>Bong County</option>
+                                                        <option>Gbarpolu County</option>
+                                                        <option>Grand Bassa County</option>
+                                                        <option>Grand Cape Mount County</option>
+                                                        
+                                                        <option>Grand Gedeh County</option>
+                                                        <option>Grand Kru County</option>
+                                                        <option>Lofa County</option>
+                                                        <option>Margibi County</option>
+                                                        <option>Maryland County</option>
+
+                                                        <option>Montserrado County</option>
+                                                        <option>Nimba County</option>
+                                                        <option>Rivercess County</option>
+                                                        <option>River Gee County</option>
+                                                        <option>Sinoe County</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <!-- District -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">District</label>
+                                                    <select name="district" class="form-control" required>
+                                                        <option value="">Select County</option>
+                                                        <option>District - 1</option>
+                                                        <option>District - 2</option>
+                                                        <option>District - 3</option>
+                                                        <option>District - 4</option>
+                                                        <option>District - 5</option>
+                                                        
+                                                        <option>District - 6</option>
+                                                        <option>District - 7</option>
+                                                        <option>District - 8</option>
+                                                        <option>District - 9</option>
+                                                        <option>District - 10</option>
+
+                                                        <option>District - 11</option>
+                                                        <option>District - 12</option>
+                                                        <option>District - 13</option>
+                                                        <option>District - 14</option>
+                                                        <option>District - 15</option>
+
+                                                        <option>District - 16</option>
+                                                        <option>District - 17</option>
+                                                        <option>District - 18</option>
+                                                        <option>District - 19</option>
+                                                        <option>District - 20</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <!-- Seized By -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Seized By <span class="text-danger">*</span></label>
+                                                    <input name="seized_by" type="text" class="form-control" required>
+                                                </div>
+
+                                                <!-- Badge Number -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Badge Number</label>
+                                                    <input name="badge_number" type="text" class="form-control">
+                                                </div>
+
+                                                <!-- Photo -->
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Photo</label>
+                                                    <input name="photo" type="file" class="form-control">
+                                                </div>
+
+                                                <!-- Location Description -->
+                                                <div class="col-12">
+                                                    <label class="form-label">Location Description</label>
+                                                    <textarea name="location_description" class="form-control" rows="3"></textarea>
+                                                </div>
+
+                                                <!-- Remarks -->
+                                                <div class="col-12">
+                                                    <label class="form-label">Remarks</label>
+                                                    <textarea name="remarks" class="form-control" rows="3"></textarea>
+                                                </div>
+
+                                                <!-- Submit -->
+                                                <div class="col-12 d-flex justify-content-end">
+                                                    <button type="submit" class="btn btn-primary px-4">
+                                                        Save Seizure
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
+
+                                                    

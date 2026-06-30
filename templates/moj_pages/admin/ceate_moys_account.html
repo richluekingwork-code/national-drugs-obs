@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Create MoY&S Users Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        <div class="card-header p-4 border-bottom bg-body">
+                            <div class="row g-3 justify-content-between align-items-center">
+                                <div class="col-12 col-md">
+                                    <h4 class="text-body mb-0">Ceate MoY&S Accounts User</h4>
+                                    {% include 'includes/error.html' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    <form method="POST" class="row g-3 mb-6" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div>
+                                            <div class="col-sm-6 col-md-3 text-center">
+                                                <!-- Clickable Image -->
+                                                <label for="profile_picture" style="cursor: pointer;">
+                                                    <img id="previewImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACUCAMAAACa7lTsAAAAY1BMVEX///8AAADz8/P5+fn8/PyGhoednZ7w8PDt7e3b29vPz8/k5ORTU1T29vaBgYK/v7/IyMhpaWqoqKk0NDWOjo91dXZBQUItLS4kJCW3t7hKSkoWFhdkZGUgICBfX2DV1dUPDxLDV9swAAAE6UlEQVR4nO2c23qDKBCAm6hExYjiKZgYff+n3DCYbNocxFY24M5/2dJ8TGCOzPTrC0EQBEEQBEEQBEEQBEEQBEHWji/59Cb+I7ywjxknhHCRxdHu09sxTSTKvNncaCvCwk/vySBxmRw3P2hOfK0i07T4KS0wtNz79N4M4PHmqbhA0n96e4tDT6NsXX0OeBxFUc9IlTTD+GOy/fQOlyUeb3NdCXr3431MzqNWV6vS5EzJ2wTxg7ZScR4lps/+0k1YDSKdsv2z31J+gF/nq5E4VvKWry6tHyfqjFcShkQgzpG/WbKr1FeyCve0TcE4i7eL9iDx8H6RIzA4vHfnK9mB22pXoMZbUOBqch2FuIS4n0NxcL8aJydA0933xnChdXTTAzUOjG/IMBl4WC1/00OYaXpDpjnrHvDVnDtuqHcyiEoivcVgz09mN2QaJlOD8mlE+QiVEUrhtp0u54QTcKc7t1NjaXmLTHc1kY7JaSX2zzNU+OKKLwowEJMbMs1WauVJO16EtNlpTxxKgSvt6k0mw9DU5IZM8xuBp8Nui4ErnWvHx+5faU8KfNbWYSbDlNLkhoyTyyRX27PKzGqYypztJriIcGCaiz0ZpnTaXttK+HFGVg/F+oPblbyom1Fjj6UKt2Y3ZBxpd5tYa6lHoMhjeEOmKUEIrfJr2Mq1rtd4KDyxaDkmVf0yvSHjQBU+0DBbFB5c3LbRkh6qeBqeCWp4iftvDz4IUkyqptD9Yqynhwr7acK9MliVruJZXJ1d/rawBXnSjFKB1UDE+F4a1m1m1YIsJ1SPoW32wiKFBNoeOrfThntoDhJ35bND9mL1fQzc7QLtN6iSaZOQnyLvs2Dsd1mTvF9fu1RJNbSp+NdD+RHPR3G1c0hX2PPNyLFJAsIZ4yRtb21aK7HP36D5VboHinVd5yu+OHXPxK2DFTQ6PGcv0vqHtIecuP2YNMG+F2V+FfqQBDxzPf+dxgtpnzHGsjiiqwidkf8z3o7SKOqzy5XOsjiOIhru3E/5XxD2jJfVuS2aTjnkoWuKNk9LkUXr02UqjfNTL3yhSVY23LITVXt4FWXdhE7ZSi53GBQvY8pvHOsVDD549Hwv00Vr6zap0lKSVklbXzT6fkFKnY6q/Si9iTLU56oUD7N3WzmrltxN+BCHRabkNpnVBjx+bZYoI9UtyC6cnVQTySjCIRXRlEHa9eR6+Ydc7/HNNoLRMHdlr2WL/JDlt0M2vbnlCa/nFcy4oF58vRTO9S71SiWP+g0tI2JUe70Wa2sYJ5XqX4yN0tTBsa24VXv+VS3DF7VrEkcTk2hTjJqcunKr1eCOZp/DU6iS2JVBNWWf/9ScslU64UbrNPm7vBcHpYy1CwXNHozsn1+2I5C4tv9Sb+HZbLb7fQQaTR3o2hIy22sWeBnzQTVq29+c1P82WKQDWH2U7d3T8EbYLpPfwWWp7c6c6IzJu0l8qB6UVtcDYJiuXWqLmSyEWP1yvF92XNIHLbY5Nw6l1h01Jw01ELaH1DAsvOAYzlZGH4XFd1pOOCzaD5su/YELI43MdBvpDNgf0y7DhHCjl1Phy52GT7T2PSIGo7qo35SpdW1tnRrCrGUbzCAVsbbWIwU+LpvCEqsF3i7vNWlhddf4nr/qEP41oVjLszGCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAvyDzAUMwkbtWc0AAAAAElFTkSuQmCC" class="rounded-circle border border-3 shadow" width="150" height="150" style="object-fit: cover;">
+                                                </label>
+
+                                                <!-- Hidden File Input -->
+                                                <input type="file" name="profile_picture"  id="profile_picture"  accept="image/*" style="display: none;" onchange="previewFile(event)" required>
+                                                <label class="form-label d-block fw-bold mb-3 mt-2">Profile Picture</label>
+                                            </div>
+                                            <script>
+                                                function previewFile(event) {
+                                                    const file = event.target.files[0];
+                                                    if (!file) return;
+
+                                                    const reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        document.getElementById('previewImage').src = e.target.result;
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            </script>
+                                        </div>
+
+                                        <h4>Personal Info </h4>
+                                        
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="first_name" class="form-control" id="floatingInputGrid" type="text" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">First Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="middle_name" class="form-control" id="floatingInputGrid" type="text" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">Middle Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="last_name" class="form-control" id="floatingInputGrid" type="text" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">Last Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <select name="gender" class="form-select" id="floatingSelectTask" required>
+                                                    <option value="" selected disabled>Select Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                                <label for="floatingSelectTask">Gender</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="flatpickr-input-container">
+                                                <div class="form-floating">
+                                                    <input name="date_of_birth" class="form-control datetimepicker" id="floatingInputStartDate" type="date" data-options='{"dateFormat":"Y-m-d"}' placeholder="end date" data-options='{"disableMobile":true}' required/>
+                                                    <label class="ps-6" for="floatingInputStartDate">Date of Birth</label>
+                                                    <span class="uil uil-calendar-alt flatpickr-icon text-body-tertiary"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="phone" class="form-control" id="floatingInputGrid" type="number" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">Phone Number</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="email" class="form-control" id="floatingInputGrid" type="email" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">Email</label>
+                                            </div>
+                                        </div>  
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="emergency_contact_name" class="form-control" id="floatingInputGrid" type="text" placeholder="John Door" required/>
+                                                <label for="floatingInputGrid">Emergency Contact preson</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="emergency_contact_phone" class="form-control" id="floatingInputGrid" type="number" placeholder="231 0000000" required/>
+                                                <label for="floatingInputGrid">Emergency Contact Cell</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="blood_type" class="form-control" id="floatingInputGrid" type="text" placeholder="A+" required/>
+                                                <label for="floatingInputGrid">blood type</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="identification_number" class="form-control" id="floatingInputGrid" type="number" placeholder="23132" required/>
+                                                <label for="floatingInputGrid">identification number</label>
+                                            </div>
+                                        </div>                                                                            
+                                        
+                                        <div class="col-12 gy-6 col-md-6">
+                                            <div class="form-floating">
+                                                <textarea name="address" class="form-control" id="floatingProjectOverview" placeholder="Leave a comment here" style="height: 100px"required></textarea>
+                                                <label for="floatingProjectOverview">Address</label>
+                                            </div>
+                                        </div>   
+                                        
+                                        <h4 class="mt-5 mb-0">Professional Info </h4>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <select name="role" class="form-select" id="floatingSelectTask"required>
+                                                    <option value="" selected disabled>Select Position</option>
+                                                    <option value="moys_head">MoY&S Head</option>
+                                                    <option value="moys_officers">MoY&S Officers</option>
+                                                </select>
+                                                <label for="floatingSelectTask">Positions</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="department" class="form-control" id="floatingInputGrid" type="text" placeholder="Head of OPs" required/>
+                                                <label for="floatingInputGrid">department</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="rank" class="form-control" id="floatingInputGrid" type="text" placeholder="Head of OPs" required/>
+                                                <label for="floatingInputGrid">rank</label>
+                                            </div>
+                                        </div>                                        
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="unit" class="form-control" id="floatingInputGrid" type="text" placeholder="Head of OPs" required/>
+                                                <label for="floatingInputGrid">unit</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="badge_number" class="form-control" id="floatingInputGrid" type="text" placeholder="Head of OPs" required/>
+                                                <label for="floatingInputGrid">badge_number</label>
+                                            </div>
+                                        </div>                                        
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="flatpickr-input-container">
+                                                <div class="form-floating">
+                                                    <input name="date_joined_agency" class="form-control datetimepicker" id="floatingInputStartDate" type="date" data-options='{"dateFormat":"Y-m-d"}' placeholder="end date" data-options='{"disableMobile":true}' required/>
+                                                    <label class="ps-6" for="floatingInputStartDate">Date joined agency</label>
+                                                    <span class="uil uil-calendar-alt flatpickr-icon text-body-tertiary"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="service_number" class="form-control" id="floatingInputGrid" type="text" placeholder="Head of OPs" required/>
+                                                <label for="floatingInputGrid">service number</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <select name="security_clearance_level" class="form-select" id="floatingSelectTask" required>
+                                                    <option value="" selected disabled>Select Security Clearance Level</option>
+                                                    <option value="confidential">Confidential</option>
+                                                    <option value="secret">Secret</option>
+                                                    <option value="top_secret">Top Secret</option>
+                                                </select>
+                                                <label for="floatingSelectTask">Security Clearance Level</label>
+                                            </div>
+                                        </div>
+
+                                        <h4>Account Info </h4>
+                                        
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="user_name" class="form-control" id="floatingInputGrid" type="email" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">User Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-floating">
+                                                <input name="password" class="form-control" id="floatingInputGrid" type="password" placeholder="Project title" required/>
+                                                <label for="floatingInputGrid">Password</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 gy-6">
+                                            <div class="row g-3">
+                                                <div class="col-auto">
+                                                    <button class="btn btn-primary">Create User</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>   
+{% endblock content %}

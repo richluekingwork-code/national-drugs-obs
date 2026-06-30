@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}MoJ Officers Create Court Cases Update Page{% endblock %}</title>
+    <style>
+        /* FORM CARD */
+        .drug-form .card {
+            border-radius: 8px;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        /* LABEL */
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        /* INPUT */
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 10px 12px;
+            transition: all 0.2s ease;
+        }
+
+        /* INPUT FOCUS */
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.1rem rgba(13,110,253,0.15);
+        }
+
+        /* BUTTON */
+        .btn-primary {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        /* BUTTON HOVER */
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+
+        /* SUBTLE ENTRY ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    <form action="{% url 'create_cases_update' %}" method="POST" class="court-update-form">
+                                        {% csrf_token %}
+
+                                        <div class="card shadow-sm border-0">
+                                            <div class="card-header bg-white border-bottom">
+                                                <h5 class="mb-0 fw-semibold">Create Court Update</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row g-4">
+
+                                                    <!-- COURT CASE -->
+                                                    <div class="col-md-12">
+                                                        <label class="form-label">Case Name</label>
+                                                        <select name="court_case" class="form-control" required>
+                                                            <option value="">Select Case</option>
+                                                            {% for case in cases %}
+                                                                <option value="{{ case.id }}">{{case.case_number}} - {{case.title}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Identify the Court</label>
+                                                        <input name="court" type="text" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- UPDATE DATE -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Date of First Appearance:</label>
+                                                        <input name="update_date" type="date" class="form-control" required>
+                                                    </div>
+
+                                                    
+                                                    <!-- County -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">County</label>
+                                                        <select name="county" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>Bomi County</option>
+                                                            <option>Bong County</option>
+                                                            <option>Gbarpolu County</option>
+                                                            <option>Grand Bassa County</option>
+                                                            <option>Grand Cape Mount County</option>
+                                                            
+                                                            <option>Grand Gedeh County</option>
+                                                            <option>Grand Kru County</option>
+                                                            <option>Lofa County</option>
+                                                            <option>Margibi County</option>
+                                                            <option>Maryland County</option>
+
+                                                            <option>Montserrado County</option>
+                                                            <option>Nimba County</option>
+                                                            <option>Rivercess County</option>
+                                                            <option>River Gee County</option>
+                                                            <option>Sinoe County</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    
+                                                    <!-- NEXT HEARING DATE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Hearing Date</label>
+                                                        <input name="next_hearing_date" type="date" class="form-control">
+                                                    </div>
+
+                                                    <!-- STATUS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Status</label>
+                                                        <select name="status" class="form-control" required>
+                                                            <option value="">Select Status</option>
+                                                            <option value="pending">Pending</option>
+                                                            <option value="in_trial">In Trial</option>
+                                                            <option value="adjourned">Adjourned</option>
+                                                            <option value="completed">Completed</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- NOTES -->
+                                                    <div class="col-12">
+                                                        <label class="form-label">Notes</label>
+                                                        <textarea name="notes" class="form-control" rows="4"></textarea>
+                                                    </div>
+
+                                                    <!-- BUTTON -->
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary px-4">
+                                                            Save Court Update
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>         
+{% endblock content %}

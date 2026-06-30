@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+logs/
+
+# Environment files
+.env
+.env.*
+!.env.example
+*.local
+
+# Build output
+/dist/
+/build/
+/.next/
+/.nuxt/
+/.cache/
+/.parcel-cache/
+/coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+ENV/
+
+# PHP
+/vendor/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/

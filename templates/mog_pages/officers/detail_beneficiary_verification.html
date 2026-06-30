@@ -1,0 +1,418 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Beneficiary Verification Page{% endblock %}</title>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Verification Detail Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+
+            <div>
+                {% csrf_token %}
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Case Management Step 4: Case Plan Implementation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- CASE INFO -->
+                        <div class="row g-3 mb-3">
+                            <!-- Child Code -->
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold">Child’s Code</label>
+                                <input type="text" class="form-control" value="Sl-N0-{{ beneficiar_tracing.child_code }}" disabled>
+                            </div>
+
+                            <!-- County -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">County</label>
+                                <select class="form-control" disabled>
+                                    <option disabled>Select County</option>
+                                    <option value="Bomi County"{% if beneficiar_tracing.follow_county == "Bomi County" %}selected{% endif %}>Bomi County</option>
+                                    <option value="Bong County" {% if beneficiar_tracing.follow_county == "Bong County" %}selected{% endif %}>Bong County</option>
+                                    <option value="Gbarpolu County" {% if beneficiar_tracing.follow_county == "Gbarpolu County" %}selected{% endif %}>Gbarpolu County </option>
+                                    <option value="Grand Bassa County" {% if beneficiar_tracing.follow_county == "Grand Bassa County" %}selected{% endif %}>Grand Bassa County</option>
+                                    <option value="Grand Cape Mount County" {% if beneficiar_tracing.follow_county == "Grand Cape Mount County" %}selected{% endif %}> Grand Cape Mount County</option>
+                                    <option value="Grand Gedeh County" {% if beneficiar_tracing.follow_county == "Grand Gedeh County" %}selected{% endif %}> Grand Gedeh County</option>
+                                    <option value="Grand Kru County" {% if beneficiar_tracing.follow_county == "Grand Kru County" %}selected{% endif %}> Grand Kru County</option>
+                                    <option value="Lofa County" {% if beneficiar_tracing.follow_county == "Lofa County" %}selected{% endif %}>Lofa County</option>
+                                    <option value="Margibi County"{% if beneficiar_tracing.follow_county == "Margibi County" %}selected{% endif %}> Margibi County</option>
+                                    <option value="Maryland County" {% if beneficiar_tracing.follow_county == "Maryland County" %}selected{% endif %}> Maryland County</option>
+                                    <option value="Montserrado County" {% if beneficiar_tracing.follow_county == "Montserrado County" %}selected{% endif %}>Montserrado County</option>
+                                    <option value="Nimba County" {% if beneficiar_tracing.follow_county == "Nimba County" %}selected{% endif %}>Nimba County</option>
+                                    <option value="Rivercess County" {% if beneficiar_tracing.follow_county == "Rivercess County" %}selected{% endif %}>Rivercess County</option>
+                                    <option value="River Gee County" {% if beneficiar_tracing.follow_county == "River Gee County" %}selected{% endif %}>River Gee County</option>
+                                    <option value="Sinoe County" {% if beneficiar_tracing.follow_county == "Sinoe County" %}selected{% endif %}>Sinoe County</option>
+                                </select>
+                            </div>
+
+                            <!-- Case ID Number -->
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">
+                                    Case ID Number <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" value="{{ beneficiar_tracing.case_id_number }}" disabled>
+                            </div>
+
+                            <!-- Date Completed -->
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">
+                                    Date Form Completed <span class="text-danger">*</span>
+                                </label>
+                                <input type="date" class="form-control" value="{{ beneficiar_tracing.date_completed|date:'Y-m-d' }}" disabled>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 2 PERSONAL INFORMATION -->
+                        <div class="mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="row g-3">
+                                            <div class="col-md-3">
+                                                <label>Surname</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.last_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.first_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Middle Name</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.middle_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Nickname</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.other_name}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Sex</label>
+                                                <select class="form-select" disabled>
+                                                    <option value="Male" {% if beneficiar_tracing.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                                    <option value="Female" {% if beneficiar_tracing.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Date of Birth</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.date_of_birth}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Age</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.age}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label>Marital St..</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.marital_status}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>County of Birth</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.county}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Professional Status</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.professional_status}}" disabled>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label>Educational Level</label>
+                                                <input type="text" class="form-control" value="{{beneficiar_tracing.person.educational_level}}" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-3 text-center">
+                                        <div class="photo-box d-flex align-items-center justify-content-center">
+                                            {% if beneficiar_tracing.person.photo %}
+                                                <img src="{{beneficiar_tracing.person.photo.url}}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                            {% else %}
+                                                No Photo Available
+                                            {% endif %}
+                                        </div>
+                                        <style>
+                                            .photo-box {
+                                                border: 1px solid #ccc;
+                                                height: 160px;   /* fixed height keeps alignment */
+                                                width: 100%;
+                                                overflow: hidden;
+                                            }
+                                        </style>
+                                    </div>
+
+                                </div>
+
+                                <div class="row g-3 mt-2">  
+                                    
+                                    <div class="col-md-3">
+                                        <label>Nationality</label>
+                                        <input type="text" class="form-control" value="{{beneficiar_tracing.person.nationality}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label>District</label>
+                                        <input type="text" class="form-control" value="{{beneficiar_tracing.person.district}}" disabled>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Current Address</label>
+                                        <input type="text" class="form-control" value="{{beneficiar_tracing.person.address}}" disabled>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 2. VERIFICATION -->
+                        <h5 class="mb-3">2. Verification</h5>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Does information match child case file?</label>
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.match_case == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+                                    <option value="No"
+                                        {% if beneficiar_tracing.match_case == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+                                    <option value="Partially"
+                                        {% if beneficiar_tracing.match_case == "Partially" %}selected{% endif %}>
+                                        Partially
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Does child know adult?</label>
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.child_knows_adult == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+                                    <option value="No"
+                                        {% if beneficiar_tracing.child_knows_adult == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+                                    <option value="Not Sure"
+                                        {% if beneficiar_tracing.child_knows_adult == "Not Sure" %}selected{% endif %}>
+                                        Not Sure
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Child recognizes photos?</label>
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.recognize_photos == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+                                    <option value="No"
+                                        {% if beneficiar_tracing.recognize_photos == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+                                    <option value="Not Sure"
+                                        {% if beneficiar_tracing.recognize_photos == "Not Sure" %}selected{% endif %}>
+                                        Not Sure
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Discrepancies</label>
+                                <textarea  class="form-control" disabled>{{beneficiar_tracing.discrepancies}}</textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Child Comments</label>
+                                <textarea  class="form-control" disabled>{{beneficiar_tracing.child_comments}}</textarea>
+                            </div>
+
+                            
+                        </div>
+
+                        <hr>
+
+                        <!-- 3. WISHES OF THE CHILD -->
+                        <h5 class="mb-3">3. Wishes of the Child</h5>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Additional Information Needed?</label>
+
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.need_info == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+
+                                    <option value="No"
+                                        {% if beneficiar_tracing.need_info == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+
+                                    <option value="Not Sure"
+                                        {% if beneficiar_tracing.need_info == "Not Sure" %}selected{% endif %}>
+                                        Not Sure
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label class="form-label">Provided to Child?</label>
+
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.info_provided == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+
+                                    <option value="No"
+                                        {% if beneficiar_tracing.info_provided == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+
+                                    <option value="Not Sure"
+                                        {% if beneficiar_tracing.info_provided == "Not Sure" %}selected{% endif %}>
+                                        Not Sure
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label class="form-label">Child Wants Reunification?</label>
+
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+
+                                    <option value="Yes"
+                                        {% if beneficiar_tracing.wants_reunification == "Yes" %}selected{% endif %}>
+                                        Yes
+                                    </option>
+
+                                    <option value="No"
+                                        {% if beneficiar_tracing.wants_reunification == "No" %}selected{% endif %}>
+                                        No
+                                    </option>
+
+                                    <option value="Not Sure"
+                                        {% if beneficiar_tracing.wants_reunification == "Not Sure" %}selected{% endif %}>
+                                        Not Sure
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Child Comments</label>
+                                <textarea class="form-control" disabled>{{beneficiar_tracing.child_wishes_comments}}</textarea>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 4. CASEWORKER RECOMMENDATION -->
+                        <h5 class="mb-3">4. Caseworker Recommendation</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label">Recommendation</label>
+
+                                <select class="form-select" disabled>
+                                    <option value="">Select</option>
+
+                                    <option value="Immediate Reunification"
+                                        {% if beneficiar_tracing.recommendation == "Immediate Reunification" %}selected{% endif %}>
+                                        Immediate Reunification
+                                    </option>
+
+                                    <option value="Reunification after support"
+                                        {% if beneficiar_tracing.recommendation == "Reunification after support" %}selected{% endif %}>
+                                        Reunification after support is provided
+                                    </option>
+
+                                    <option value="Long-term alternative care"
+                                        {% if beneficiar_tracing.recommendation == "Long-term alternative care" %}selected{% endif %}>
+                                        Long-term alternative care
+                                    </option>
+
+                                    <option value="Further tracing"
+                                        {% if beneficiar_tracing.recommendation == "Further tracing" %}selected{% endif %}>
+                                        Further tracing
+                                    </option>
+
+                                    <option value="Other"
+                                        {% if beneficiar_tracing.recommendation == "Other" %}selected{% endif %}>
+                                        Other
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Reason for Recommendation</label>
+                                <textarea class="form-control" disabled>{{beneficiar_tracing.recommendation_reason}}</textarea>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Caseworker Name</label>
+                                <input type="text" class="form-control" value="{{beneficiar_tracing.caseworker_name}}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" value="{{beneficiar_tracing.caseworker_date}}" disabled>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Organization</label>
+                                <input type="text" class="form-control" value="{{beneficiar_tracing.organization}}" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

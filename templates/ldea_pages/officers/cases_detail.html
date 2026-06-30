@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Cases Detail Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div class="container">
+
+                                    <div class="headertext-center mb-5 animate__animated animate__fadeInDown">
+                                        <h6>REPUBLIC OF LIBERIA</h6>
+                                        <h4>LIBERIA DRUG ENFORCEMENT AGENCY (LDEA)</h4>
+                                        <div class="divider"></div>
+                                        <h5>LEGAL CASE REPORT</h5>
+                                    </div>
+
+                                    <div class="section case-info">
+                                        <p style="margin: 4px 0; font-size: 1rem;">
+                                            <strong>Case Title:</strong>
+                                            Republic of Liberia vs.                                            
+                                            {% for participant in participants %}
+                                                {% if participant.is_primary and participant.role == "suspect" %}
+                                                    {{ participant.person.first_name }} {{ participant.person.last_name }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                        <p style="margin: 4px 0; font-size: 1rem;">
+                                            <strong>Case No.:</strong> 
+                                            {{case.case_number}}
+                                        </p>
+                                        <p style="margin: 4px 0; font-size: 1rem;">
+                                            <strong>Date:</strong> 
+                                            {{case.filing_date}}
+                                        </p>
+                                        <p style="margin: 4px 0; font-size: 1rem;">
+                                            <strong>Location:</strong> 
+                                            Monrovia, Liberia
+                                        </p>
+                                    </div>
+
+                                    <div class="section mt-5">
+                                        <h5 class="label">Chargs</h5>
+                                        <ul>
+                                            {% for charge in charges_list %}
+                                            <li>{{ charge }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="section">
+                                        <h5 class="label">Statement of Facts</h5>
+                                        <p>
+                                            {{ case.description|linebreaks }}
+                                        </p>
+                                    </div>
+
+                                    <div class="section">
+                                        <h5 class="label">Evidence</h5>
+                                        <ul>
+                                            {% for evidence in evidence_list %}
+                                                <li>{{ evidence }}</li>
+                                            {% empty %}
+                                                <li>No evidence provided</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                    <div class="section">
+                                        <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                            <div class="table-responsive scrollbar mx-n1 px-1">
+                                            <!-- ================= SUSPECTS ================= -->
+                                            <div class="section">
+                                                <h5 class="label mt-4 mb-3">Suspects</h5>
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Age</th>
+                                                                <th>Nationality</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            {% for participant in suspects %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="avatar avatar-xl me-3">
+                                                                            <img class="rounded-circle" src="{{ participant.person.photo.url }}" alt="">
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="fw-bold">
+                                                                                {{ participant.person.first_name }} {{ participant.person.last_name }}
+                                                                            </div>
+                                                                            <small>{{ participant.person.get_gender_display }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>{{ participant.person.age }}</td>
+
+                                                                <td>{{ participant.person.nationality }}</td>
+
+                                                                <td>
+                                                                    {% if participant.is_primary %}
+                                                                        <span class="badge bg-danger">Primary Suspect</span>
+                                                                    {% else %}
+                                                                        <span class="badge bg-warning text-dark">Suspect</span>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            {% empty %}
+                                                            <tr>
+                                                                <td colspan="4" class="text-center">No suspects found</td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section pt-5">
+                                        <h5 class="label">Action Taken</h5>
+                                        <p>{{case.action_taken}}</p>
+                                        <h5 class="label">Status</h5>
+                                        <p>{{case.get_status_display}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Head of LDEA Home Page{% endblock %}</title>
+    
+        <div class="row gy-3 mb-6 justify-content-between">
+          <div class="col-md-9 col-auto">
+            <h2 class="mb-2 text-body-emphasis">The Head of the LDEA Dashboard</h2>
+          </div>
+        </div>
+        <div class="row mb-3 gy-6 bg-body-emphasis pt-7 pb-3 border-y">
+          
+          <div class="col-12 col-xl-6 col-xxl-5">
+            <div class="mx-xxl-0">
+              <h3>Drug Hotspots Analysis</h3>
+              <p class="text-body-tertiary"></p>
+              <div class="gantt-zero-roadmap">
+                <div id="Substances" class=""></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xl-6 col-xxl-5">
+            <div class="card border h-100 w-100 overflow-hidden">
+            <div class="mx-xxl-0 m-3">
+              <h3>New Substances Analysis</h3>
+              <p class="text-body-tertiary"></p>
+              <div class="gantt-zero-roadmap">
+                <div id="NewSubstancesChart" class=""></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+          <div class="row">
+            
+            <div class="col-12 col-xl-7 col-xxl-6">
+              <div class="row g-3 mb-3">
+                <div class="col-12 col-md-6">
+                  <h3 class="text-body-emphasis text-nowrap">Most Trafficked Drugs Analysis</h3>
+                  <p class="text-body-tertiary mb-md-7"></p>
+                 
+                </div>
+                <div class="col-12 col-md-7">
+                  <div class="position-relative mb-sm-4 mb-xl-0">
+                    <div id="Trafficked" class=""></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-xl-5 col-xxl-6">
+              <h3>Arrest Effectiveness</h3>
+              <form method="get" class="mb-3">
+                <select name="year" onchange="this.form.submit()" class="form-select w-auto">
+                    <option value="">All Years</option>
+                    {% for y in years %}
+                        <option value="{{ y }}" {% if selected_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+              <div class="position-relative mb-sm-4 mb-xl-0">
+                <div id="Effectiveness" class=""></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% include 'includes/chart.html' %} 
+{% endblock content %}

@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Create Arrests Person Page{% endblock %}</title>
+    <style>
+        .form-card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .form-section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #0d6efd;
+            border-left: 4px solid #0d6efd;
+            padding-left: 10px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.2);
+        }
+
+        .btn-primary {
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 500;
+        }
+
+        .divider {
+            height: 1px;
+            background: #eee;
+            margin: 30px 0;
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                   
+                                    <form method="POST">
+                                        {% csrf_token %}
+
+                                        <div class="card shadow-sm border-0">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Arrest Information</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row g-3">
+
+                                                    <!-- PERSON -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Select Person *</label>
+                                                        <select name="person" class="form-select" required>
+                                                            <option disabled>Select Person</option>
+                                                                {% for p in persons %}
+                                                                <option value="{{ p.id }}"
+                                                                    {% if p.id|stringformat:"s" == selected_person_id %}selected{% endif %}>
+                                                                    {{ p }}
+                                                                </option>
+                                                                {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- ARREST DATE -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Arrest Date *</label>
+                                                        <input type="date" name="arrest_date" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- ARREST TIME -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Arrest Time</label>
+                                                        <input type="time" name="arrest_time" class="form-control">
+                                                    </div>
+
+                                                    <!-- COUNTY -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">County</label>
+                                                        <select name="county" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>Bomi County</option>
+                                                            <option>Bong County</option>
+                                                            <option>Gbarpolu County</option>
+                                                            <option>Grand Bassa County</option>
+                                                            <option>Grand Cape Mount County</option>
+                                                            
+                                                            <option>Grand Gedeh County</option>
+                                                            <option>Grand Kru County</option>
+                                                            <option>Lofa County</option>
+                                                            <option>Margibi County</option>
+                                                            <option>Maryland County</option>
+
+                                                            <option>Montserrado County</option>
+                                                            <option>Nimba County</option>
+                                                            <option>Rivercess County</option>
+                                                            <option>River Gee County</option>
+                                                            <option>Sinoe County</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- DISTRICT -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">District</label>
+                                                        <select name="district" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>District - 1</option>
+                                                            <option>District - 2</option>
+                                                            <option>District - 3</option>
+                                                            <option>District - 4</option>
+                                                            <option>District - 5</option>
+                                                            
+                                                            <option>District - 6</option>
+                                                            <option>District - 7</option>
+                                                            <option>District - 8</option>
+                                                            <option>District - 9</option>
+                                                            <option>District - 10</option>
+
+                                                            <option>District - 11</option>
+                                                            <option>District - 12</option>
+                                                            <option>District - 13</option>
+                                                            <option>District - 14</option>
+                                                            <option>District - 15</option>
+
+                                                            <option>District - 16</option>
+                                                            <option>District - 17</option>
+                                                            <option>District - 18</option>
+                                                            <option>District - 19</option>
+                                                            <option>District - 20</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- LOCATION -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Location Description</label>
+                                                        <input type="text" name="location_description" class="form-control">
+                                                    </div>
+
+                                                    <!-- OFFICER -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Arresting Officer *</label>
+                                                        <input type="text" name="arresting_officer" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- BADGE -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Badge Number</label>
+                                                        <input type="text" name="badge_number" class="form-control">
+                                                    </div>
+
+                                                    <!-- DRUG TYPE -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Drug Type</label>
+                                                        <input type="text" name="drug_type" class="form-control">
+                                                    </div>
+
+                                                    <!-- QUANTITY -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Quantity</label>
+                                                        <input type="number" step="any" name="quantity" class="form-control">
+                                                    </div>
+
+                                                    <!-- UNIT -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Unit</label>
+                                                        <input type="text" name="unit" class="form-control">
+                                                    </div>
+
+                                                    <!-- SEIZURE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Seizure</label>
+                                                        <input type="text" name="seizure" class="form-control">
+                                                    </div>
+
+                                                    <!-- STATUS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Status</label>
+                                                        <select name="status" class="form-select">
+                                                            <option value="detained">Detained</option>
+                                                            <option value="released">Released</option>
+                                                            <option value="transferred">Transferred to Court</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- CHARGES -->
+                                                    <div class="col-6">
+                                                        <label class="form-label">Charges</label>
+                                                        <textarea name="charges" class="form-control"></textarea>
+                                                    </div>
+
+                                                    <!-- REMARKS -->
+                                                    <div class="col-6">
+                                                        <label class="form-label">Remarks</label>
+                                                        <textarea name="remarks" class="form-control"></textarea>
+                                                    </div>
+
+                                                    <!-- BUTTON -->
+                                                    <div class="col-12 text-end">
+                                                        <button class="btn btn-primary px-4">Save Arrest</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
+
+                                                    

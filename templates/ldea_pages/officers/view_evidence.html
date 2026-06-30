@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers View Evidence Page{% endblock %}</title>
+    <style>
+        .leads-table {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* Row hover effect */
+        .leads-table tbody tr {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .leads-table tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.002);
+        }
+
+        /* Main title (Case title) */
+        .fs-8 {
+            font-size: 14px !important;
+        }
+
+        /* Secondary text */
+        .fs-9 {
+            font-size: 12.5px !important;
+            color: #6c757d;
+        }
+
+        /* Badges modern look */
+        .badge {
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        /* Status styling upgrade */
+        .badge.bg-danger {
+            background: #dc3545 !important;
+        }
+
+        .badge.bg-success {
+            background: #198754 !important;
+        }
+
+        .badge.bg-warning {
+            background: #ffc107 !important;
+            color: #000 !important;
+        }
+
+        .badge.bg-primary {
+            background: #0d6efd !important;
+        }
+
+        /* Table header */
+        thead th {
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+            background: #f8f9fa;
+        }
+
+        /* Action button */
+        .btn-reveal {
+            border-radius: 8px;
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+            
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    {% if action is None %}
+                                    <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                        <form method="GET" class="drug-form">
+                                            <div class="card shadow-sm border-0">
+                                                <div class="card-header bg-white border-bottom">
+                                                    <h5 class="mb-0 fw-semibold">View Drug Evidence</h5>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <input type="hidden" name="action" value="view_evidence">
+
+                                                    <div class="row g-3 align-items-end">
+
+                                                        <!-- YEAR -->
+                                                        <div class="col-12 col-md-4">
+                                                            <label class="form-label fw-semibold">Year</label>
+                                                            <input type="number" name="year" class="form-control" placeholder="e.g. 2026" required>
+                                                        </div>
+
+                                                        <!-- COUNTY -->
+                                                        <div class="col-12 col-md-5">
+                                                            <label class="form-label fw-semibold">County</label>
+                                                            <select name="county" class="form-control" required>
+                                                                <option value="">Select County</option>
+                                                                <option>Bomi County</option>
+                                                                <option>Bong County</option>
+                                                                <option>Gbarpolu County</option>
+                                                                <option>Grand Bassa County</option>
+                                                                <option>Grand Cape Mount County</option>
+                                                                
+                                                                <option>Grand Gedeh County</option>
+                                                                <option>Grand Kru County</option>
+                                                                <option>Lofa County</option>
+                                                                <option>Margibi County</option>
+                                                                <option>Maryland County</option>
+
+                                                                <option>Montserrado County</option>
+                                                                <option>Nimba County</option>
+                                                                <option>Rivercess County</option>
+                                                                <option>River Gee County</option>
+                                                                <option>Sinoe County</option>
+
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- BUTTON -->
+                                                        <div class="col-12 col-md-3 d-grid">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="uil uil-search me-1"></i> Filter
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                    </div>
+                                    {% else %} 
+
+                                    <div class="table-responsive scrollbar mx-n1 px-1">
+                                        <div class="card-header bg-white border-bottom">
+                                            <h5 class="mb-0 fw-semibold">View Drug Seizure</h5>
+                                        </div>
+                                        <table class="table fs-9 mb-0 leads-table border-top border-translucent">
+
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-uppercase ps-5">Case / Evidence</th>
+                                                    <th class="text-uppercase">Details</th>
+                                                    <th class="text-end pe-3">Actions</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                {% for a in evidences %}
+                                                <tr class="hover-actions-trigger position-static">
+
+                                                    <!-- CASE + MAIN INFO -->
+                                                    <td class="align-middle ps-5 border-end border-translucent">
+
+                                                        <div>
+
+                                                            <div class="fw-bold text-dark fs-7">
+                                                                {{ a.case.title|default:"No Case Linked" }}
+                                                            </div>
+
+                                                            <div class="fw-semibold text-primary">
+                                                                {{ a.name }}
+                                                            </div>
+
+                                                            <div class="text-muted">
+                                                                {{ a.get_evidence_type_display }}
+                                                            </div>
+
+                                                            <div class="mt-1">
+                                                                <span class="badge bg-success">
+                                                                    Qty {{ a.quantity|default:"0" }} {{ a.unit }}
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="mt-1 text-muted">
+                                                                Collected: {{ a.collected_by|default:"-" }}
+                                                            </div>
+
+                                                            <div class="mt-1 text-muted">
+                                                                Badge: {{ a.badge_number|default:"-" }}
+                                                            </div>
+
+                                                            <div class="mt-2">
+                                                                {% if a.status == "stored" %}
+                                                                    <span class="badge bg-success">Stored</span>
+                                                                {% elif a.status == "analyzed" %}
+                                                                    <span class="badge bg-warning text-dark">Analyzed</span>
+                                                                {% elif a.status == "destroyed" %}
+                                                                    <span class="badge bg-danger">Destroyed</span>
+                                                                {% else %}
+                                                                    <span class="badge bg-primary">Submitted to Court</span>
+                                                                {% endif %}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <!-- DETAILS -->
+                                                    <td class="align-middle border-end border-translucent ps-4">
+
+                                                        <div class="text-muted">
+                                                            <div>
+                                                                <h4 class="d-flex align-items-center gap-2">
+
+                                                                {% if a.arrest.person.photo %}
+                                                                <img src="{{ a.arrest.person.photo.url }}" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:1px solid #ddd;">
+                                                                {% endif %}
+
+                                                                <span>
+                                                                    {{a.arrest.person.first_name}} 
+                                                                    {{a.arrest.person.middle_name}} 
+                                                                    {{a.arrest.person.last_name}} 
+                                                                    - Nick Name {{a.arrest.person.other_name}}
+                                                                </span>
+
+                                                            </h4>
+                                                            </div>
+                                                            <div><strong>Drug:</strong> {{ a.drug_type|default:"-" }}</div>
+                                                            <div><strong>County:</strong> {{ a.county|default:"-" }}</div>
+                                                            <div><strong>District:</strong> {{ a.district|default:"-" }}</div>
+                                                            <div><strong>Location:</strong> {{ a.location_description|truncatechars:60 }}</div>
+                                                            <div><strong>Case No:</strong> {{ a.case.case_number|default:"-" }}</div>
+                                                            <div><strong>Arrest ID:</strong> {{ a.arrest.id|default:"-" }}</div>                                                       
+
+                                                            <hr>
+
+                                                            <div class="text-dark">
+                                                                {{ a.remarks|default:"No remarks available" }}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <!-- ACTIONS -->
+                                                    <td class="text-end pe-3">
+
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-light btn-sm dropdown-toggle"
+                                                                    data-bs-toggle="dropdown">
+                                                                Actions
+                                                            </button>
+
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="{% url 'edit_evidence' a.id %}">Edit</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex flex-between-center pt-3">
+                                        <div class="pagination d-none"></div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
+                                            <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div> 
+{% endblock content %}

@@ -1,0 +1,409 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Beneficiary Verification Page{% endblock %}</title>
+
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Verification Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Case Management Step 4: Case Plan Implementation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- CASE INFO -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Child’s Code   <span class="text-danger">*</span></label>
+                                <input type="text" name="child_code" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>County <span class="text-danger">*</span></label>
+                                <select name="follow_county" class="form-control" required>
+                                    <option disabled selected>Select Countyy</option>
+                                    <option value="">Select County</option>
+                                    <option>Bomi County</option>
+                                    <option>Bong County</option>
+                                    <option>Gbarpolu County</option>
+                                    <option>Grand Bassa County</option>
+                                    <option>Grand Cape Mount County</option>
+                                    
+                                    <option>Grand Gedeh County</option>
+                                    <option>Grand Kru County</option>
+                                    <option>Lofa County</option>
+                                    <option>Margibi County</option>
+                                    <option>Maryland County</option>
+
+                                    <option>Montserrado County</option>
+                                    <option>Nimba County</option>
+                                    <option>Rivercess County</option>
+                                    <option>River Gee County</option>
+                                    <option>Sinoe County</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Case ID Number  <span class="text-danger">*</span></label>
+                                <input type="text" name="case_id_number" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Date Form Completed  <span class="text-danger">*</span></label>
+                                <input type="date" name="date_completed" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 1. CHILD INFORMATION -->
+                        <h5 class="mb-3">1. Information About the Child</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label>Related Arrest <span class="text-danger">*</span></label>
+                                <select name="person" class="form-select select2" required>
+                                    <option disabled selected>Select Arrest</option>
+                                    {% for a in get_persons %}
+                                    <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                        {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Mother / Father / Caregiver Name <span class="text-danger">*</span></label>
+                                <input type="text" name="caregiver_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Current Address <span class="text-danger">*</span></label>
+                                <textarea name="current_address" class="form-control" required></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Address Before Separation</label>
+                                <textarea name="before_separation_address" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Street</label>
+                                <input type="text" name="street" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Town</label>
+                                <input type="text" name="town" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">District</label>
+                                <input type="text" name="district" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">County <span class="text-danger">*</span></label>
+                                <input type="text" name="county" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Country <span class="text-danger">*</span></label>
+                                <input type="text" name="country" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Other Address Information</label>
+                                <input type="text" name="other_address_info" class="form-control">
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 2. VERIFICATION -->
+                        <h5 class="mb-3">2. Verification</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">Does information match child case file?</label>
+                                <select name="match_case" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Partially">Partially</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Does child know adult?</label>
+                                <select name="child_knows_adult" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Child recognizes photos?</label>
+                                <select name="recognize_photos" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Discrepancies</label>
+                                <textarea name="discrepancies" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Child Comments</label>
+                                <textarea name="child_comments" class="form-control"></textarea>
+                            </div>
+
+                            
+                        </div>
+
+                        <hr>
+
+                        <!-- 3. WISHES OF THE CHILD -->
+                        <h5 class="mb-3">3. Wishes of the Child</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">Additional Information Needed?</label>
+                                <select name="need_info" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Provided to Child?</label>
+                                <select name="info_provided" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Child Wants Reunification?</label>
+                                <select name="wants_reunification" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Not Sure">Not Sure</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Child Comments</label>
+                                <textarea name="child_wishes_comments" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- 4. CASEWORKER RECOMMENDATION -->
+                        <h5 class="mb-3">4. Caseworker Recommendation</h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label class="form-label">Recommendation</label>
+
+                                <select name="recommendation" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="Immediate Reunification">Immediate Reunification</option>
+                                    <option value="Reunification after support">Reunification after support is provided</option>
+                                    <option value="Long-term alternative care">Long-term alternative care</option>
+                                    <option value="Further tracing">Further tracing</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Reason for Recommendation</label>
+                                <textarea name="recommendation_reason" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Caseworker Name</label>
+                                <input type="text" name="caseworker_name" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Date</label>
+                                <input type="date" name="caseworker_date" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Organization</label>
+                                <input type="text" name="organization" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-success px-5">
+                                Save Case Plan
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}view LDEA Users Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+            
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        <div class="card-header p-4 border-bottom bg-body">
+                            <div class="row g-3 justify-content-between align-items-center">
+                                <div class="col-12 col-md">
+                                    <h4 class="text-body mb-0">View MoJ Accounts User</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                     <div class="table-responsive scrollbar mx-n1 px-1">
+                                        <table class="table fs-9 mb-0 leads-table border-top border-translucent">
+                                            <thead>
+                                                <tr>                                              
+                                                    
+                                                    <th class="sort white-space-nowrap align-middle text-uppercase ps-0" scope="col" data-sort="name" style="width:25%;">
+                                                        Name
+                                                    </th>
+
+                                                    <th class="sort align-middle ps-4 pe-5 text-uppercase border-end border-translucent" scope="col" data-sort="email" style="width:15%;">
+                                                        <div class="d-inline-flex flex-center">
+                                                            <div class="d-flex align-items-center px-1 py-1 bg-success-subtle rounded me-2">
+                                                                <span class="text-success-dark" data-feather="mail"></span>
+                                                            </div>
+                                                            <span>Position</span>
+                                                        </div>
+                                                    </th>
+
+                                                    <th class="sort align-middle ps-4 pe-5 text-uppercase border-end border-translucent" scope="col" data-sort="phone" style="width:15%; min-width: 180px;">
+                                                        <div class="d-inline-flex flex-center">
+                                                            <div class="d-flex align-items-center px-1 py-1 bg-primary-subtle rounded me-2">
+                                                                <span class="text-primary-dark" data-feather="phone"></span>
+                                                            </div>
+                                                            <span>Address / Phone</span>
+                                                        </div>
+                                                    </th>
+
+                                                   
+                                                    <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" data-sort="date" style="width:15%;">
+                                                        Create Date
+                                                    </th>
+                                                    
+                                                    <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="list" id="leal-tables-body">
+                                                {% for a in view_moj_user %}
+                                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                                   
+                                                    <td class="name align-middle white-space-nowrap ps-0">
+                                                        <div class="d-flex align-items-center">
+                                                            <a href="#!">
+                                                                <div class="avatar avatar-xl me-3">
+                                                                    <img class="rounded-circle" src="{{a.profile_picture.url}}" alt="" />
+                                                                </div>
+                                                            </a>
+                                                        
+                                                            <div>
+                                                                <a class="fs-8 fw-bold" href="#!">{{a.admin.get_full_name}}</a>
+                                                                <div class="d-flex align-items-center">
+                                                                    <span class="badge badge-phoenix badge-phoenix-primary me-2">Unit-{{a.unit}}</span>
+                                                                    <p class="mb-0 text-body-highlight fw-semibold fs-9">Badge-{{a.badge_number}}</p>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="email align-middle white-space-nowrap fw-semibold ps-4 border-end border-translucent">
+                                                        <div class="d-flex align-items-center">                                                                                                                    
+                                                            <div>
+                                                                {{a.admin.get_role_display}}
+                                                                <div class="d-flex align-items-center">
+                                                                    <a class="text-body-highlight" href="mailto:anth125@gmail.com">
+                                                                        {% if a.email|length > 6 %}
+                                                                            {{ a.email|slice:":1" }}*****{{ a.email|slice:"6:" }}
+                                                                        {% endif %}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="phone align-middle white-space-nowrap fw-semibold ps-4 border-end border-translucent">
+                                                        <div class="d-flex align-items-center">                                                                                                                    
+                                                            <div>
+                                                                {{a.address}}
+                                                                <div class="d-flex align-items-center">
+                                                                    <a class="text-body-highlight" href="tel:+1-202-555-0126">
+                                                                       +231 {{a.phone}}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="date align-middle white-space-nowrap text-body-tertiary text-opacity-85 ps-4 text-body-tertiary">
+                                                        <div class="d-flex align-items-center">                                                                                                                    
+                                                            <div>
+                                                                <div>
+                                                                    {{a.date_joined_agency}}
+                                                                </div>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="text-body-highlight" href="mailto:anth125@gmail.com">
+                                                                        {{a.get_security_clearance_level_display}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+                                                        <div class="btn-reveal-trigger position-static">
+                                                            <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
+                                                                <span class="fas fa-ellipsis-h fs-10"></span>
+                                                            </button>
+                                                        
+                                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                                <a class="dropdown-item" href="#!">Edit</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex flex-between-center pt-3">
+                                        <div class="pagination d-none"></div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
+                                            <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>   
+{% endblock content %}

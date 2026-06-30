@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Tracing Actiona Page{% endblock %}</title>
+
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    
+    <div class="container my-5">
+
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Handover Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+        </div>
+     
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- CHILD INFORMATION -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Person Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="col-md-3">
+                        <label>County <span class="text-danger">*</span></label>
+                        <select name="follow_county" class="form-control" required>
+                            <option disabled selected>Select Countyy</option>
+                            <option value="">Select County</option>
+                            <option>Bomi County</option>
+                            <option>Bong County</option>
+                            <option>Gbarpolu County</option>
+                            <option>Grand Bassa County</option>
+                            <option>Grand Cape Mount County</option>
+
+                            <option>Grand Gedeh County</option>
+                            <option>Grand Kru County</option>
+                            <option>Lofa County</option>
+                            <option>Margibi County</option>
+                            <option>Maryland County</option>
+
+                            <option>Montserrado County</option>
+                            <option>Nimba County</option>
+                            <option>Rivercess County</option>
+                            <option>River Gee County</option>
+                            <option>Sinoe County</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <label>Related Arrest <span class="text-danger">*</span></label>
+                        <select name="person" class="form-select select2" required>
+                            <option disabled selected>Select Arrest</option>
+                            {% for a in get_persons %}
+                            <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- TRACING NOTES -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Tracing Information</h5>
+                </div>
+                
+                <div class="card-body">
+                    <label class="form-label">
+                        Please enter details of all tracing actions taken and the outcome of the action.
+                        Include additional information gathered during tracing, comments on the child's
+                        well-being and home life if visited. <span class="text-danger">*</span>
+                    </label>
+
+                    <textarea class="form-control" rows="6" name="tracing_notes"></textarea>
+                </div>
+            </div>
+
+            <!-- TRACING ACTIONS -->
+            {% for i in "123456" %}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header">
+                    <h6 class="mb-0">Tracing Action {{ forloop.counter }}</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Action Taken <span class="text-danger">*</span></label>
+
+                            <select class="form-select" name="action_taken_{{ forloop.counter }}">
+                                <option value="">Select</option>
+                                <option>Individual Tracing</option>
+                                <option>Referral to Service Providers</option>
+                                <option>Photo Tracing</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Referral Provider / Other Details <span class="text-danger">*</span></label>
+
+                            <input type="text" class="form-control" name="provider_details_{{ forloop.counter }}">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Individual Being Traced <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="individual_traced_{{ forloop.counter }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Location of Tracing (Country, Province, District, City/Village) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="tracing_location_{{ forloop.counter }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Tracing Outcome <span class="text-danger">*</span></label>
+                            <select class="form-select" name="tracing_outcome_{{ forloop.counter }}">
+                                <option value="">Select</option>
+                                <option>Successful</option>
+                                <option>Unsuccessful</option>
+                                <option>Pending</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Details of Tracing Action <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="3" name="tracing_details_{{ forloop.counter }}"></textarea>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Next Steps / Action <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="2" name="next_steps_{{ forloop.counter }}"></textarea>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Due Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" name="due_date_{{ forloop.counter }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- CASEWORKER INFORMATION -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Caseworker Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Name of Caseworker <span class="text-danger">*</span></label>
+                            <input type="text" name="caseworker_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="date" name="caseworker_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Signature <span class="text-danger">*</span></label>
+                            <input type="text"name="caseworker_signature" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="text-end mb-4">
+                <button type="submit" class="btn btn-primary px-5">Save Tracing Record</button>
+            </div>
+        </form>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

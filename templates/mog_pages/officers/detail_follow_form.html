@@ -1,0 +1,485 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Detail Follow Up Form Page{% endblock %}</title>
+
+    <style>
+        body{
+            background:#f5f7fa;
+        }
+        .card{
+            border:none;
+            box-shadow:0 0.125rem 0.25rem rgba(0,0,0,.075);
+        }
+        .section-title{
+            background: #fbefef;
+            color: #000000;
+            padding:10px 15px;
+            font-weight:bold;
+        }
+        .photo-box{
+            width:150px;
+            height:180px;
+            border:2px dashed #000000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+        }
+    </style>
+
+    <div class="container py-4">
+
+        <!-- HEADER -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class=" text-center">
+                    <h3 class="fw-bold">MINISTRY OF GENDER, CHILDREN AND SOCIAL PROTECTION</h3>
+                    <h5>CASE FOLLOW UP FORM</h5>
+                </div>
+            </div>
+        
+            <!-- 1 ELIGIBILITY -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Form ID
+                </div>
+
+                <div class="card-body">
+                    <div class="row mt-3">
+
+                    <div class="col-md-4">
+                            <label>Child / Adult Code</label>
+                            <input type="text" class="form-control" value="SL-No-{{detail_follow_form.child_code}}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Date of Registration</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.created_at}}" readonly>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>County</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.visit_county}}" readonly>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 2 PERSONAL INFORMATION -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Child / Adult Personal Information
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label>Surname</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.last_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.first_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Middle Name</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.middle_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Nickname</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.other_name}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Sex</label>
+                                    <select class="form-select" disabled>
+                                        <option value="Male" {% if detail_follow_form.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                        <option value="Female" {% if detail_follow_form.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Date of Birth</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.date_of_birth}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Age</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.age}}" disabled>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label>Marital St..</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.marital_status}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>County of Birth</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.county}}" disabled>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Professional Status</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.professional_status}}" disabled>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Educational Level</label>
+                                    <input type="text" class="form-control" value="{{detail_follow_form.person.educational_level}}" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 text-center">
+                            <div class="photo-box d-flex align-items-center justify-content-center">
+                                {% if detail_follow_form.person.photo %}
+                                    <img src="{{ detail_follow_form.person.photo.url }}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                {% else %}
+                                    No Photo Available
+                                {% endif %}
+                            </div>
+                            <style>
+                                .photo-box {
+                                    border: 1px solid #ccc;
+                                    height: 160px;   /* fixed height keeps alignment */
+                                    width: 100%;
+                                    overflow: hidden;
+                                }
+                            </style>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3 mt-2">  
+                        
+                        <div class="col-md-3">
+                            <label>Nationality</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.person.nationality}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>District</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.person.district}}" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Current Address</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.person.address}}" disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 4 BIOLOGICAL PARENTS -->
+            <div class="mb-4">
+                <div class="section-title">
+                Current Living Location
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label>House Location</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.location_house}}" disabled>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Street</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.street}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Town</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.town}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Country</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.country}}" disabled>
+                        </div>         
+
+                        <div class="col-md-3">
+                            <label>District</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.district}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Caregiver Name</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.caregiver_name}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Relationship</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.relationship}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Contact Number</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.contact_number}}" disabled>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 5 CARE ARRANGEMENT -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Follow-up Visit Information
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Date of Visit</label>
+                                <input  value="{{detail_follow_form.visit_date}}" disabled class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Visit Number</label>
+                                <input class="form-control" value="{{detail_follow_form.visit_number}}-Time's" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Was the Beneficiary Seen?</label>
+                                <input type="radio" class="ms-3" {% if detail_follow_form.child_seen == "Yes" %}checked{% endif %}>
+                                {% if detail_follow_form.child_seen %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Was the Beneficiary seen Alone?</label>
+                                <input type="radio" class="ms-3" {% if detail_follow_form.seen_alone %}checked{% endif %}>
+                                {% if detail_follow_form.seen_alone %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 CAREGIVER -->
+            <div class="mb-4">
+                <div class="section-title">
+                Details of Follow-Up
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>Date of Follow-Up </label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.followup_date}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Previous Date</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.previous_followup_date}}" disabled>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Followed-up Through</label>
+                            <select class="form-select" disabled>
+                                <option value="Phone call" {% if detail_follow_form.followed_through == "Phone call" %}selected{% endif %}>Phone call</option>
+                                <option value="Instant message / SMS / WhatsApp" {% if detail_follow_form.followed_through == "Instant message / SMS / WhatsApp" %}selected{% endif %}>Instant message / SMS / WhatsApp</option>
+                                <option value="Email" {% if detail_follow_form.followed_through == "Email" %}selected{% endif %}>Email</option>
+                                <option value="Social media" {% if detail_follow_form.followed_through == "Social media" %}selected{% endif %}>Social media</option>
+                                <option value="Home visit" {% if detail_follow_form.followed_through == "Home visit" %}selected{% endif %}>Home visit</option>
+                                <option value="Face-to-face meeting" {% if detail_follow_form.followed_through == "Face-to-face meeting" %}selected{% endif %}>Face-to-face meeting</option>
+                                <option value="Community-based group" {% if detail_follow_form.followed_through == "Community-based group" %}selected{% endif %}>Community-based group</option>
+                                <option value="Local community leaders" {% if detail_follow_form.followed_through == "Local community leaders" %}selected{% endif %}>Local community leaders</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Followed-up With</label>
+                            <select class="form-select" disabled>
+                                <option value="Child" {% if detail_follow_form.followed_with == "Child" %}selected{% endif %}>Child</option>
+                                <option value="Caregiver(s) / family" {% if detail_follow_form.followed_with == "Caregiver(s) / family" %}selected{% endif %}>Caregiver(s) / family</option>
+                                <option value="Service provider (own agency)" {% if detail_follow_form.followed_with == "Service provider (own agency)" %}selected{% endif %}>Service provider (own agency)</option>
+                                <option value="Service provider (referral)" {% if detail_follow_form.followed_with == "Service provider (referral)" %}selected{% endif %}>Service provider (referral)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <label>Specify action/service followed up</label>
+                        <textarea class="form-control" rows="4"placeholder="Summary of reasons" disabled>{{detail_follow_form.action_service}}</textarea>
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <label>Purpose of follow-up</label>
+                        <textarea class="form-control" rows="4"placeholder="Summary of reasons" disabled>{{detail_follow_form.purpose_of_followup}}</textarea>
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <label>Follow-up details / outcomes</label>
+                        <textarea class="form-control" rows="4"placeholder="Summary of reasons" disabled>{{detail_follow_form.followup_details}}</textarea>
+                    </div>
+
+                    <div class="row mt-3">
+        
+                        <div class="col-md-3">
+                            <label>Situation Change?</label>
+                            <select class="form-select" disabled>
+                                <option value="No" {% if detail_follow_form.situation_change == "No" %}selected{% endif %}>No</option>
+                                <option value="Yes" {% if detail_follow_form.situation_change == "Yes" %}selected{% endif %}>Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Action Conducted?</label>
+                            <select class="form-select" disabled>
+                                <option value="No" {% if detail_follow_form.action_conducted == "No" %}selected{% endif %}>No</option>
+                                <option value="Yes" {% if detail_follow_form.action_conducted == "Yes" %}selected{% endif %}>Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        
+            <!-- 10 IMMEDIATE CONCERNS -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Psychological Well-Being
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>Appearance</label>
+                            <select class="form-select" disabled>
+                                <option value="Happy" {% if detail_follow_form.appearance == "Happy" %}selected{% endif %}>Happy</option>
+                                <option value="Well-adjusted" {% if detail_follow_form.appearance == "Yes" %}selected{% endif %}>Well-adjusted</option>
+                                <option value="Other" {% if detail_follow_form.appearance == "Other" %}selected{% endif %}>Other</option>
+                                <option value="Withdrawn" {% if detail_follow_form.appearance == "Withdrawn" %}selected{% endif %}>Withdrawn</option>
+                                <option value="Aggressive" {% if detail_follow_form.appearance == "Aggressive" %}selected{% endif %}>Aggressive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <label>Explain issues or concerns</label>
+                    <textarea class="form-control" rows="10" disabled>{{detail_follow_form.psychological_notes}}</textarea>
+                </div>
+            </div>
+
+            <!-- 11 CASE HISTORY -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Physical Health
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label>Appearance</label>
+                            <select class="form-select" disabled>
+                                <option value="Healthy" {% if detail_follow_form.health_status == "Happy" %}selected{% endif %}>Healthy</option>
+                                <option value="Malnourished" {% if detail_follow_form.health_status == "Malnourished" %}selected{% endif %}>Malnourished</option>
+                                <option value="Other" {% if detail_follow_form.health_status == "Other" %}selected{% endif %}>Other</option>
+                                <option value="Sickly" {% if detail_follow_form.health_status == "Sickly" %}selected{% endif %}>Sickly</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>Frequently sick</label>
+                            <select class="form-select" disabled>
+                                <option value="Frequently sick - Yes" {% if detail_follow_form.frequently_sicks == "Frequently sick - Yes" %}selected{% endif %}>Frequently sick - Yes</option>
+                                <option value="Frequently sick - No" {% if detail_follow_form.frequently_sick == "Frequently sick - No" %}selected{% endif %}>Frequently sick - No</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <label>Explain issues or concerns</label>
+                    <textarea class="form-control" rows="10" disabled>{{detail_follow_form.psychological_notes}}</textarea>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="section-title">
+                    Protection Issues 
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if "Different treatment in family" in detail_follow_form.protection_issues %}checked{% endif %}>
+                                <label class="form-check-label">Different treatment in family</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if "Reported abuse" in detail_follow_form.protection_issues %}checked{% endif %}>
+                                <label class="form-check-label">Reported abuse</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled
+                                    {% if "Conflict with law" in detail_follow_form.protection_issues %}checked{% endif %}>
+                                <label class="form-check-label">Conflict with law</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12 REPORTING -->
+            <div class="mb-4">
+                <div class="section-title">
+                    Social Worker Info
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label>Supervisor Name</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.caseworker_name}}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Reporting Agency</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.agency}}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Social Worker Signature</label>
+                            <input type="text" class="form-control" value="{{detail_follow_form.signature}}" disabled>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

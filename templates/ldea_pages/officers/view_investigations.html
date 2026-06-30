@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers view Investigations Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+            {% if action is None %}
+            <div class="col-12 col-xl-10 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        <div class="card-header p-4 border-bottom bg-body">
+                            <div class="row g-3 justify-content-between align-items-center">
+                                <div class="col-12 col-md">
+                                    <h4 class="text-body mb-0">View Investigations</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <form action="?action=view_cases" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate="">
+                                    {% csrf_token %}
+                                    <div class="col-md-7 position-relative">
+                                        <label class="form-label" for="validationTooltip01">
+                                            First name
+                                        </label>
+                                        <input class="form-control" id="validationTooltip01" type="text" value="Mark" required="" />
+                                        <div class="valid-tooltip">Looks good!</div>
+                                    </div>
+
+                                    <div class="col-md-7 position-relative">
+                                        <label class="form-label" for="validationTooltip02">
+                                            Last name
+                                        </label>
+                                        <input class="form-control" id="validationTooltip02" type="text" value="Otto" required="" />
+                                        <div class="valid-tooltip">Looks good!</div>
+                                    </div>
+
+                                    <div class="col-md-7 position-relative">
+                                        <label class="form-label" for="datepicker">Start Date</label>
+                                       <input class="form-control datetimepicker" id="dateTimepickerVal" type="text" required="required" placeholder="dd/mm/yyyy " data-options='{"enableTime":true,"dateFormat":"d/m/y","disableMobile":true,"allowInput":true}' />
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <button class="btn btn-primary" type="submit">Submit form</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %} 
+            <div class="col-12 col-xl-10 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        <div class="card-header p-4 border-bottom bg-body">
+                            <div class="row g-3 justify-content-between align-items-center">
+                                <div class="col-12 col-md">
+                                    <h4 class="text-body mb-0">View Investigations</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm fs-9 mb-0">
+                                            <thead>
+                                                    <tr>
+                                                        <th class="sort border-top border-translucent ps-3" data-sort="name">
+                                                            Name
+                                                        </th>
+                                                        <th class="sort border-top border-translucent" data-sort="email">
+                                                            Email
+                                                        </th>
+                                                        <th class="sort border-top border-translucent" data-sort="age">
+                                                            Age
+                                                        </th>
+
+                                                        <th class="sort text-end align-middle pe-0 border-top border-translucent" scope="col">
+                                                            ACTION
+                                                        </th>
+                                                    </tr>
+                                            </thead>
+                                            <tbody class="list">
+                                                
+                                                <tr>
+                                                        <td class="align-middle ps-3 name">Anna</td>
+                                                        <td class="align-middle email">anna@example.com</td>
+                                                        <td class="align-middle age">18</td>
+                                                        <td class="align-middle white-space-nowrap text-end pe-0">
+                                                        <div class="btn-reveal-trigger position-static"><button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs-10"></span></button>
+                                                            <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                                            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                            </div>
+                                                        </div>
+                                                        </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex flex-between-center pt-3">
+                                        <div class="pagination d-none"></div>
+                                        <p class="mb-0 fs-9">
+                                            <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
+                                            <span class="d-none d-sm-inline-block"> &mdash; </span>
+                                            <a class="fw-semibold" href="#!" data-list-view="*">
+                                                View all
+                                                <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                                            </a>
+
+                                            <a class="fw-semibold d-none" href="#!" data-list-view="less">
+                                                View Less
+                                                <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                                            </a>
+                                        </p>
+
+                                        <div class="d-flex">
+                                            <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
+                                            <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-12 col-xl-2">
+                <div class="position-sticky mt-xl-4" style="top: 80px;">
+                    <h5 class="lh-1">Others Page </h5>
+                    <hr />
+                    <ul class="nav nav-vertical flex-column doc-nav" data-doc-nav="data-doc-nav">
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{% url 'view_investigations' %}">View Investigations</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{% url 'create_investigations' %}">Create Investigations </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>   
+{% endblock content %}

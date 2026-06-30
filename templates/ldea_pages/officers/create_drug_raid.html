@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Create Drug Raid Operations Page{% endblock %}</title>
+    <style>
+        /* FORCE STYLE APPLY */
+        .drug-form .card {
+            border-radius: 10px !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* LABEL */
+        .drug-form .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+        }
+
+        /* INPUT */
+        .drug-form .form-control,
+        .drug-form .form-select {
+            border-radius: 8px !important;
+            border: 1px solid #d0d5dd;
+            padding: 10px 12px;
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        /* INPUT FOCUS */
+        .drug-form .form-control:focus,
+        .drug-form .form-select:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.15);
+            transform: scale(1.01);
+        }
+
+        /* BUTTON */
+        .drug-form .btn-primary {
+            border-radius: 8px !important;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.25s ease;
+        }
+
+        /* BUTTON HOVER */
+        .drug-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CARD HEADER */
+        .drug-form .card-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    <form action="{% url 'crate_drug_raid' %}" method="POST" class="drug-form">
+                                        {% csrf_token %}
+                                        <div class="card shadow-sm border-0">
+                                            <div class="card-header bg-white border-bottom">
+                                                <h5 class="mb-0 fw-semibold">Create Drug Raid</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row g-4">
+
+                                                    <!-- TITLE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Operation Title</label>
+                                                        <input name="title" type="text" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- REFERENCE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Reference Code</label>
+                                                        <input name="reference_code" type="text" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- LOCATION -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Location</label>
+                                                        <input name="location" type="text" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- CITY -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">City</label>
+                                                        <input name="city" type="text" class="form-control" required>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">County</label>
+                                                        <select name="county" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>Bomi County</option>
+                                                            <option>Bong County</option>
+                                                            <option>Gbarpolu County</option>
+                                                            <option>Grand Bassa County</option>
+                                                            <option>Grand Cape Mount County</option>
+                                                            
+                                                            <option>Grand Gedeh County</option>
+                                                            <option>Grand Kru County</option>
+                                                            <option>Lofa County</option>
+                                                            <option>Margibi County</option>
+                                                            <option>Maryland County</option>
+
+                                                            <option>Montserrado County</option>
+                                                            <option>Nimba County</option>
+                                                            <option>Rivercess County</option>
+                                                            <option>River Gee County</option>
+                                                            <option>Sinoe County</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- DATE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Raid Date</label>
+                                                        <input name="raid_date" type="date" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- TIME -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Raid Time</label>
+                                                        <input name="raid_time" type="time" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Total Arrests -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Total Arrests</label>
+                                                        <input name="total_arrests" type="number" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Total Seizures -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Total Seizures</label>
+                                                        <input name="total_seizures" type="number" class="form-control">
+                                                    </div>
+
+                                                    <!-- STATUS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Status</label>
+                                                        <select name="status" class="form-select">
+                                                            <option selected disabled>Select Status</option>
+                                                            <option value="planned">Planned</option>
+                                                            <option value="ongoing">Ongoing</option>
+                                                            <option value="completed">Completed</option>
+                                                            <option value="cancelled">Cancelled</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- LEAD OFFICER -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Lead Officer</label>
+                                                        <select name="lead_officer" class="form-select" required>
+                                                            <option selected disabled>Select Lead Officer</option>
+                                                            {% for a in view_officers %}
+                                                            <option value="{{ a.id }}">
+                                                                {{ a.rank }} - {{ a.admin.get_full_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- TEAM MEMBERS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Team Members</label>
+                                                        <div class="form-floating form-floating-advance-select">
+                                                            <label>Select LDEA Officers</label>
+                                                            <select class="form-select" name="team_members" id="organizerMultiple" data-choices="data-choices" multiple="multiple" data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                                {% for a in view_officers %}
+                                                                <option value="{{ a.id }}">
+                                                                    {{ a.rank }} - {{ a.admin.get_full_name }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- DESCRIPTION -->
+                                                    <div class="col-12">
+                                                        <label class="form-label">Description</label>
+                                                        <textarea name="description" class="form-control" rows="4"></textarea>
+                                                    </div>
+
+                                                    <!-- BUTTON -->
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary px-4">
+                                                            Save Raid
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>
+{% endblock content %}
+
+                                                    

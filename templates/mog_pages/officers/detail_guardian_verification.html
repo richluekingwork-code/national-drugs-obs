@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+{% block content %}
+    <title>{% block title %}Parent/guardian Verification Detail View {% endblock %}</title>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Parent/guardian Verification Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+    
+            <div>
+
+                <!-- 1. BASIC INFORMATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">1. Basic Information</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold">Child Code</label>
+                                <input type="text" class="form-control" value="{{ family_tracing.child_code }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>County</label>
+                                <input type="text" class="form-control" value="{{ family_tracing.follow_county }}" readonly>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Type of Center</label>
+                                <input type="text" class="form-control" value="{{ family_tracing.center_type }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Other Center Type</label>
+                                <input type="text" class="form-control" value="{{ family_tracing.center_type_other }}" readonly>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label>Separated Child</label>
+                                <input type="text" class="form-control"
+                                    value="{% if family_tracing.separated_child %}YES{% else %}NO{% endif %}" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CHILD IDENTITY -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">2. Beneficiary Personal Information</h5>
+                    </div>
+
+                    <!-- 2 PERSONAL INFORMATION -->
+                    <div class="mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <label>Surname</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.last_name}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.first_name}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Middle Name</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.middle_name}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Nickname</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.other_name}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label>Sex</label>
+                                            <select class="form-select" disabled>
+                                                <option value="Male" {% if family_tracing.person.gender == "Male" %}selected{% endif %}>Male</option>
+                                                <option value="Female" {% if family_tracing.person.gender == "Female" %}selected{% endif %}>Female</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Date of Birth</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.date_of_birth}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label>Age</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.age}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label>Marital St..</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.marital_status}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>County of Birth</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.county}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label>Professional Status</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.professional_status}}" disabled>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label>Educational Level</label>
+                                            <input type="text" class="form-control" value="{{family_tracing.person.educational_level}}" disabled>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-3 text-center">
+                                    <div class="photo-box d-flex align-items-center justify-content-center">
+                                        {% if family_tracing.person.photo %}
+                                            <img src="{{family_tracing.person.photo.url}}" style="max-height: 150px; max-width: 100%; object-fit: cover;">
+                                        {% else %}
+                                            No Photo Available
+                                        {% endif %}
+                                    </div>
+                                    <style>
+                                        .photo-box {
+                                            border: 1px solid #ccc;
+                                            height: 160px;   /* fixed height keeps alignment */
+                                            width: 100%;
+                                            overflow: hidden;
+                                        }
+                                    </style>
+                                </div>
+
+                            </div>
+
+                            <div class="row g-3 mt-2">  
+                                
+                                <div class="col-md-3">
+                                    <label>Nationality</label>
+                                    <input type="text" class="form-control" value="{{family_tracing.person.nationality}}" disabled>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>District</label>
+                                    <input type="text" class="form-control" value="{{family_tracing.person.district}}" disabled>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Current Address</label>
+                                    <input type="text" class="form-control" value="{{family_tracing.person.address}}" disabled>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. FAMILY HISTORY -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">3. Family History</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label>Mother's Name</label>
+                                <input class="form-control" value="{{ family_tracing.mother_name }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Mother Alive</label>
+                                <input class="form-control" value="{{ family_tracing.mother_alive }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Father's Name</label>
+                                <input class="form-control" value="{{ family_tracing.father_name }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Father Alive</label>
+                                <input class="form-control" value="{{ family_tracing.father_alive }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Guardian Alive</label>
+                                <input class="form-control" value="{{ family_tracing.guardian_alive }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Parent Status</label>
+                                <input class="form-control" value="{{ family_tracing.parent_status }}" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. FAMILY MEMBERS -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">4. Other Family Members</h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Relationship</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for m in family_tracing.family_members.all %}
+                                <tr>
+                                    <td>{{ m.name }}</td>
+                                    <td>{{ m.relationship }}</td>
+                                    <td>{{ m.address }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3">No family members found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <!-- 5. BEFORE SEPARATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">5. Information Before Separation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+                                <label>House Location</label>
+                                <input class="form-control" value="{{ family_tracing.house_location }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Street</label>
+                                <input class="form-control" value="{{ family_tracing.street }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Town</label>
+                                <input class="form-control" value="{{ family_tracing.town }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>District</label>
+                                <input class="form-control" value="{{ family_tracing.district }}" readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>County</label>
+                                <input class="form-control" value="{{ family_tracing.county }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Country</label>
+                                <input class="form-control" value="{{ family_tracing.country }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Other Info</label>
+                                <input class="form-control" value="{{ family_tracing.address_information }}" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. SEPARATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">6. Circumstances of Separation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label>Date</label>
+                                <input class="form-control" value="{{ family_tracing.separation_date }}" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Place</label>
+                                <input class="form-control" value="{{ family_tracing.separation_address }}" readonly>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label>Cause</label>
+                                <textarea class="form-control" rows="4" readonly>{{ family_tracing.main_cause_of_separation }}</textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

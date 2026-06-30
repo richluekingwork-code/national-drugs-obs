@@ -1,0 +1,533 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Case Closure Report Page{% endblock %}</title>
+    <style>
+
+        /* LABELS */
+        .form-label{
+            font-weight:600;
+            color:#374151;
+            margin-bottom:8px;
+        }
+
+        /* INPUTS + NORMAL SELECTS + TEXTAREA */
+        .form-control,
+        .form-select,
+        textarea{
+
+            height:56px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+
+            background:#fff;
+            padding:12px 18px;
+
+            font-size:15px;
+            font-weight:500;
+
+            transition:.25s ease;
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        /* TEXTAREA */
+        textarea.form-control{
+            min-height:120px;
+            padding-top:15px;
+        }
+
+        /* FOCUS EFFECT */
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+
+            outline:none;
+        }
+
+        /* PLACEHOLDER */
+
+        .form-control::placeholder,
+        textarea::placeholder{
+            color:#9ca3af;
+        }
+
+        /* CARD LOOK */
+
+        .card{
+            border-radius:22px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            padding:20px 24px;
+        }
+
+        .card-body{
+            padding:30px;
+        }
+
+        /* BUTTON */
+
+        .btn-primary{
+
+            border-radius:14px;
+            padding:14px 30px;
+
+            font-weight:600;
+
+            box-shadow:
+                0 8px 20px rgba(13,110,253,.20);
+
+            transition:.25s ease;
+        }
+
+        .btn-primary:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(13,110,253,.28);
+        }
+
+
+        /* SELECT2 MATCHING STYLE */
+
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+
+            height:56px !important;
+
+            border-radius:14px !important;
+
+            border:1px solid #d1d5db !important;
+
+            display:flex !important;
+
+            align-items:center !important;
+
+            padding:0 12px !important;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        .select2-container--focus .select2-selection{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+        }
+
+        .select2-dropdown{
+
+            border:none;
+
+            border-radius:16px;
+
+            overflow:hidden;
+
+            box-shadow:0 12px 35px rgba(0,0,0,.12);
+        }
+
+        .select2-results__option{
+            padding:12px 15px;
+        }
+
+    </style>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Case Closure Form
+                </div>
+                {% include 'includes/error.html' %}
+
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-body">
+                        <!-- CHILD INFORMATION -->
+                        <h5 class="border-bottom pb-2 mb-3">1. Beneficiary Information</h5>
+                        <div class="row">
+                            <div class="col-md-3 mb-2">
+                                <label class="form-label">Case ID Number <span class="text-danger">*</span></label>
+                                <input type="number" name="case_id_number" class="form-control" required>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Date Case Closed <span class="text-danger">*</span></label>
+                                <input type="date" name="date_case_closed" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label class="form-label">County <span class="text-danger">*</span></label>
+                                <select name="follow_county" class="form-control" required>
+                                    <option disabled selected>Select Countyy</option>
+                                    <option value="">Select County</option>
+                                    <option>Bomi County</option>
+                                    <option>Bong County</option>
+                                    <option>Gbarpolu County</option>
+                                    <option>Grand Bassa County</option>
+                                    <option>Grand Cape Mount County</option>
+                                    
+                                    <option>Grand Gedeh County</option>
+                                    <option>Grand Kru County</option>
+                                    <option>Lofa County</option>
+                                    <option>Margibi County</option>
+                                    <option>Maryland County</option>
+
+                                    <option>Montserrado County</option>
+                                    <option>Nimba County</option>
+                                    <option>Rivercess County</option>
+                                    <option>River Gee County</option>
+                                    <option>Sinoe County</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Related Arrest <span class="text-danger">*</span></label>
+                                <select name="person" class="form-select select2" required>
+                                    <option disabled selected>Select Arrest</option>
+                                    {% for a in get_persons %}
+                                    <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                        {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- REASON FOR CASE CLOSURE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">2. Reason for Case Closure</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Primary Reason <span class="text-danger">*</span></label>
+                            <select name="primary_reason" class="form-select" required>
+                                <option value="">Select Reason</option>
+                                <option>Overall goal achieved</option>
+                                <option>Child turned 18 years old</option>
+                                <option>Child/Caregiver declined support</option>
+                                <option>Relocation</option>
+                                <option>Durable solution</option>
+                                <option>Transferred to another organization</option>
+                                <option>Organization ceased operations</option>
+                                <option>Child no longer contactable</option>
+                                <option>Death of child</option>
+                                <option>No further action required</option>
+                                <option>Case opened in error</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Further Details <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="5" name="closure_reason_details" required></textarea>
+                        </div>
+
+                        <!-- CURRENT CASE SITUATION -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">3. Situation of Child at Case Closure</h5>
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Case Opened (Weeks) <span class="text-danger">*</span></label>
+                                <input type="number" name="case_opened_weeks" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Current Situation Summary <span class="text-danger">*</span></label>
+                                <textarea rows="6" name="current_case_summary" class="form-control" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- CASE ARRANGEMENT -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">Case Arrangement at Closure </h5>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Caregiver Name <span class="text-danger">*</span></label>
+                                <input type="text" name="caregiver_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Relationship to Child <span class="text-danger">*</span></label>
+                                <input type="text" name="caregiver_relationship" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">County <span class="text-danger">*</span></label>
+                                <input type="text" name="county" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">District <span class="text-danger">*</span></label>
+                                <input type="text" name="district" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Community <span class="text-danger">*</span></label>
+                                <input type="text" name="community" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Street <span class="text-danger">*</span></label>
+                                <input type="text" name="street" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Telephone</label>
+                                <input type="text" name="caregiver_phone" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- ARRANGEMENTS MADE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">4. Arrangements Made to Support Successful Closure </h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">Describe the Case Closure Process <span class="text-danger">*</span></label>
+                            <textarea rows="6" class="form-control" name="closure_process" required></textarea>
+                        </div>
+
+                        <!-- CHILD AGREEMENT -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Child Agreed? <span class="text-danger">*</span></label>
+                                <select name="child_agreed" class="form-select" required>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" name="child_reason" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <!-- CAREGIVER AGREEMENT -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Caregiver Agreed? <span class="text-danger">*</span></label>
+                                <select name="caregiver_agreed" class="form-select" required>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" name="caregiver_reason" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- FOLLOW UP -->
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Final Follow-Up Planned? <span class="text-danger">*</span></label>
+                                <select name="followup_planned" class="form-select" required>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why? </label>
+                                <input type="text" name="followup_reason" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- FILE COMPLETE -->
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Case File Complete? <span class="text-danger">*</span></label>
+                                <select name="file_complete" class="form-select" required>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">If No, Why?</label>
+                                <input type="text" name="file_complete_reason" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- STORAGE -->
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Storage Method <span class="text-danger">*</span></label>
+
+                                <select name="storage_method" class="form-select" required>
+                                    <option value="electronic">Electronic</option>
+                                    <option value="hardcopy">Hard Copy</option>
+                                    <option value="both">Both</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Store Until <span class="text-danger">*</span></label>
+                                <input type="date" name="file_storage_until" class="form-control" required>
+                            </div>
+
+                        </div>
+
+                        <!-- CONTACT PERSON -->
+
+                        <div class="mb-3">
+                            <label class="form-label">Contact Person Details <span class="text-danger">*</span></label>
+                            <textarea rows="4"  class="form-control" name="contact_person_details" required></textarea>
+                        </div>
+
+                        <!-- APPROVAL TABLE -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">
+                            5. Approval & Agreements Before Closure
+                        </h5>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Role <span class="text-danger">*</span></th>
+                                        <th>Name <span class="text-danger">*</span></th>
+                                        <th>Agency <span class="text-danger">*</span></th>
+                                        <th>Contact Details <span class="text-danger">*</span></th>
+                                        <th>Signature <span class="text-danger">*</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Child</td>
+                                        <td><input class="form-control" name="child_name" required></td>
+                                        <td><input class="form-control" name="child_agency" required></td>
+                                        <td><input class="form-control" name="child_contact" required></td>
+                                        <td><input class="form-control" name="child_signature" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Caregiver</td>
+                                        <td><input class="form-control" name="caregiver_approval_name" required></td>
+                                        <td><input class="form-control" name="caregiver_agency" required></td>
+                                        <td><input class="form-control" name="caregiver_contact" required></td>
+                                        <td><input class="form-control" name="caregiver_signature" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Caseworker</td>
+                                        <td><input class="form-control" name="caseworker_approval_name" required></td>
+                                        <td><input class="form-control" name="caseworker_agency" required></td>
+                                        <td><input class="form-control" name="caseworker_contact" required></td>
+                                        <td><input class="form-control" name="caseworker_approval_signature" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Supervisor</td>
+                                        <td><input class="form-control" name="supervisor_name" required></td>
+                                        <td><input class="form-control" name="supervisor_agency" required></td>
+                                        <td><input class="form-control" name="supervisor_contact" required></td>
+                                        <td><input class="form-control" name="supervisor_signature" required></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- CASEWORKER -->
+                        <h5 class="border-bottom pb-2 mt-4 mb-3">Caseworker Approval</h5>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label"> Caseworker Name <span class="text-danger">*</span></label>
+                                <input type="text" name="caseworker_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                <input type="text" name="caseworker_phone" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Signature <span class="text-danger">*</span></label>
+                                <input type="text" name="caseworker_signature" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary px-5">Save Case Closure</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

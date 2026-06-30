@@ -1,0 +1,776 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Initial Assessment Form Page{% endblock %}</title>
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    CASE REGISTRATION & INITIAL ASSESSMENT FORM
+                </div>
+                {% include 'includes/error.html' %}
+
+            </div>
+        </div>
+
+        
+
+    </div> 
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- =========================
+        1. ELIGIBILITY & CONSENT
+        ========================= -->
+        <div class="card mb-3">
+            <div class="card-header">
+                1. Eligibility & Consent
+            </div>
+            <div class="card-body row">
+
+                <div class="col-md-4">
+                    <label>Case Meets Eligibility <span class="text-danger">*</span></label>
+                    <select name="case_meets_eligibility" class="form-control" required>
+                        <option disabled selected>Select Case Meets Eligibility</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Consent Completed <span class="text-danger">*</span></label>
+                    <select name="consent_assent_completed" class="form-control" required>
+                        <option disabled selected>Select Consent Completedy</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Child/Adult Code <span class="text-danger">*</span></label>
+                    <input type="text" name="child_adult_code" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Registration Date <span class="text-danger">*</span></label>
+                    <input type="date" name="registration_date" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>County <span class="text-danger">*</span></label>
+                    <select name="county" class="form-control" required>
+                        <option disabled selected>Select Countyy</option>
+                        <option value="">Select County</option>
+                        <option>Bomi County</option>
+                        <option>Bong County</option>
+                        <option>Gbarpolu County</option>
+                        <option>Grand Bassa County</option>
+                        <option>Grand Cape Mount County</option>
+                        
+                        <option>Grand Gedeh County</option>
+                        <option>Grand Kru County</option>
+                        <option>Lofa County</option>
+                        <option>Margibi County</option>
+                        <option>Maryland County</option>
+
+                        <option>Montserrado County</option>
+                        <option>Nimba County</option>
+                        <option>Rivercess County</option>
+                        <option>River Gee County</option>
+                        <option>Sinoe County</option>
+
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 2. PERSONAL INFORMATION -->
+        <div class="card mb-3">
+            <div class="card-header">
+                2. Personal Information
+            </div>
+
+            <div class="card-body row">
+                <div class="col-md-12">
+                    <label>Related Arrest <span class="text-danger">*</span></label>
+                    <select name="person" class="form-select select2" required>
+                        <option disabled selected>Select Arrest</option>
+                        {% for a in get_persons %}
+                        <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                            {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label>Languages Dpoken <span class="text-danger">*</span></label>
+                    <textarea name="languages_spoken" class="form-control" required></textarea>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label>Special Communication Needs <span class="text-danger">*</span></label>
+                    <textarea name="special_communication_needs" class="form-control" rows="2" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!--  4. FATHER  -->
+        <div class="card mb-3">
+            <div class="card-header">4. Father Info</div>
+            <div class="card-body row">
+
+                <div class="col-md-4">
+                    <label>Father Name <span class="text-danger">*</span></label>
+                    <input name="father_name" class="form-control" placeholder="Father Name" required>
+                </div>
+                
+                <div class="col-md-4">
+                    <label>Date of Birth <span class="text-danger">*</span></label>
+                    <input type="date" name="father_date_of_birth" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Father Nationality <span class="text-danger">*</span></label>
+                    <input name="father_nationality" class="form-control" placeholder="Nationality" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Father Phon Number</label>
+                    <input type="number" name="father_contact" class="form-control" placeholder="231 888000000">
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Father Status <span class="text-danger">*</span></label>
+                    <select name="father_status" class="form-control" required>
+                        <option disabled selected>Select Father Status</option>
+                        <option>Living</option>
+                        <option>Deceased</option>
+                        <option>Missing</option>
+                        <option>Unknown</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Father County Origin <span class="text-danger">*</span></label>
+                    <select name="father_county_origin" class="form-control" required>
+                            <option disabled selected>Select Countyy</option>
+                            <option value="">Select County</option>
+                            <option>Bomi County</option>
+                            <option>Bong County</option>
+                            <option>Gbarpolu County</option>
+                            <option>Grand Bassa County</option>
+                            <option>Grand Cape Mount County</option>
+                            
+                            <option>Grand Gedeh County</option>
+                            <option>Grand Kru County</option>
+                            <option>Lofa County</option>
+                            <option>Margibi County</option>
+                            <option>Maryland County</option>
+
+                            <option>Montserrado County</option>
+                            <option>Nimba County</option>
+                            <option>Rivercess County</option>
+                            <option>River Gee County</option>
+                            <option>Sinoe County</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Father District Origin <span class="text-danger">*</span></label>
+                    <select name="father_district_origin" class="form-control" required>
+                            <option value="">Select County</option>
+                            <option>District - 1</option>
+                            <option>District - 2</option>
+                            <option>District - 3</option>
+                            <option>District - 4</option>
+                            <option>District - 5</option>
+                            
+                            <option>District - 6</option>
+                            <option>District - 7</option>
+                            <option>District - 8</option>
+                            <option>District - 9</option>
+                            <option>District - 10</option>
+
+                            <option>District - 11</option>
+                            <option>District - 12</option>
+                            <option>District - 13</option>
+                            <option>District - 14</option>
+                            <option>District - 15</option>
+
+                            <option>District - 16</option>
+                            <option>District - 17</option>
+                            <option>District - 18</option>
+                            <option>District - 19</option>
+                            <option>District - 20</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-8 mt-2">
+                    <label>Father Address <span class="text-danger">*</span></label>
+                    <textarea name="father_address" rows="1" class="form-control" placeholder="Address" required></textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <!--  5. MOTHER -->
+        <div class="card mb-3">
+            <div class="card-header">5. Mother Info</div>
+            <div class="card-body row">
+
+                <div class="col-md-4">
+                    <label>Motheer Name <span class="text-danger">*</span></label>
+                    <input name="mother_name" class="form-control" placeholder="Father Name" required>
+                </div>
+                
+                <div class="col-md-4">
+                    <label>Date of Birth <span class="text-danger">*</span></label>
+                    <input type="date" name="mother_date_of_birth" class="form-control" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Mother Nationality <span class="text-danger">*</span></label>
+                    <input name="mother_nationality" class="form-control" placeholder="Nationality" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Mother Phon Number</label>
+                    <input type="number" name="mother_contact" class="form-control" placeholder="231 888000000">
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Mother Status <span class="text-danger">*</span></label>
+                    <select name="mother_status" class="form-control" required>
+                        <option disabled selected>Select Father Status</option>
+                        <option>Living</option>
+                        <option>Deceased</option>
+                        <option>Missing</option>
+                        <option>Unknown</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Mother County Origin <span class="text-danger">*</span></label>
+                    <select name="mother_county_origin" class="form-control" required>
+                        <option disabled selected>Select Countyy</option>
+                        <option value="">Select County</option>
+                        <option>Bomi County</option>
+                        <option>Bong County</option>
+                        <option>Gbarpolu County</option>
+                        <option>Grand Bassa County</option>
+                        <option>Grand Cape Mount County</option>
+                        
+                        <option>Grand Gedeh County</option>
+                        <option>Grand Kru County</option>
+                        <option>Lofa County</option>
+                        <option>Margibi County</option>
+                        <option>Maryland County</option>
+
+                        <option>Montserrado County</option>
+                        <option>Nimba County</option>
+                        <option>Rivercess County</option>
+                        <option>River Gee County</option>
+                        <option>Sinoe County</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Mother District Origin <span class="text-danger">*</span></label>
+                    <select name="mother_district_origin" class="form-control" required>
+                        <option value="">Select County</option>
+                        <option>District - 1</option>
+                        <option>District - 2</option>
+                        <option>District - 3</option>
+                        <option>District - 4</option>
+                        <option>District - 5</option>
+                        
+                        <option>District - 6</option>
+                        <option>District - 7</option>
+                        <option>District - 8</option>
+                        <option>District - 9</option>
+                        <option>District - 10</option>
+
+                        <option>District - 11</option>
+                        <option>District - 12</option>
+                        <option>District - 13</option>
+                        <option>District - 14</option>
+                        <option>District - 15</option>
+
+                        <option>District - 16</option>
+                        <option>District - 17</option>
+                        <option>District - 18</option>
+                        <option>District - 19</option>
+                        <option>District - 20</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-8 mt-2">
+                    <label>Mother Current or last known location/address:  <span class="text-danger">*</span></label>
+                    <textarea name="mother_address" rows="1" class="form-control" placeholder="Address" required></textarea>
+                </div>
+
+            </div> 
+        </div> 
+
+        <!-- 6. CURRENT CARE / LIVING ARRANGEMENT  -->
+        <div class="card mb-3">
+            <div class="card-header">
+                6. Child's / Adult's Current Care & Living Arrangement
+            </div>
+
+            <div class="card-body row">
+
+                <div class="col-md-6">
+                    <label class="form-label">Current Living Arrangement <span class="text-danger">*</span></label>
+                    <select name="care_arrangement" class="form-control" required>
+                            <option disabled selected>Select Living Arrangement</option>
+                            <option>Living with Parent(s)</option>
+                            <option>Living with Step Parent</option>
+                            <option>Living with Customary Caregiver(s)</option>
+                            <option>Living with Adult Sibling</option>
+                            <option>Kinship Care / Extended Family</option>
+                            <option>Residential Care</option>
+                            <option>Living Independently</option>
+                            <option>Foster Care	</option>
+                            <option>Child-Headed Household</option>
+                            <option>Unrelated adult</option>
+                            <option>No care arrangement</option>
+                            <option>Other, please specify</option>
+                            <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Care Full name <span class="text-danger">*</span></label>
+                    <input type="text" name="care_full_name" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Care Date of Birth <span class="text-danger">*</span></label>
+                    <input type="date" name="care_date_birth" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Care Nationality <span class="text-danger">*</span></label>
+                    <input type="text" name="care_nationality" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mt-2">
+                    <label>Cear County of Origin <span class="text-danger">*</span></label>
+                    <select name="father_district_origin" class="form-control" required>
+                            <option disabled selected>Select Countyy</option>
+                            <option value="">Select County</option>
+                            <option>Bomi County</option>
+                            <option>Bong County</option>
+                            <option>Gbarpolu County</option>
+                            <option>Grand Bassa County</option>
+                            <option>Grand Cape Mount County</option>
+                            
+                            <option>Grand Gedeh County</option>
+                            <option>Grand Kru County</option>
+                            <option>Lofa County</option>
+                            <option>Margibi County</option>
+                            <option>Maryland County</option>
+
+                            <option>Montserrado County</option>
+                            <option>Nimba County</option>
+                            <option>Rivercess County</option>
+                            <option>River Gee County</option>
+                            <option>Sinoe County</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Cear District, Village or Town of Origin <span class="text-danger">*</span></label>
+                    <input type="text" name="town_of_origin" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Cear Gender <span class="text-danger">*</span></label>
+                    <select name="care_gender" class="form-select" required>
+                        <option selected disabled>Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Cear Contact number <span class="text-danger">*</span></label>
+                    <input type="text" name="care_contact_number" class="form-control" required>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Cear Current Address <span class="text-danger">*</span></label>
+                    <textarea name="cear_current_address" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+        7. PROTECTION CONCERNS
+        ========================= -->
+        <div class="card mb-3">
+            <div class="card-header">7. Initial Assessment – Protection Concerns </div>
+            <div class="card-body row">
+
+                <div class="col-md-6 mt-3">
+                    <label>Initial Assessment – Protection Concerns <span class="text-danger">*</span></label>
+                    <select name="protection_concerns" class="form-select" required>
+                        <option selected disabled>Select Protection Concerns </option>
+                        <option>Physical abuse / violence</option>
+                        <option>Sexual abuse / violence</option>
+                        <option>Rape</option>
+                        <option>Emotional or psychological abuse / violence</option>
+                        <option>Neglect</option>
+                        <option>Abandonment</option>
+                        <option>Child labour (not Worst Forms)</option>
+                        <option>Hazardous work</option>
+                        <option>Sexual exploitation</option>
+                        <option>Slavery / sale / abduction / trafficking / forced labour</option>
+
+                        <option>In conflict with the law</option>
+                        <option>Associated with Armed Forces or Groups</option>
+                        <option>Deprived of liberty / in detention</option>
+                        <option>Serious medical condition</option>
+                        <option>Functional difficulty (seeing, even if wearing glasses)</option>
+                        <option>Functional difficulty (hearing, even if using hearing aids)</option>
+                        <option>Functional difficulty  (walking or using parts of his body)</option>
+                        <option>Functional difficulty (remembering or concentrating)</option>
+                        <option>Difficulty with self-care such as feeding or dressing </option>
+                        <option>Difficulty communicating </option>
+
+                        <option>Unaccompanied</option>
+                        <option>Separated</option>
+                        <option>Orphan </option>
+                        <option>Physical Abuse</option>
+                        <option>Psychosocial distress</option>
+                        <option>Mental disorder</option>
+                        <option>Substance abuse and addiction (child)</option>
+                        <option>Belongs to marginalised/discriminated group</option>
+                        <option>Lack of documentation / birth registration</option>
+                        <option>Child marriage/option>
+
+                        <option>Female genital mutilation (FGM)</option> 
+                        <option>Pregnancy / child-parent</option>
+                        <option>Highly vulnerable care arrangement </option>
+                        <option>Child in the street </option>
+                        <option>Internally displaced </option>
+                        <option>Other, please specify</option>   
+                    </select>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label>Parent/guardian with a physical disability or chronic illness <span class="text-danger">*</span></label>
+                    <select name="physical_disability" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label>Parent/guardian with a mental illness <span class="text-danger">*</span></label>
+                    <select name="mental_illness" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mt-2">
+                    <label>Parent/guardian involved in drug/substance abuse <span class="text-danger">*</span></label>
+                    <select name="substances_abuse" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+        8. RISK LEVEL
+        ========================= -->
+        <div class="card mb-3">
+            <div class="card-header">8. Initial Assessment – Risk Level</div>
+            <div class="card-body row">
+
+                <div class="col-md-6 mt-2">
+                    <label>Risk Level <span class="text-danger">*</span></label>
+                    <select name="risk_level" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Risk Level</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                        <option>No </option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Cear Current Address <span class="text-danger">*</span></label>
+                    <textarea name="risk_summary" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================
+        9. CASE HISTORY
+        ========================= -->
+        <div class="card mb-3">
+            <div class="card-header">9.	IMMEDIATE CONCERN(S) THAT NEEDED TO BE ADDRESSED </div>
+            <div class="card-body row">
+
+                <div class="col-md-12 mt-2">
+                    <label>Immediate Concern <span class="text-danger">*</span></label>
+                    <select name="immediate_concern" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Health Care</option>
+                        <option>Safety</option>
+                        <option>Interim Care</option>
+                        <option>OTHER Specify</option>
+                        <option>No </option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Immediate Reason <span class="text-danger">*</span></label>
+                    <textarea name="immediate_reason" class="form-control" required></textarea>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Immediate Action Taken <span class="text-danger">*</span></label>
+                    <textarea name="immediate_action_taken" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">9. Case History</div>
+            <div class="card-body row">
+
+                <div class="col-md-12 mt-2">
+                    <label class="form-label">Additional Information/ Recommended Next Steps: <span class="text-danger">*</span></label>
+                    <textarea name="case_history" class="form-control" required></textarea>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Referral to Services/Support: <span class="text-danger">*</span></label>
+                    <select name="recommended_next_steps" class="form-control" required>
+                        <option disabled selected>Select Parent/guardian</option>
+                        <option>Gbv Services</option>
+                        <option>Health</option>
+                        <option>Mental Health</option>
+                        <option>FTR</option>
+                        <option>Alternative Care</option>
+                        <option>Other:</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">10. Case First Documented</div>
+            <div class="card-body row">
+
+                <div class="col-md-4 mt-2">
+                    <label>County First Documented <span class="text-danger">*</span></label>
+                    <input name="first_documented" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>County Location Status <span class="text-danger">*</span></label>
+                    <input name="location_status" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Next follow-up date <span class="text-danger">*</span></label>
+                    <input type="date" name="next_up_date" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Reporting Agency <span class="text-danger">*</span></label>
+                    <input name="reporting_agency" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Professional Name <span class="text-danger">*</span></label>
+                    <input name="professional_name" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Professional cell <span class="text-danger">*</span></label>
+                    <input name="professional_cell" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Supervisor Name <span class="text-danger">*</span></label>
+                    <input name="supervisor_name" class="form-control" placeholder="Father Name" required>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Supervisor cell <span class="text-danger">*</span></label>
+                    <input name="supervisor_cell" class="form-control" placeholder="Father Name" required>
+                </div>
+
+
+                <div class="col-md-4">
+                    <label>Social Worker’s signature <span class="text-danger">*</span></label>
+                    <input name="social_workersignature" class="form-control" placeholder="Father Name" required>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="text-end mb-5">
+            <button class="btn btn-primary btn-lg">
+                Save Assessment
+            </button>
+        </div>
+
+    </form>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

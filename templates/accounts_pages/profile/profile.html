@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}User Profile Page{% endblock %}</title> 
+    
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        <div class="card-header p-4 border-bottom bg-body">
+                            <div class="row g-3 justify-content-between align-items-center">
+                                <div class="col-12 col-md">
+                                    <h4 class="text-body mb-0">HSE User Profile Pager</h4>
+                                    {% include 'includes/error.html' %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    <form method="POST" action="{% url 'profile' %}"  class="row g-3 mb-6" enctype="multipart/form-data">
+                                        {% csrf_token %}
+
+                                        <!-- ================= PROFILE PICTURE ================= -->
+                                        <div class="col-sm-6 col-md-3 text-center mb-5">
+                                            <label for="profile_picture" style="cursor: pointer;">
+                                                <img id="previewImage"
+                                                    src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCKnkcldvTLRKwVmiqfMYdxuK04cx_OiBQnQ&s{% endif %}"
+                                                    class="rounded-circle border border-3 shadow"
+                                                    width="150" height="150"
+                                                    style="object-fit: cover;">
+                                            </label>
+
+                                            <input type="file" name="profile_picture" id="profile_picture"
+                                                accept="image/*" style="display: none;"
+                                                onchange="previewFile(event)">
+                                            <label class="form-label d-block fw-bold mt-2">Profile Picture</label>
+                                        </div>
+
+                                        <script>
+                                            function previewFile(event) {
+                                                const file = event.target.files[0];
+                                                if (!file) return;
+
+                                                const reader = new FileReader();
+                                                reader.onload = function(e) {
+                                                    document.getElementById('previewImage').src = e.target.result;
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        </script>
+
+                                        <div class="row g-3">
+
+                                            <!-- PERSONAL INFO -->
+                                            <h5 class="mt-5">PERSONAL Info</h5>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="first_name" class="form-control" value="{{request.user.first_name}}">
+                                                    <label>First Name</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="middle_name" class="form-control" value="{{request.user.middle_name}}">
+                                                    <label>Middle Name</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="last_name" class="form-control" value="{{request.user.last_name}}">
+                                                    <label>Last Name</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- ROLE (ADMIN ONLY) -->
+                                            {% if request.user.role == "hse_admin" %}
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <select name="role" class="form-control">
+                                                        <option disabled>Select Position</option>
+                                                        <option value="hse_admin" {% if request.user.role == "hse_admin" %}selected{% endif %}>HSE Admin</option>
+                                                        <option value="hse_head" {% if request.user.role == "hse_head" %}selected{% endif %}>HSE Head</option>
+                                                        <option value="hse_officers" {% if request.user.role == "hse_officers" %}selected{% endif %}>HSE Officers</option>
+                                                    </select>
+                                                    <label>Role</label>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <select name="gender" class="form-control">
+                                                        <option value="male" {% if profile.gender == "male" %}selected{% endif %}>Male</option>
+                                                        <option value="female" {% if profile.gender == "female" %}selected{% endif %}>Female</option>
+                                                        <option value="other" {% if profile.gender == "other" %}selected{% endif %}>Other</option>
+                                                    </select>
+                                                    <label>Gender</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input name="date_of_birth" type="date" class="form-control"
+                                                        value="{{profile.date_of_birth|date:'Y-m-d'}}">
+                                                    <label>Date of Birth</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="phone" class="form-control" value="{{profile.phone}}">
+                                                    <label>Phone</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- PROFESSIONAL INFO (ADMIN ONLY) -->
+                                            {% if request.user.role == "hse_admin" %}
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="identification_number" class="form-control" value="{{ profile.identification_number }}">
+                                                    <label>Identification Number</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="job_title" class="form-control" value="{{ profile.job_title }}">
+                                                    <label>Job Title</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="department" class="form-control" value="{{ profile.department }}">
+                                                    <label>Department</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="site_location" class="form-control" value="{{ profile.site_location }}">
+                                                    <label>Site Location</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="supervisor" class="form-control" value="{{ profile.supervisor }}">
+                                                    <label>Supervisor</label>
+                                                </div>
+                                            </div>
+
+                                            {% endif %}
+
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <textarea name="address" class="form-control">{{ profile.address }}</textarea>
+                                                    <label>Address</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- EMERGENCY CONTACT -->
+                                            <div class="col-12">
+                                                <h5>Emergency Contact</h5>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="emergency_contact_name" class="form-control"
+                                                        value="{{ profile.emergency_contact_name }}">
+                                                    <label>Contact Name</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="text" name="emergency_contact_phone" class="form-control"
+                                                        value="{{ profile.emergency_contact_phone }}">
+                                                    <label>Contact Phone</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="email" name="emergency_contact_email" class="form-control"
+                                                        value="{{ profile.emergency_contact_email }}">
+                                                    <label>Contact Email</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <textarea name="emergency_contact_address" class="form-control">{{ profile.emergency_contact_address }}</textarea>
+                                                    <label>Contact Address</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Account Info -->
+                                            <h5 class="mt-5">Account Info</h5>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="email" name="email" class="form-control" value="{{ request.user.email }}">
+                                                    <label>Email</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input name="user_name" class="form-control" type="text"
+                                                        value="{{ request.user.username }}">
+                                                    <label>User Name</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-floating">
+                                                    <input name="password" class="form-control" type="password">
+                                                    <label>Password</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- SUBMIT -->
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div> 
+
+{% endblock content %}

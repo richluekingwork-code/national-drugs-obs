@@ -1,0 +1,158 @@
+<style>
+/* Container (top-right floating) */
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 350px;
+}
+
+/* Base Alert */
+.custom-alert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-left: 5px solid;
+    overflow: hidden;
+    animation: slideIn 0.4s ease;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.custom-alert:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Icon */
+.alert-icon i {
+    font-size: 22px;
+}
+
+/* Text */
+.alert-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Close Button */
+.custom-alert .btn-close {
+    opacity: 0.6;
+}
+.custom-alert .btn-close:hover {
+    opacity: 1;
+}
+
+/* Colors */
+.alert-success {
+    border-color: #28a745;
+    color: #155724;
+}
+.alert-warning {
+    border-color: #ffc107;
+    color: #856404;
+}
+.alert-danger {
+    border-color: #dc3545;
+    color: #721c24;
+}
+.alert-info {
+    border-color: #17a2b8;
+    color: #0c5460;
+}
+
+/* Progress Bar */
+.alert-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: currentColor;
+    animation: progressBar 4s linear forwards;
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes progressBar {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+    .alert-container {
+        width: 90%;
+        right: 5%;
+        top: 10px;
+    }
+}
+</style>
+{% if messages %}
+<div class="alert-container">
+    {% for message in messages %}
+    
+    <div class="custom-alert 
+        {% if message.tags == 'success' %}alert-success
+        {% elif message.tags == 'warning' %}alert-warning
+        {% elif message.tags == 'error' %}alert-danger
+        {% else %}alert-info
+        {% endif %}
+        alert-dismissible fade show"
+        role="alert">
+
+        <!-- ICON -->
+        <div class="alert-icon">
+            {% if message.tags == 'success' %}
+                <i class="feather-check-circle"></i>
+            {% elif message.tags == 'warning' %}
+                <i class="feather-alert-triangle"></i>
+            {% elif message.tags == 'error' %}
+                <i class="feather-alert-octagon"></i>
+            {% else %}
+                <i class="feather-info"></i>
+            {% endif %}
+        </div>
+
+        <!-- TEXT -->
+        <div class="alert-text">
+            {{ message }}
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="alert-progress"></div>
+
+    </div>
+
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.custom-alert').forEach(alert => {
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateX(100%)';
+            setTimeout(() => alert.remove(), 400);
+        });
+    }, 4000);
+</script>

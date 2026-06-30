@@ -1,0 +1,536 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Beneficiary Handover Page{% endblock %}</title>
+
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    
+    <div class="container my-5">
+
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Handover Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- CHILD INFORMATION -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    Child Information
+                </div>
+
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <label>Related Arrest <span class="text-danger">*</span></label>
+                        <select name="person" class="form-select select2" required>
+                            <option disabled selected>Select Arrest</option>
+                            {% for a in get_persons %}
+                            <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REUNIFICATION DETAILS -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    1. Details of Reunification
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Type of Reunification <span class="text-danger">*</span></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reunification_type" value="Spontaneous">
+                                <label class="form-check-label">Spontaneous</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reunification_type" value="Agency Facilitated">
+                                <label class="form-check-label">Agency Facilitated</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>County <span class="text-danger">*</span></label>
+                            <select name="follow_county" class="form-control" required>
+                                <option disabled selected>Select Countyy</option>
+                                <option value="">Select County</option>
+                                <option>Bomi County</option>
+                                <option>Bong County</option>
+                                <option>Gbarpolu County</option>
+                                <option>Grand Bassa County</option>
+                                <option>Grand Cape Mount County</option>
+                                
+                                <option>Grand Gedeh County</option>
+                                <option>Grand Kru County</option>
+                                <option>Lofa County</option>
+                                <option>Margibi County</option>
+                                <option>Maryland County</option>
+
+                                <option>Montserrado County</option>
+                                <option>Nimba County</option>
+                                <option>Rivercess County</option>
+                                <option>River Gee County</option>
+                                <option>Sinoe County</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Adult Verification Completed? <span class="text-danger">*</span></label>
+                            <select name="adult_verification" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Child Verification Completed? <span class="text-danger">*</span></label>
+                            <select name="child_verification" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">
+                                Relationship Between Child and Adult Verified? <span class="text-danger">*</span>
+                            </label>
+
+                            <select name="relationship_verified" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">
+                                Ongoing Support Needed? <span class="text-danger">*</span>
+                            </label>
+
+                            <select name="ongoing_support_needed" class="form-select" required>
+                                <option value="">Select</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- HANDING OVER -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    2. Handing Over the Child
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tracing/Caseworker Name <span class="text-danger">*</span></label>
+                            <input type="text" name="caseworker_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Organization <span class="text-danger">*</span></label>
+                            <input type="text" name="organization" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="section-title mb-3">Receiving Caregiver 1</h5>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" name="caregiver1_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Sex <span class="text-danger">*</span></label>
+                            <select class="form-select" name="caregiver1_sex" required>
+                                <option></option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Relationship to Child <span class="text-danger">*</span></label>
+                            <input type="text" name="caregiver1_relationship" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="section-title mb-3">Receiving Caregiver 2</h5>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" name="caregiver2_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Sex <span class="text-danger">*</span></label>
+                            <select class="form-select" name="caregiver2_sex" required>
+                                <option></option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Relationship to Child <span class="text-danger">*</span></label>
+                            <input type="text" name="caregiver2_relationship" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+                            <label class="form-label">Street Address / Landmark <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="2" name="address" required></textarea>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" name="phone" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Town/Village <span class="text-danger">*</span></label>
+                            <input type="text" name="town_village" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Clan <span class="text-danger">*</span></label>
+                            <input type="text" name="clan" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">District <span class="text-danger">*</span></label>
+                            <input type="text" name="district" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">County <span class="text-danger">*</span></label>
+                            <input type="text" name="county" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Country <span class="text-danger">*</span></label>
+                            <input type="text" name="country" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- AGREEMENT -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    3. Agreement to Take the Child
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Reunification <span class="text-danger">*</span></label>
+                            <input type="date" name="reunification_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Place of Reunification <span class="text-danger">*</span></label>
+                            <input type="text" name="reunification_place" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Person Giving Consent <span class="text-danger">*</span></label>
+                            <input type="text" name="consent_person" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Child Name <span class="text-danger">*</span></label>
+                            <input type="text" name="child_name" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="form-label">
+                            Agreement Statement <span class="text-danger">*</span>
+                        </label>
+
+                        <textarea class="form-control" rows="8" name="agreement_statement" required></textarea>
+                    </div>
+
+                    <div class="row mt-4 g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Caseworker Signature <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="caseworker_signature" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Receiving Person Signature/Thumbprint <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="receiver_signature" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Witness Signature/Thumbprint <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="witness_signature" required>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ADDITIONAL INFORMATION -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    4. Additional Information & Ongoing Support
+                </div>
+
+                <div class="card-body">
+                    <label class="form-label"> 
+                        Additional information about the reunification and details on the ongoing support needed (if answered ‘yes’ above) 
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" rows="6" name="additional_information" required></textarea>
+                </div>
+            </div>
+
+            <!-- NEW ADDRESS -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    5. New Address / Location After Reunification
+                </div>
+
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Provide as much detail as possible about the location so others can find the location e.g. house, landmark, street, city/village, district, province (adapt according to context) 
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea class="form-control" rows="6" name="new_address_location" required></textarea>
+                    </div>
+                    
+                    <div class="row mt-3 g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Signature <span class="text-danger">*</span></label>
+                            <input type="date" name="signature_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Place of Signature <span class="text-danger">*</span></label>
+                            <input type="text" name="signature_place" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SIBLINGS -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    Siblings Reunified During Same Occasion
+                </div>
+
+                <div class="card-body">
+                    <label class="form-label">
+                        Names and Code numbers of siblings reunified during the same occasion (if applicable)
+                        <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" rows="4" name="siblings_reunified" required></textarea>
+                </div>
+            </div>
+
+            <!-- APPROVAL -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    Supervisor Approval
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Supervisor Name <span class="text-danger">*</span></label>
+                            <input type="text" name="supervisor_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Position <span class="text-danger">*</span></label>
+                            <input type="text" name="supervisor_position" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-success px-5">Save Reunification Form</button>
+            </div> 
+        </form>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}MoH Head Home Page{% endblock %}</title>
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y mb-3">
+        <div class="row">
+            
+            <div class="col-12 col-xl-7 col-xxl-6">
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-6">
+                        <h4 class="text-body-emphasis text-nowrap">Number of Male and Female of Beneficiaries</h4>
+                    </div>
+                
+                    <div class="col-12 col-md-10">
+                        <div class="position-relative mb-sm-4 mb-xl-0">
+                            <div id="Gender" class=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-xl-5 col-xxl-10">
+                <div class="position-relative mb-sm-4 mb-xl-0">
+                    <div id="preventionCountyChart" class=""></div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y mb-3">
+        <div class="row">            
+            <div class="col-12 col-xl-7 col-xxl-6">
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-6">
+                        <h4 class="text-body-emphasis text-nowrap"></h4>
+                    </div>
+                
+                    <div class="col-12 col-md-10">
+                        <div class="position-relative mb-sm-4 mb-xl-0">
+                            <div id="HighBeneficiary" style="min-height:350px"></div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-xl-5 col-xxl-10">
+                <div class="position-relative mb-sm-4 mb-xl-0">
+                    <div id="chart3" class=""></div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    {% include 'includes/chart.html' %}   
+{% endblock content %}

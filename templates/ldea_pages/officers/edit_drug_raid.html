@@ -1,0 +1,449 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Edid Drug Raid Operations Page{% endblock %}</title>
+    <style>
+        /* FORCE STYLE APPLY */
+        .drug-form .card {
+            border-radius: 10px !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* LABEL */
+        .drug-form .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+        }
+
+        /* INPUT */
+        .drug-form .form-control,
+        .drug-form .form-select {
+            border-radius: 8px !important;
+            border: 1px solid #d0d5dd;
+            padding: 10px 12px;
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        /* INPUT FOCUS */
+        .drug-form .form-control:focus,
+        .drug-form .form-select:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.15);
+            transform: scale(1.01);
+        }
+
+        /* BUTTON */
+        .drug-form .btn-primary {
+            border-radius: 8px !important;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.25s ease;
+        }
+
+        /* BUTTON HOVER */
+        .drug-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CARD HEADER */
+        .drug-form .card-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                 
+                                    <form action="{% url 'edit_drug_raid' raid.id %}" method="POST" class="drug-form">
+                                        {% csrf_token %}
+
+                                        <div class="card shadow-sm border-0 rounded-4">
+
+                                            <!-- HEADER -->
+                                            <div class="card-header bg-white border-bottom py-3">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <h4 class="mb-1 fw-bold text-primary">
+                                                            Edit Drug Raid
+                                                        </h4>
+
+                                                        <small class="text-muted">
+                                                            Update drug raid operation details
+                                                        </small>
+                                                    </div>
+
+                                                    <span class="badge bg-primary-subtle text-primary px-3 py-2">
+                                                        {{ raid.reference_code }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- BODY -->
+                                            <div class="card-body p-4">
+
+                                                <div class="row g-4">
+
+                                                    <!-- TITLE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            Operation Title
+                                                        </label>
+
+                                                        <input
+                                                            name="title"
+                                                            type="text"
+                                                            class="form-control form-control-lg"
+                                                            value="{{ raid.title }}"
+                                                            required>
+                                                    </div>
+
+                                                    <!-- REFERENCE -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            Reference Code
+                                                        </label>
+
+                                                        <input
+                                                            name="reference_code"
+                                                            type="text"
+                                                            class="form-control form-control-lg"
+                                                            value="{{ raid.reference_code }}"
+                                                            readonly>
+                                                    </div>
+
+                                                    <!-- LOCATION -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            Location
+                                                        </label>
+
+                                                        <input
+                                                            name="location"
+                                                            type="text"
+                                                            class="form-control"
+                                                            value="{{ raid.location }}"
+                                                            required>
+                                                    </div>
+
+                                                    <!-- CITY -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            City
+                                                        </label>
+
+                                                        <input
+                                                            name="city"
+                                                            type="text"
+                                                            class="form-control"
+                                                            value="{{ raid.city }}"
+                                                            required>
+                                                    </div>
+
+                                                    <!-- COUNTY -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            County
+                                                        </label>
+
+                                                        <select name="county" class="form-select">
+
+                                                            <option value="Bomi County"
+                                                                {% if raid.county == "Bomi County" %}selected{% endif %}>
+                                                                Bomi County
+                                                            </option>
+
+                                                            <option value="Bong County"
+                                                                {% if raid.county == "Bong County" %}selected{% endif %}>
+                                                                Bong County
+                                                            </option>
+
+                                                            <option value="Gbarpolu County"
+                                                                {% if raid.county == "Gbarpolu County" %}selected{% endif %}>
+                                                                Gbarpolu County
+                                                            </option>
+
+                                                            <option value="Grand Bassa County"
+                                                                {% if raid.county == "Grand Bassa County" %}selected{% endif %}>
+                                                                Grand Bassa County
+                                                            </option>
+
+                                                            <option value="Grand Cape Mount County"
+                                                                {% if raid.county == "Grand Cape Mount County" %}selected{% endif %}>
+                                                                Grand Cape Mount County
+                                                            </option>
+
+                                                            <option value="Grand Gedeh County"
+                                                                {% if raid.county == "Grand Gedeh County" %}selected{% endif %}>
+                                                                Grand Gedeh County
+                                                            </option>
+
+                                                            <option value="Grand Kru County"
+                                                                {% if raid.county == "Grand Kru County" %}selected{% endif %}>
+                                                                Grand Kru County
+                                                            </option>
+
+                                                            <option value="Lofa County"
+                                                                {% if raid.county == "Lofa County" %}selected{% endif %}>
+                                                                Lofa County
+                                                            </option>
+
+                                                            <option value="Margibi County"
+                                                                {% if raid.county == "Margibi County" %}selected{% endif %}>
+                                                                Margibi County
+                                                            </option>
+
+                                                            <option value="Maryland County"
+                                                                {% if raid.county == "Maryland County" %}selected{% endif %}>
+                                                                Maryland County
+                                                            </option>
+
+                                                            <option value="Montserrado County"
+                                                                {% if raid.county == "Montserrado County" %}selected{% endif %}>
+                                                                Montserrado County
+                                                            </option>
+
+                                                            <option value="Nimba County"
+                                                                {% if raid.county == "Nimba County" %}selected{% endif %}>
+                                                                Nimba County
+                                                            </option>
+
+                                                            <option value="Rivercess County"
+                                                                {% if raid.county == "Rivercess County" %}selected{% endif %}>
+                                                                Rivercess County
+                                                            </option>
+
+                                                            <option value="River Gee County"
+                                                                {% if raid.county == "River Gee County" %}selected{% endif %}>
+                                                                River Gee County
+                                                            </option>
+
+                                                            <option value="Sinoe County"
+                                                                {% if raid.county == "Sinoe County" %}selected{% endif %}>
+                                                                Sinoe County
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- RAID DATE -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-semibold">
+                                                            Raid Date
+                                                        </label>
+
+                                                        <input
+                                                            name="raid_date"
+                                                            type="date"
+                                                            class="form-control"
+                                                            value="{{ raid.raid_date|date:'Y-m-d' }}"
+                                                            required>
+                                                    </div>
+
+                                                    <!-- RAID TIME -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-semibold">
+                                                            Raid Time
+                                                        </label>
+
+                                                        <input
+                                                            name="raid_time"
+                                                            type="time"
+                                                            class="form-control"
+                                                            value="{{ raid.raid_time|time:'H:i' }}">
+                                                    </div>
+
+                                                    <!-- TOTAL ARRESTS -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-semibold">
+                                                            Total Arrests
+                                                        </label>
+
+                                                        <input
+                                                            name="total_arrests"
+                                                            type="number"
+                                                            class="form-control"
+                                                            value="{{ raid.total_arrests }}">
+                                                    </div>
+
+                                                    <!-- TOTAL SEIZURES -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-semibold">
+                                                            Total Seizures
+                                                        </label>
+
+                                                        <input
+                                                            name="total_seizures"
+                                                            type="number"
+                                                            class="form-control"
+                                                            value="{{ raid.total_seizures }}">
+                                                    </div>
+
+                                                    <!-- STATUS -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            Status
+                                                        </label>
+
+                                                        <select name="status" class="form-select">
+
+                                                            <option value="planned"
+                                                                {% if raid.status == "planned" %}selected{% endif %}>
+                                                                Planned
+                                                            </option>
+
+                                                            <option value="ongoing"
+                                                                {% if raid.status == "ongoing" %}selected{% endif %}>
+                                                                Ongoing
+                                                            </option>
+
+                                                            <option value="completed"
+                                                                {% if raid.status == "completed" %}selected{% endif %}>
+                                                                Completed
+                                                            </option>
+
+                                                            <option value="cancelled"
+                                                                {% if raid.status == "cancelled" %}selected{% endif %}>
+                                                                Cancelled
+                                                            </option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- LEAD OFFICER -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-semibold">
+                                                            Lead Officer
+                                                        </label>
+
+                                                        <select name="lead_officer" class="form-select">
+
+                                                            <option value="">
+                                                                Select Lead Officer
+                                                            </option>
+
+                                                            {% for a in view_officers %}
+
+                                                            <option value="{{ a.id }}"
+                                                                {% if raid.lead_officer_id == a.id %}selected{% endif %}>
+
+                                                                {{ a.rank }} -
+                                                                {{ a.admin.get_full_name }}
+
+                                                            </option>
+
+                                                            {% endfor %}
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- TEAM MEMBERS -->
+                                                    <div class="col-md-12">
+                                                        <label class="form-label fw-semibold">
+                                                            Team Members
+                                                        </label>
+
+                                                        <select
+                                                            name="team_members"
+                                                            class="form-select select2"
+                                                            multiple>
+
+                                                            {% for a in view_officers %}
+
+                                                            <option value="{{ a.id }}"
+                                                                {% if a.id in selected_team %}selected{% endif %}>
+
+                                                                {{ a.rank }} -
+                                                                {{ a.admin.get_full_name }}
+
+                                                            </option>
+
+                                                            {% endfor %}
+
+                                                        </select>
+
+                                                        <small class="text-muted">
+                                                            Select multiple officers for this raid operation.
+                                                        </small>
+                                                    </div>
+
+                                                    <!-- DESCRIPTION -->
+                                                    <div class="col-12">
+                                                        <label class="form-label fw-semibold">
+                                                            Description
+                                                        </label>
+
+                                                        <textarea
+                                                            name="description"
+                                                            rows="5"
+                                                            class="form-control">{{ raid.description }}</textarea>
+                                                    </div>
+
+                                                    <!-- FOOTER -->
+                                                    <div class="col-12">
+
+                                                        <div class="d-flex justify-content-between align-items-center mt-3">
+
+                                                            <div class="text-muted small">
+                                                                Last updated:
+                                                                {{ raid.updated_at }}
+                                                            </div>
+
+                                                            <button type="submit"
+                                                                class="btn btn-primary px-5 py-2 rounded-pill">
+
+                                                                <i class="fas fa-save me-2"></i>
+                                                                Update Raid
+
+                                                            </button>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>
+{% endblock content %}               

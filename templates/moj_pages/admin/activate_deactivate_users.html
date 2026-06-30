@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Manage Users Page{% endblock %}</title>
+
+    <div class="card border-0 shadow-sm">
+    
+        <!-- Header -->
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-semibold">Manage Users</h5>
+            {% include 'includes/error.html' %}
+        </div>
+
+        <div class="card-body p-0">
+
+            {% if grouped_users %}
+
+                {% for role, users_in_role in grouped_users.items %}
+
+                    <!-- ROLE HEADER -->
+                    <div class="px-4 py-3 border-top bg-light d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 fw-bold text-dark">
+                            {{ role }}
+                        </h6>
+                        <span class="badge bg-dark-subtle text-dark">
+                            {{ users_in_role|length }} Users
+                        </span>
+                    </div>
+
+                    <!-- TABLE -->
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4">User</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-4">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for user_obj in users_in_role %}
+                                <tr class="border-top">
+
+                                    <!-- USER INFO -->
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+
+                                            <!-- Avatar -->
+                                            <div class="me-3">
+                                                {% if user_obj.MoJ_profile.profile_picture %}
+                                                <img src="{{ user_obj.MoJ_profile.profile_picture.url }}" class="rounded-circle border" width="40" height="40">
+                                                {% else %}
+                                                <img src="{% static 'images/default-profile.png' %}" class="rounded-circle border" width="40" height="40">
+                                                {% endif %}
+                                            </div>
+
+                                            <!-- Name -->
+                                            <div>
+                                                <h6 class="mb-0 fw-semibold">
+                                                    {{ user_obj.get_full_name }}
+                                                </h6>
+                                                <small class="text-muted">
+                                                    @{{ user_obj.username }}
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <!-- EMAIL -->
+                                    <td>
+                                        <span class="text-muted">{{ user_obj.email }}</span>
+                                    </td>
+
+                                    <!-- STATUS -->
+                                    <td>
+                                        {% if user_obj.is_active %}
+                                            <span class="badge bg-success-subtle text-success px-3 py-2">
+                                                Active
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-danger-subtle text-danger px-3 py-2">
+                                                Inactive
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- ACTION -->
+                                    <td class="text-end pe-4">
+                                        <a href="{% url 'toggle_user_status' user_obj.id %}"
+                                        class="btn btn-sm px-3 
+                                        {% if user_obj.is_active %}
+                                            btn-outline-danger
+                                        {% else %}
+                                            btn-outline-success
+                                        {% endif %}">
+
+                                            {% if user_obj.is_active %}
+                                                <i class="ti ti-user-off me-1"></i> Deactivate
+                                            {% else %}
+                                                <i class="ti ti-user-check me-1"></i> Activate
+                                            {% endif %}
+
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+                <div class="p-5 text-center">
+                    <i class="ti ti-users fs-1 text-muted mb-3"></i>
+                    <p class="text-muted mb-0">No users found.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock content %}

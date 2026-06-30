@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}My Account Page{% endblock %}</title>
+    
+    <style>
+        body {
+            background-color: #f5f7fb;
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #e9ecef;
+        }
+
+        .badge-role {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <div class="container py-5">
+
+    <div class="row g-4">
+
+        <!-- ================= LEFT PROFILE ================= -->
+        <div class="col-lg-4 col-md-5 col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+
+                    <!-- PROFILE IMAGE -->
+                    <img src="{% if profile and profile.profile_picture %} {{ profile.profile_picture.url }} {% else %} {% static 'images/default-profile.png' %} {% endif %}"  class="profile-img mb-3">
+
+                    <!-- NAME -->
+                    <h5 class="fw-bold">
+                        {{ request.user.first_name }} {{ request.user.middle_name }} {{ request.user.last_name }}
+                    </h5>
+
+                    <p class="text-muted">{{ profile.get_gender_display }}</p>
+
+                    <div class="mt-2">
+                        <span class="badge bg-primary badge-role">
+                            {{ request.user.get_role_display }}
+                        </span>
+                    </div>
+
+                    <hr>
+
+                    <!-- BASIC INFO -->
+
+                    {% if profile.date_of_birth %}
+                        <p><strong>DOB:</strong> {{ profile.date_of_birth }}</p>
+                    {% endif %}
+
+                    {% if profile.phone %}
+                        <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                    {% endif %}
+
+                    <p><strong>Email:</strong> {{ request.user.email }}</p>
+
+                    {% if profile.department %}
+                        <p><strong>Department:</strong> {{ profile.department }}</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= RIGHT DETAILS ================= -->
+        <div class="col-lg-8 col-md-7 col-12">
+
+            <!-- PROFESSIONAL DETAILS -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0 section-title">
+                        <i class="bi bi-person-badge me-2"></i> Professional Details
+                    </h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        {% if profile.identification_number %}
+                        <div class="col-md-6">
+                            <strong>ID Number:</strong><br>
+                            {{ profile.identification_number }}
+                        </div>
+                        {% endif %}
+
+                        {% if profile.rank %}
+                        <div class="col-md-6">
+                            <strong>Rank:</strong><br>
+                            {{ profile.rank }}
+                        </div>
+                        {% endif %}
+
+                        {% if profile.unit %}
+                        <div class="col-md-6">
+                            <strong>Unit:</strong><br>
+                            {{ profile.unit }}
+                        </div>
+                        {% endif %}
+
+                        {% if profile.badge_number %}
+                        <div class="col-md-6">
+                            <strong>Badge Number:</strong><br>
+                            {{ profile.badge_number }}
+                        </div>
+                        {% endif %}
+
+                        {% if profile.security_clearance_level %}
+                        <div class="col-md-6">
+                            <strong>Security Clearance:</strong><br>
+                            {{ profile.get_security_clearance_level_display }}
+                        </div>
+                        {% endif %}
+
+                        {% if profile.date_joined_agency %}
+                        <div class="col-md-6">
+                            <strong>Date Joined:</strong><br>
+                            {{ profile.date_joined_agency }}
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADDRESS -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0 section-title">
+                        <i class="bi bi-geo-alt me-2"></i> Address Information
+                    </h6>
+                </div>
+
+                <div class="card-body">
+                    {% if profile.address %}
+                        <p>{{ profile.address }}</p>
+                    {% else %}
+                        <p class="text-muted">No address provided</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- EMERGENCY CONTACT -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h6 class="mb-0 section-title">
+                        <i class="bi bi-telephone me-2"></i> Emergency Contact
+                    </h6>
+                </div>
+
+                <div class="card-body">
+
+                    {% if profile.emergency_contact_name %}
+                        <p><strong>Name:</strong> {{ profile.emergency_contact_name }}</p>
+                    {% endif %}
+
+                    {% if profile.emergency_contact_phone %}
+                        <p><strong>Phone:</strong> {{ profile.emergency_contact_phone }}</p>
+                    {% endif %}
+
+                    {% if profile.email %}
+                        <p><strong>Email:</strong> {{ profile.email }}</p>
+                    {% endif %}
+
+                    {% if profile.address %}
+                        <p><strong>Address:</strong> {{ profile.address }}</p>
+                    {% endif %}
+
+                    {% if not profile.emergency_contact_name %}
+                        <p class="text-muted">No emergency contact info added</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock content %}

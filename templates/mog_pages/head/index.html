@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}MoJ Admin Page{% endblock %}</title>
+    <style>
+
+        /* Gradient Header */
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #0d6efd, #4f8cff);
+        }
+
+        /* Icon Circle */
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Summary Cards */
+        .summary-card {
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            transition: 0.3s ease;
+        }
+
+        .success-card {
+            border-left: 5px solid #28a745;
+        }
+
+        .danger-card {
+            border-left: 5px solid #dc3545;
+        }
+
+        /* Hover Effects */
+        .analytics-card {
+            transition: all 0.3s ease;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .summary-card:hover {
+            transform: scale(1.03);
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+    </style>
+    
+    <div class="row g-4 mb-9">         
+        <div class="row gy-3 mb-1 justify-content-between">
+            <div class="col-md-9 col-auto">
+                <h2 class="mb-0 text-body-emphasis">MoG Officers Dashboard</h2>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Assessment Data Count -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="uil uil-books"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{assessment_data_count}}</h4>
+                            <small class="text-muted">Initial Assessment</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Followvisit data count -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="uil uil-file-search-alt"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{followvisit_data_count}}</h4>
+                            <small class="text-muted">Follow up Form</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parent/guardian Verification -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-warning-subtle text-warning">
+                            <i class="uil uil-shield-check"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{guardian_verification}}</h4>
+                            <small class="text-muted">Parent Verification</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beneficiary Verification -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-danger-subtle text-danger">
+                            <i class="uil uil-capsule"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{beneficiary_verification}}</h4>
+                            <small class="text-muted">Beneficiary Verifi..</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Closure -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="uil uil-books"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{case_closure}}</h4>
+                            <small class="text-muted">Case Closure</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beneficiary Handover -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="uil uil-file-search-alt"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{beneficiary_handover}}</h4>
+                            <small class="text-muted">Beneficiary Handover</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracing Action Taken -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-warning-subtle text-warning">
+                            <i class="uil uil-shield-check"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{tracing_action_taken}}</h4>
+                            <small class="text-muted">Tracing Action Taken</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Level  -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-danger-subtle text-danger">
+                            <i class="uil uil-capsule"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{community_level}}</h4>
+                            <small class="text-muted">Community Level </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row pt-7 pb-3">
+            <div class="col-12 col-xl-6">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+                    <!-- Header -->
+                    <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold mb-0">Initial Assessment Analysis</h5>
+                            <small class="text-muted">County performance insights</small>
+                        </div>
+
+                        <span class="badge bg-success-subtle text-success px-3 py-2">
+                            Live
+                        </span>
+                    </div>
+
+                    <!-- KPI -->
+                    <div class="px-4 pt-3">
+                        <div class="d-flex justify-content-between align-items-center bg-light rounded-4 p-3">
+                            <div>
+                                <small class="text-muted">Total Assessments</small>
+                                <h3 class="fw-bold mb-0">{{ assessment_counts|length }}</h3>
+                            </div>
+
+                            <div class="text-end">
+                                <div class="text-primary fw-semibold">Analytics</div>
+                                <small class="text-muted">Updated now</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="card-body pt-3">
+                        <div id="assessmentChart"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-xl-6 col-xxl-5">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <!-- Header -->
+                    <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold mb-0">Beneficiary Follow-Up Analysis</h5>
+                            <small class="text-muted">Distribution by county</small>
+                        </div>
+
+                        <span class="badge bg-primary-subtle text-primary px-3 py-2">
+                            Overview
+                        </span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="card-body">
+
+                        <!-- Chart -->
+                        <div id="chart3" style="min-height: 320px;"></div>
+
+                        <!-- Mini insight footer -->
+                        <div class="mt-3 d-flex justify-content-between text-muted small">
+                            <span>Total Counties</span>
+                            <span>{{ county_labels|length }}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+                <!-- Header -->
+                <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="fw-bold mb-0">
+                            County Beneficiary Handover Analysis
+                        </h5>
+                        <small class="text-muted">
+                            Highest vs Lowest performance comparison
+                        </small>
+                    </div>
+
+                    <span class="badge bg-danger-subtle text-danger px-3 py-2">
+                        KPI Report
+                    </span>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body p-4">
+
+                    <!-- Chart -->
+                    <div id="chart2" style="min-height: 360px;"></div>
+
+                    <!-- KPI Section -->
+                    <div class="row mt-4 g-3">
+
+                        <!-- Highest -->
+                        <div class="col-md-6">
+                            <div class="border rounded-4 p-3 bg-light h-100">
+                                <small class="text-muted">Highest Beneficiary Handover</small>
+                                <h4 class="fw-bold mb-1">{{ highest_county }}</h4>
+                                <span class="text-success fw-semibold">
+                                    {{ highest_total }} Records
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Lowest -->
+                        <div class="col-md-6">
+                            <div class="border rounded-4 p-3 bg-light h-100">
+                                <small class="text-muted">Insight</small>
+                                <h6 class="mb-0 text-muted">
+                                    Compare county performance distribution across regions
+                                </h6>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> 
+    {% include 'includes/chart.html' %} 
+         
+{% endblock content %}

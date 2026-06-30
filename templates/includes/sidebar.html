@@ -1,0 +1,2000 @@
+{% load static %}
+<nav class="navbar navbar-vertical navbar-expand-lg" style="display:none;">
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <!-- scrollbar removed-->
+        <div class="navbar-vertical-content">
+
+            <!-- System Admin -->
+            {% if request.user.role == "moj_it_head" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The MOJ Admin MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- MOJ -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#MOJ" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Creat MOJ Account </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="MOJ">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_moj_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create Account User</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_moj_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Account View</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- LDEA -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#LDEA" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Creat LDEA Account </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="LDEA">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_ldea_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create Account User</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_ldea_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Account View</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- MOH -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#MOH" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Creat MOH Account </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="MOH">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_moh_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create Account User</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_moh_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Account View</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- MOG -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#MOG" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Creat MOG Account </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="MOG">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_mog_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create Account User</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_mog_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Account View</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- MOY&S -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#MOY&S" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Creat MOY&S Account </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="MOY&S">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_moys_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create Account User</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_moys_account' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Account View</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'activate_deactivate_users' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Activate / Deactivate Users </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'audit_logs' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Audit user Activity </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+            <!-- System Admin -->
+
+            <!-- The Head of the MoJ -->
+            {% if request.user.role == "moj_head" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The Head of the MoJ MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- View ALL Cases-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'active_cases' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Victims History </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View ALL Cases-->
+
+                    <!-- View Arrest Effectiveness-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'view_cases_update' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Court Cases </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Arrest Effectiveness-->  
+
+                    <!-- View Most trafficked drugs-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'trafficked_drugs' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Most Trafficked Drugs </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Most trafficked drugs-->
+
+                    <!-- View Drug hotspots -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'drug_hotspots' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Drug hotspots </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Drug hotspots -->
+
+                    <!-- View Drug Seizure -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'view_drug_seizure' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Drug Seizure </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Drug Seizure -->                    
+
+                    <!-- New/emerging substances -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'new_substances' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">New Substances </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- New/emerging substances -->
+                    
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End	The Moj Officers -->
+
+            {% if request.user.role == "moj_officers" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The Head of the MoJ MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- Court Cases Update -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CourtCases" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Referred Cases To Court </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CourtCases">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_cases_update' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Cases Update</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_cases_update' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Cases Update</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--  Court Cases Update -->  
+
+                    <!-- Victim Details Update -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#VictimDetails" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Referred Victim To MOH </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="VictimDetails">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_victim_details' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Victim Details</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_victim_details' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Victim Details</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--  Victim Details Update --> 
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End	The  Moj Officers -->
+
+            <!-- The Head of the DEA -->
+            {% if request.user.role == "ldea_head" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The Head of the DEA MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- View ALL Cases-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'active_cases' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">ALL Cases </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View ALL Cases-->
+
+                    <!-- View Arrest Effectiveness-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'view_arrests_person' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Arrest Effectiveness </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Arrest Effectiveness-->  
+
+                    <!-- View Most trafficked drugs-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'trafficked_drugs' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Most Trafficked Drugs </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Most trafficked drugs-->                    
+
+                    <!-- View Drug Seizure -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'view_drug_seizure' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Drug Seizure </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Drug Seizure -->
+
+                    <!-- View Drug hotspots -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'drug_hotspots' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Drug hotspots </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- View Drug hotspots -->
+
+                    <!-- New/emerging substances -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'new_substances' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">New Substances </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- New/emerging substances -->
+                    
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End	The Head of the DEA  -->
+            
+            <!-- The DEA Officers -->
+            {% if request.user.role == "officers" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The DEA Officers MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- Assign Cases to Officers -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Person" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Arrests Person </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Person">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ceate_arrests_person' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Arrests Person</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_arrests_person' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Ceate Arrests Person</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Arrests Person -->
+
+                    <!-- Assign Cases to Officers -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Cases" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Cases </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Cases">
+                               <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_case' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Cases</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_case' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Cases</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Assign Cases to Officers -->
+
+                    <!-- Evidence -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Evidence" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Evidence </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Evidence">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_evidence' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Evidence</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_evidence' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Evidence</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Evidence -->                  
+                   
+                    <!-- Drug Raid Operations -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#DrugRaidOperations" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Drug Raid Operations </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="DrugRaidOperations">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'crate_drug_raid' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Drug Raid</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_drug_raid' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Drug Raid</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Drug Raid Operations --> 
+                    
+                    <!-- Seizure -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Seizure" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Seizure </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Seizure">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'crate_drug_seizure' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Seizure</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_drug_seizure' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Seizure</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Seizure -->
+
+                    <!-- Log in New Drug -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#NewDrug" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Login New Psychoactive </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="NewDrug">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'crate_new_drug' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Create New Drug</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_new_drug' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View New Drug</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Log in New Drug-->
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End The DEA Officers  -->
+
+            <!-- The MoH Head -->
+            {% if request.user.role == "moh_head" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The MoH Officers MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- View Chat Report -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#view_chat_report" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Reports </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="view_chat_report">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_chat_report' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Chart Report</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_detail_report' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Detail Report</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- view chat report -->
+
+                    <!-- Beneficial -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Beneficial" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Beneficial">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_arrests_person' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficial -->
+
+                    <!-- Treatment  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Demand_Reduction" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Treatment Info </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Demand_Reduction">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_demand_reduction' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Demand Reduction-->
+
+                    <!-- Prevention-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Prevention" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Prevention Info </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Prevention">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_prevention' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Prevention-->
+
+                    <!-- Treatment facility -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#facility" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Treatment Facility </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="facility">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_treatment_facility' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Treatment facility -->
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End The MoH Head  -->
+
+            <!-- The MoH Officers -->
+            {% if request.user.role == "moh_officers" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The MoH Officers MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- Beneficial -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Beneficial" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Beneficial">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_beneficial' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_arrests_person' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficial -->
+
+                    <!-- Treatment  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Demand_Reduction" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Treatment Info </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Demand_Reduction">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'demand_reduction' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Treatment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_demand_reduction' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Demand Reduction-->
+
+                    <!-- Prevention-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Prevention" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Prevention Info </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Prevention">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_prevention' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_prevention' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Prevention-->
+
+                    <!-- Treatment facility -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#facility" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Treatment Facility </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="facility">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_treatment_facility' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_treatment_facility' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Treatment facility -->
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+            <!-- End The MoH Officers -->
+
+            <!-- MoG Head -->
+            {% if request.user.role == "mog_head" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The MoG Officers MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- CASE REGISTRATION -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#InitialAssessment" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Initial Assessment Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="InitialAssessment">
+                              
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_initial_assessment_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Assessment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Follow up Form -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CommunityOutreach" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Follow up Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CommunityOutreach">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_follow_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Follow Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Follow up Form -->
+
+                    <!-- Parent/guardian Verification -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Demand_Reduction" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Parent/guardian Verification  </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Demand_Reduction">
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_parent_guardian_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Verification</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Parent/guardian Verification -->
+
+                    <!-- Beneficiary or Beneficial Verification -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Prevention" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary Verification </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Prevention">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_beneficiary_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficiary or Beneficial Verification -->
+
+                    <!-- Beneficiary Handover -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#facility" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary Handover </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="facility">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_beneficiary_handover' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficiary Handover  -->
+
+                    <!--- Tracing Action Taken Form -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#ActionTaken" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Tracing Action Taken Form </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="ActionTaken">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_tracing_action_taken' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--- End Tracing Action Taken Form -->
+
+                    <!-- Community Level  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CommunityLevel" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Community Level Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CommunityLevel">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_community_Level_report' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Community Level</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End CommunityLevel -->
+
+                    <!-- Case Closure Form  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CaseClosure" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Case Closure Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CaseClosure">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_case_closure_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Case Closure Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Case Closure Form -->
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+
+            <!-- MoG Offices -->
+            {% if request.user.role == "mog_officers" %}
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+               
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">The MoG Officers MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- CASE REGISTRATION -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#InitialAssessment" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Initial Assessment Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="InitialAssessment">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_initial_assessment_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Assessment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_initial_assessment_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Assessment</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Follow up Form -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CommunityOutreach" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Follow up Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CommunityOutreach">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'create_follow_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Follow Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_follow_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Follow Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Follow up Form -->
+
+                    <!-- Parent/guardian Verification -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Demand_Reduction" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Parent/guardian Verification  </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Demand_Reduction">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'parent_guardian_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Verification</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_parent_guardian_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Verification</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Parent/guardian Verification -->
+
+                    <!-- Beneficiary or Beneficial Verification -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#Prevention" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary Verification </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Prevention">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_beneficiary_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_beneficiary_verification' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Prevention</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficiary or Beneficial Verification -->
+
+                    <!-- Beneficiary Handover -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#facility" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Beneficiary Handover </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="facility">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_beneficiary_handover' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_beneficiary_handover' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Beneficiary</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Beneficiary Handover  -->
+
+                    <!--- Tracing Action Taken Form -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#ActionTaken" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Tracing Action Taken Form </span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="ActionTaken">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_tracing_action_taken' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_tracing_action_taken' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Treatment Facility</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--- End Tracing Action Taken Form -->
+
+                    <!-- Community Level  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CommunityLevel" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Community Level Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CommunityLevel">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_community_Level_report' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Community Level</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_community_Level_report' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Community Level</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End CommunityLevel -->
+
+                    <!-- Case Closure Form  -->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#CaseClosure" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-faq">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon-wrapper">
+                                    <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                </div>
+                                <span class="nav-link-icon">
+                                    <span data-feather="help-circle"></span>
+                                </span>
+                                <span class="nav-link-text">Case Closure Form</span>
+                            </div>
+                        </a>
+
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="CaseClosure">
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'creat_case_closure_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">Login Case Closure Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'view_case_closure_form' %}">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text">View Case Closure Form</span>
+                                        </div>
+                                    </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Case Closure Form -->
+
+                    <p class="navbar-vertical-label">User Account MENU </p>
+                    <hr class="navbar-vertical-line" />
+
+                    <!-- My Account-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'my_account' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">My Account </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- My Account-->
+
+                    <!-- Logout-->
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="{% url 'logout' %}" role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                 <span class="nav-link-icon me-2">
+                                    <i class="uil uil-compass fs-8"></i>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Logout </span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Logout -->
+                    
+                </li>
+            </ul>
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="navbar-vertical-footer"><button class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"><span class="uil uil-left-arrow-to-left fs-8"></span><span class="uil uil-arrow-from-right fs-8"></span><span class="navbar-vertical-footer-text ms-2">Collapsed View</span></button></div>
+</nav>

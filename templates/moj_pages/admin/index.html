@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}MoJ Admin Page{% endblock %}</title>
+    <style>
+
+        /* Gradient Header */
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #0d6efd, #4f8cff);
+        }
+
+        /* Icon Circle */
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Summary Cards */
+        .summary-card {
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            transition: 0.3s ease;
+        }
+
+        .success-card {
+            border-left: 5px solid #28a745;
+        }
+
+        .danger-card {
+            border-left: 5px solid #dc3545;
+        }
+
+        /* Hover Effects */
+        .analytics-card {
+            transition: all 0.3s ease;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .summary-card:hover {
+            transform: scale(1.03);
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+    </style>
+    
+    <div class="row g-4 mb-9">
+         
+        <div class="row gy-3 mb-1 justify-content-between">
+            <div class="col-md-9 col-auto">
+                <h2 class="mb-0 text-body-emphasis">MoJ IT Dashboard</h2>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4 flex-nowrap overflow-auto">
+
+            <!-- CARD -->
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="uil uil-books"></i>
+                        </div>
+
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{count_moj}}</h4>
+                            <small class="text-muted text-nowrap">MoJ Users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD -->
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="uil uil-file-search-alt"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{count_ldea}}</h4>
+                            <small class="text-muted text-nowrap">LDEA Users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD -->
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-warning-subtle text-warning">
+                            <i class="uil uil-shield-check"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{count_moh}}</h4>
+                            <small class="text-muted text-nowrap">MoH Users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD -->
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-danger-subtle text-danger">
+                            <i class="uil uil-capsule"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{count_mog}}</h4>
+                            <small class="text-muted">MoG Users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD -->
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 stats-card">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="icon-box bg-danger-subtle text-danger">
+                            <i class="uil uil-capsule"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h4 class="mb-0 fw-bold">{{count_moys}}</h4>
+                            <small class="text-muted">MoYS Users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+   
+        <div class="col-12">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden analytics-card">
+
+                <!-- HEADER -->
+                <div class="card-header border-0 py-4 px-4 d-flex justify-content-between align-items-center bg-gradient-primary text-white">
+
+                    <div>
+                        <h5 class="mb-1 fw-bold">
+                            <i class="ti ti-chart-bar me-2"></i>
+                            Users Analytics
+                        </h5>
+                        <small class="opacity-75">
+                            Total users
+                        </small>
+                    </div>
+
+                    <!-- Icon -->
+                    <div class="icon-box">
+                        <i class="ti ti-activity"></i>
+                    </div>
+
+                </div>
+
+                <!-- BODY -->
+                <div class="card-body p-4 bg-white">
+
+                    <!-- CHART -->
+                    <div id="chart2" style="min-height:350px;"></div>
+
+                    <!-- DIVIDER -->
+                    <hr class="my-4">
+
+                    <!-- SUMMARY -->
+                    <div class="row text-center g-3">
+
+                        <div class="col-md-6">
+                            <div class="summary-card success-card">
+                                <h6 class="text-muted mb-1">Highest County</h6>
+                                <h4 class="fw-bold text-success mb-0">
+                                    <i class="ti ti-trending-up me-1"></i>
+                                    {{ highest }}
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="summary-card danger-card">
+                                <h6 class="text-muted mb-1">Lowest County</h6>
+                                <h4 class="fw-bold text-danger mb-0">
+                                    <i class="ti ti-trending-down me-1"></i>
+                                    {{ lowest }}
+                                </h4>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div> 
+    {% include 'includes/chart.html' %}
+         
+{% endblock content %}

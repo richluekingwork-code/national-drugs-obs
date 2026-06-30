@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}View Demand Reduction Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+            
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    {% if action is None %}
+                                    <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                        <form method="GET" class="drug-form">
+                                            <div class="card shadow-sm border-0">
+                                                <div class="card-header bg-white border-bottom">
+                                                    <h5 class="mb-0 fw-semibold">View Demand Reduction</h5>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <input type="hidden" name="action" value="view_demand_reduction">
+
+                                                    <div class="row g-3 align-items-end">
+
+                                                        <!-- YEAR -->
+                                                        <div class="col-12 col-md-4">
+                                                            <label class="form-label fw-semibold">Year</label>
+                                                            <input type="number" name="year" class="form-control" placeholder="e.g. 2026" required>
+                                                        </div>
+
+                                                        <!-- COUNTY -->
+                                                        <div class="col-12 col-md-5">
+                                                            <label class="form-label fw-semibold">County</label>
+                                                            <select name="county" class="form-control" required>
+                                                                <option value="">Select County</option>
+                                                                <option>Bomi County</option>
+                                                                <option>Bong County</option>
+                                                                <option>Gbarpolu County</option>
+                                                                <option>Grand Bassa County</option>
+                                                                <option>Grand Cape Mount County</option>
+                                                                
+                                                                <option>Grand Gedeh County</option>
+                                                                <option>Grand Kru County</option>
+                                                                <option>Lofa County</option>
+                                                                <option>Margibi County</option>
+                                                                <option>Maryland County</option>
+
+                                                                <option>Montserrado County</option>
+                                                                <option>Nimba County</option>
+                                                                <option>Rivercess County</option>
+                                                                <option>River Gee County</option>
+                                                                <option>Sinoe County</option>
+
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- BUTTON -->
+                                                        <div class="col-12 col-md-3 d-grid">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="uil uil-search me-1"></i> Filter
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                    </div>
+                                    {% else %} 
+
+                                    <div class="table-responsive scrollbar mx-n1 px-1">
+                                        <div class="card-header bg-white border-bottom">
+                                            <h5 class="mb-0 fw-semibold">View Beneficiary medical Registration </h5>
+                                        </div>
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Beneficiary Info</th>
+                                                    <th>Case Info</th>
+                                                    <th>Clinical</th>
+                                                    <th>Details</th>
+                                                    <th class="text-end">Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                {% for a in demands %}
+                                                <tr>
+
+                                                    <!-- BENEFICIARY -->
+                                                    <td>
+                                                        {% for p in a.persons.all %}
+
+                                                        <div class="d-flex align-items-center gap-3">
+
+                                                            <!-- IMAGE -->
+                                                            <div>
+                                                                {% if p.photo %}
+                                                                <img src="{{ p.photo.url }}"
+                                                                    class="rounded-circle shadow-sm"
+                                                                    width="50" height="50"
+                                                                    style="object-fit:cover;">
+                                                                {% else %}
+                                                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white"
+                                                                    style="width:50px; height:50px;">
+                                                                    N/A
+                                                                </div>
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <!-- NAME -->
+                                                            <div>
+                                                                <a href="{% url 'demand_reduction_detail' a.id %}"
+                                                                class="text-decoration-none fw-bold">
+                                                                    {{ p.first_name }} {{ p.middle_name }} {{ p.last_name }}
+                                                                </a>
+
+                                                                <div class="text-muted small">
+                                                                    {{ p.gender }} • {{ p.age|default:"-" }}
+                                                                </div>
+
+                                                                <div class="text-muted small">
+                                                                    {{ p.other_name|default:"-" }}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        {% endfor %}
+                                                    </td>
+
+                                                    <!-- CASE -->
+                                                    <td>
+                                                        <div class="fw-semibold">{{ a.cases }}</div>
+                                                        <div class="text-muted small">{{ a.treatment_facility }}</div>
+                                                        <div class="text-muted small">{{ a.type_of_treatment }}</div>
+                                                    </td>
+
+                                                    <!-- CLINICAL -->
+                                                    <td>
+                                                        <div class="small">
+                                                            <div><strong>Drug:</strong> {{ a.drug_test }}</div>
+                                                            <div><strong>Injection:</strong> {{ a.injection_substance }}</div>
+                                                            <div><strong>Status:</strong> {{ a.admission_status }}</div>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- DETAILS -->
+                                                    <td style="min-width:250px;">
+                                                        <div class="small">
+                                                            <div>{{ a.psychotherapeutic_intervention }}</div>
+                                                            <div>{{ a.psychotropic_interventions }}</div>
+                                                            <div>{{ a.comorbid_conditions }}</div>
+                                                            <div>{{ a.route_of_administration }}</div>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- ACTION -->
+                                                    <td class="text-end">
+
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-sm btn-light dropdown-toggle"
+                                                                    data-bs-toggle="dropdown">
+                                                                Actions
+                                                            </button>
+
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                            </ul>
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex flex-between-center pt-3">
+                                        <div class="pagination d-none"></div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
+                                            <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    
+{% endblock content %}

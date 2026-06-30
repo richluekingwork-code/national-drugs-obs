@@ -1,0 +1,491 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Follow Form Up Page{% endblock %}</title>
+
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    
+    <div class="container my-5">
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Beneficiary Handover Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Identity -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>1. Identity of the Child / Adult</h5>
+                </div>
+
+                <div class="card-body row g-3">
+
+                    <div class="col-md-2">
+                        <label>Beneficiary Code <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="child_code" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>County of Visit <span class="text-danger">*</span></label>
+                        <select name="visit_county" class="form-control" required>
+                            <option disabled selected>Select County of Visit</option>
+                            <option value="">Select County</option>
+                            <option>Bomi County</option>
+                            <option>Bong County</option>
+                            <option>Gbarpolu County</option>
+                            <option>Grand Bassa County</option>
+                            <option>Grand Cape Mount County</option>
+                            
+                            <option>Grand Gedeh County</option>
+                            <option>Grand Kru County</option>
+                            <option>Lofa County</option>
+                            <option>Margibi County</option>
+                            <option>Maryland County</option>
+
+                            <option>Montserrado County</option>
+                            <option>Nimba County</option>
+                            <option>Rivercess County</option>
+                            <option>River Gee County</option>
+                            <option>Sinoe County</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-7">
+                        <label>Related Beneficiary <span class="text-danger">*</span></label>
+                        <select name="person" class="form-select select2" required>
+                            <option disabled selected>Select Arrest</option>
+                            {% for a in get_persons %}
+                            <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="card mb-3">
+                <div class="card-header">2. Current Living Location</div>
+                <div class="card-body row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">House Location <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="location_house" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Street <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="street" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Town <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="town" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">District <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="district" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">County <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="county" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Country <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="country" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Caregiver Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="caregiver_name" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Relationship <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="relationship" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="contact_number" required>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Follow-up Visit -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>3. Follow-up Visit Information</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Date of Visit <span class="text-danger">*</span></label>
+                            <input type="date" name="visit_date" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Visit Number <span class="text-danger">*</span></label>
+                            <input type="number" name="visit_number" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Was Child / Adult Seen? <span class="text-danger">*</span></label><br>
+
+                            <input type="radio" name="child_seen" value="Yes"> Yes
+                            <input type="radio" name="child_seen" value="No" class="ms-3"> No
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Seen Alone? <span class="text-danger">*</span></label><br>
+
+                            <input type="radio" name="seen_alone" value="Yes"> Yes
+                            <input type="radio" name="seen_alone" value="No" class="ms-3"> No
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Follow-up Details -->
+            <div class="card mb-3">
+                <div class="card-header">4. Details of Follow-Up</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Follow-Up <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control mb-2" name="followup_date" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Previous Follow-Up <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control mb-2" name="previous_followup_date" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Followed-up With <span class="text-danger">*</span></label><br>
+                            <select class="form-select mb-3" name="followed_through" required>
+                                <option disabled selected>Select Followed-up</option>
+                                <option>Child</option>
+                                <option>Caregiver(s) / family</option>
+                                <option>Service provider (own agency)</option>
+                                <option>Service provider (referral)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Follow-up Through <span class="text-danger">*</span></label><br>
+                            <select class="form-select mb-3" name="followup_method" required>
+                                <option disabled selected>Select Follow-up Through</option>
+                                <option>Phone call</option>
+                                <option>Instant message / SMS / WhatsApp</option>
+                                <option>Email</option>
+                                <option>Social media</option>
+                                <option>Home visit</option>
+                                <option>Face-to-face meeting</option>
+                                <option>Community-based group</option>
+                                <option>Local community leaders</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <label class="form-label">Follow-up on specific action/service from case plan? <span class="text-danger">*</span></label>
+                    <select class="form-select mb-3" name="action_followed" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <label class="form-label">Specify action/service followed up <span class="text-danger">*</span></label>
+                    <textarea class="form-control mb-3" name="action_service" required></textarea>
+
+                    <label class="form-label">Purpose of follow-up <span class="text-danger">*</span></label>
+                    <textarea class="form-control mb-3" name="purpose_of_followup" required></textarea>
+
+                    <label class="form-label">Follow-up details / outcomes <span class="text-danger">*</span></label>
+                    <textarea class="form-control mb-3" name="followup_details" required></textarea>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Action conducted? <span class="text-danger">*</span></label>
+                            <select class="form-select" name="action_conducted" required>
+                                <option>Yes</option>
+                                <option>No</option>
+                                <option>Unable to determine</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Situation change? <span class="text-danger">*</span></label>
+                            <select class="form-select" name="situation_change" required>
+                                <option>Improved</option>
+                                <option>Declined</option>
+                                <option>No change</option>
+                                <option>Unable to determine</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Psychological -->
+            <div class="card mb-3">
+                <div class="card-header">5. Psychological Well-Being</div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label">Appearance</label>
+                        <select class="form-select" name="appearance" required>
+                            <option>Happy</option>
+                            <option>Well-adjusted</option>
+                            <option>Withdrawn</option>
+                            <option>Aggressive</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <label>Explain issues or concerns <span class="text-danger">*</span></label><br>
+                    <textarea class="form-control mb-3" name="psychological_notes"
+                        placeholder="Explain issues or concerns" required></textarea>
+
+                </div>
+            </div>
+
+            <!-- Physical Health -->
+            <div class="card mb-3">
+                <div class="card-header">Physical Health</div>
+                <div class="card-body">
+
+                    <select class="form-select mb-3" name="health_status" required>
+                        <option>Healthy</option>
+                        <option>Malnourished</option>
+                        <option>Sickly</option>
+                        <option>Other</option>
+                    </select>
+
+                    <textarea class="form-control mb-3" name="health_notes" placeholder="Explain health condition" required></textarea>
+
+                    <select class="form-select" name="frequently_sick" required>
+                        <option>Frequently sick - Yes</option>
+                        <option>Frequently sick - No</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <!-- Protection -->
+            <div class="card mb-3">
+                <div class="card-header">Protection Issues <span class="text-danger">*</span></div>
+                <div class="card-body">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="protection_issues" value="Different treatment in family" required>
+                        <label class="form-check-label">Different treatment in family <span class="text-danger">*</span></label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="protection_issues" value="Reported abuse" required>
+                        <label class="form-check-label">Reported abuse <span class="text-danger">*</span></label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="protection_issues" value="Conflict with law" required>
+                        <label class="form-check-label">Conflict with law <span class="text-danger">*</span></label>
+                    </div>
+
+                    <textarea class="form-control mt-3" name="protection_notes" placeholder="Explain details" required></textarea>
+
+                </div>
+            </div>
+
+            <!-- Caseworker -->
+            <div class="card mb-3">
+                <div class="card-header">Caseworker Information</div>
+                <div class="card-body row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Caseworker Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="caseworker_name" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" name="caseworker_date" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Agency <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="agency" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Signature <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="signature" required>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Save Follow-up Visit
+            </button>
+
+        </form>
+        
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}
+

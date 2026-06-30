@@ -1,0 +1,389 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Create Vicitim History Page{% endblock %}</title>
+   
+    <style>
+
+        /* LABELS */
+        .form-label{
+            font-weight:600;
+            color:#374151;
+            margin-bottom:8px;
+        }
+
+        /* INPUTS + NORMAL SELECTS + TEXTAREA */
+        .form-control,
+        .form-select,
+        textarea{
+
+            height:56px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+
+            background:#fff;
+            padding:12px 18px;
+
+            font-size:15px;
+            font-weight:500;
+
+            transition:.25s ease;
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        /* TEXTAREA */
+        textarea.form-control{
+            min-height:120px;
+            padding-top:15px;
+        }
+
+        /* FOCUS EFFECT */
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+
+            outline:none;
+        }
+
+        /* PLACEHOLDER */
+
+        .form-control::placeholder,
+        textarea::placeholder{
+            color:#9ca3af;
+        }
+
+        /* CARD LOOK */
+
+        .card{
+            border-radius:22px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            padding:20px 24px;
+        }
+
+        .card-body{
+            padding:30px;
+        }
+
+        /* BUTTON */
+
+        .btn-primary{
+
+            border-radius:14px;
+            padding:14px 30px;
+
+            font-weight:600;
+
+            box-shadow:
+                0 8px 20px rgba(13,110,253,.20);
+
+            transition:.25s ease;
+        }
+
+        .btn-primary:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(13,110,253,.28);
+        }
+
+
+        /* SELECT2 MATCHING STYLE */
+
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+
+            height:56px !important;
+
+            border-radius:14px !important;
+
+            border:1px solid #d1d5db !important;
+
+            display:flex !important;
+
+            align-items:center !important;
+
+            padding:0 12px !important;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        .select2-container--focus .select2-selection{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+        }
+
+        .select2-dropdown{
+
+            border:none;
+
+            border-radius:16px;
+
+            overflow:hidden;
+
+            box-shadow:0 12px 35px rgba(0,0,0,.12);
+        }
+
+        .select2-results__option{
+            padding:12px 15px;
+        }
+
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                   <div class="card-header bg-white border-bottom">
+                                        <h5 class="mb-0 fw-semibold">Create Beneficiary History</h5>
+                                    </div>
+                                    
+                                    <form method="POST">
+                                        {% csrf_token %}
+
+                                        <div class="card shadow-sm">
+                                            <div class="card-body">
+
+                                                
+
+                                                <!-- PERSON -->
+                                                <div class="mb-3">
+                                                    <label>
+                                                        Select Person <span class="text-danger">*</span>
+                                                    </label>
+
+                                                    <select name="person_id" class="form-select select2">
+                                                        <option></option>
+
+                                                        {% for person in persons %}
+                                                        <option
+                                                            value="{{ person.id }}"
+                                                            {% if selected_person_id == person.id|stringformat:"s" %}selected{% endif %}
+                                                            data-image="{% if person.photo %}{{ person.photo.url }}{% endif %}">
+                                                            {{ person.first_name }} {{ person.middle_name }}
+                                                            {{ person.last_name }} - Nick Name {{ person.other_name }}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="row g-3">
+
+                                                    <!-- INCIDENT -->
+                                                    <div class="col-md-4">
+                                                        <label>Date<span class="text-danger">*</span></label>
+                                                        <input type="date" name="incident_date" class="form-control" required>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Time</label>
+                                                        <input type="time" name="incident_time" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Location<span class="text-danger">*</span></label>
+                                                        <input type="text" name="incident_location" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- DRUG DETAILS -->
+                                                    <div class="col-md-4">
+                                                        <label>Primary Substance</label>
+                                                        <input type="text" name="primary_substance" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Secondary Substances</label>
+                                                        <input type="text" name="secondary_substances" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Type of Drug Used</label>
+                                                        <input type="text" name="type_of_drug_used" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Frequency of Use</label>
+                                                        <select name="frequency_of_use" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="daily">Daily</option>
+                                                            <option value="weekly">Weekly</option>
+                                                            <option value="monthly">Monthly</option>
+                                                            <option value="occasional">Occasional</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Method of Use</label>
+                                                        <select name="method_of_use" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="smoking">Smoking</option>
+                                                            <option value="injecting">Injecting</option>
+                                                            <option value="oral">Oral</option>
+                                                            <option value="snorting">Snorting</option>
+                                                            <option value="inhaling">Inhaling</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Dependency Level</label>
+                                                        <select name="dependency_level" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option value="low">Low</option>
+                                                            <option value="moderate">Moderate</option>
+                                                            <option value="high">High</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Age First Used</label>
+                                                        <input type="number" name="age_first_used" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Duration of Addiction (Years)</label>
+                                                        <input type="number" name="duration_of_addiction_years" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Last Used Date</label>
+                                                        <input type="date" name="last_used_date" class="form-control">
+                                                    </div>
+
+                                                    <!-- HEALTH -->
+                                                    <div class="col-md-4">
+                                                        <label>Any Mental Health Issues</label>
+                                                        <select name="mental_health_issues" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option>Yes</option>
+                                                            <option>No</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Any Overdose History</label>
+                                                        <select name="overdose_history" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option>Yes</option>
+                                                            <option>No</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>If Yes / Overdose Count</label>
+                                                        <input type="number" name="overdose_count" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Rehab History</label>
+                                                        <select name="rehab_history" class="form-control">
+                                                            <option value="">-- Select --</option>
+                                                            <option>Yes</option>
+                                                            <option>No</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>If Yes / Rehab Name </label>
+                                                        <input type="text" name="if_rehab_yes" class="form-control">
+                                                    </div>
+
+                                                    <!-- Arrest Reference -->
+                                                    <div class="col-md-4">
+                                                        <label>Data Click</label>
+                                                        <input type="text" name="arrest_reference" class="form-control">
+                                                    </div>
+
+                                                    <!-- SUBMIT -->
+                                                    <div class="col-12 text-end mt-3">
+                                                        <button class="btn btn-primary">Save</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
+
+                                                    

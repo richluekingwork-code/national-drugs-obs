@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>{% block title %} Creat Treatment Facility Page{% endblock %}</title>
+
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    
+    <div class="container my-5">
+
+        <!-- HEADER -->
+        <div class="card shadow mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Health
+                </div>
+
+                <div class="text-muted small">
+                    Treatment Facility
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- ================= FACILITY PROFILE ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Facility Profile</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Facility Name <span class="text-danger">*</span></label>
+                            <input type="text" name="facility_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Facility Code <span class="text-danger">*</span></label>
+                            <input type="text" name="facility_code" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Facility Type <span class="text-danger">*</span></label>
+                            <select name="facility_type" class="form-select" required>
+                                <option value="inpatient">Inpatient Rehabilitation Center</option>
+                                <option value="outpatient">Outpatient Treatment Center</option>
+                                <option value="detox">Detoxification Center</option>
+                                <option value="community">Community-Based Treatment Center</option>
+                                <option value="hospital">Hospital-Based Treatment Unit</option>
+                                <option value="private">Private Treatment Facility</option>
+                                <option value="government">Government Treatment Facility</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Ownership Type <span class="text-danger">*</span></label>
+                            <select name="ownership_type" class="form-select" required>
+                                <option value="government">Government</option>
+                                <option value="private">Private</option>
+                                <option value="ngo">NGO</option>
+                                <option value="faith_based">Faith-Based Organization</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= LOCATION ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Location</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">County <span class="text-danger">*</span></label>
+                            <select name="county" class="form-control" required>
+                                <option disabled selected>Select Countyy</option>
+                                <option value="">Select County</option>
+                                <option>Bomi County</option>
+                                <option>Bong County</option>
+                                <option>Gbarpolu County</option>
+                                <option>Grand Bassa County</option>
+                                <option>Grand Cape Mount County</option>
+                                
+                                <option>Grand Gedeh County</option>
+                                <option>Grand Kru County</option>
+                                <option>Lofa County</option>
+                                <option>Margibi County</option>
+                                <option>Maryland County</option>
+
+                                <option>Montserrado County</option>
+                                <option>Nimba County</option>
+                                <option>Rivercess County</option>
+                                <option>River Gee County</option>
+                                <option>Sinoe County</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">District <span class="text-danger">*</span></label>
+                            <input type="text" name="district" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">City/Town <span class="text-danger">*</span></label>
+                            <input type="text" name="city_town" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Physical Address <span class="text-danger">*</span></label>
+                            <textarea name="physical_address" class="form-control" required></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= CONTACT ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Contact Information</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label class="form-label">Contact Person  <span class="text-danger">*</span></label>
+                            <input type="text" name="contact_person" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Phone Number  <span class="text-danger">*</span></label>
+                            <input type="text" name="phone_number" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Alternate Phone</label>
+                            <input type="text" name="alternate_phone" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Website</label>
+                            <input type="url" name="website" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= LICENSING ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Licensing</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-3">
+                            <label class="form-label">Licensed?</label>
+                            <select name="licensed" class="form-select">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">License Number</label>
+                            <input type="text" name="license_number" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Issue Date</label>
+                            <input type="date" name="license_issue_date" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="date" name="license_expiry_date" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= CAPACITY ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Capacity</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-3">
+                            <label class="form-label">Total Beds</label>
+                            <input type="number" name="total_beds" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Male Beds</label>
+                            <input type="number" name="male_beds" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Female Beds</label>
+                            <input type="number" name="female_beds" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Adolescent Beds</label>
+                            <input type="number" name="adolescent_beds" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Current Occupancy</label>
+                            <input type="number" name="current_occupancy" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= SERVICES ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Services Offered</div>
+
+                <div class="card-body">
+                    <div class="row g-2">
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="detoxification_services"> Detoxification
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="inpatient_services"> Inpatient
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="outpatient_services"> Outpatient
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="counseling_services"> Counseling
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="family_therapy"> Family Therapy
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="group_therapy"> Group Therapy
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="medication_assisted_treatment"> MAT
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="mental_health_services"> Mental Health
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="vocational_training"> Vocational Training
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="checkbox" name="aftercare_services"> Aftercare
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= STAFFING ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Staffing</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-2">
+                            <label class="form-label">Doctors</label>
+                            <input type="number" name="medical_doctors" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Psychiatrists</label>
+                            <input type="number" name="psychiatrists" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Psychologists</label>
+                            <input type="number" name="psychologists" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Nurses</label>
+                            <input type="number" name="nurses" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Counselors</label>
+                            <input type="number" name="counselors" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>Social Workers</label>
+                            <input type="number" name="social_workers" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Peer Support Workers</label>
+                            <input type="number" name="peer_support_workers" class="form-control">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= OPERATIONS ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Operations</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <label>Status</label>
+                            <select name="operational_status" class="form-select">
+                                <option value="active">Active</option>
+                                <option value="inactive">Active</option>
+                                <option value="suspended">Suspended</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Opening Hours</label>
+                            <input type="text" name="opening_hours" class="form-control">
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Accepts Referrals</label>
+                            <select name="accepts_referrals" class="form-select">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="form-label">Emergency Services</label>
+                            <select name="emergency_services_available" class="form-select">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= REPORTING ================= -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Reporting</div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Reporting Year *</label>
+                            <input type="number" name="reporting_year" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Quarter</label>
+                            <input type="text" name="reporting_quarter" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Remarks</label>
+                            <textarea name="remarks" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SUBMIT -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-success px-5">
+                    Save Facility
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock %}

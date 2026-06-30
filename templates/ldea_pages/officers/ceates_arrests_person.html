@@ -1,0 +1,393 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Create Arrests Person Page{% endblock %}</title>
+    <style>
+        /* FORCE STYLE APPLY */
+        .drug-form .card {
+            border-radius: 10px !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* LABEL */
+        .drug-form .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+        }
+
+        /* INPUT */
+        .drug-form .form-control,
+        .drug-form .form-select {
+            border-radius: 8px !important;
+            border: 1px solid #d0d5dd;
+            padding: 10px 12px;
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        /* INPUT FOCUS */
+        .drug-form .form-control:focus,
+        .drug-form .form-select:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.15);
+            transform: scale(1.01);
+        }
+
+        /* BUTTON */
+        .drug-form .btn-primary {
+            border-radius: 8px !important;
+            font-weight: 600;
+            padding: 10px 18px;
+            transition: all 0.25s ease;
+        }
+
+        /* BUTTON HOVER */
+        .drug-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* CARD HEADER */
+        .drug-form .card-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                   
+                                    <form action="{% url 'ceate_arrests_person' %}" method="POST" class="drug-form" enctype="multipart/form-data">
+                                        {% csrf_token %}                                       
+
+                                        <div class="card shadow-sm border-0">
+                                            <div class="card-header bg-white border-bottom">
+                                                <h5 class="mb-0 fw-semibold">Log Arrested Person</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row g-4">
+
+                                                    <div class="row align-items-center mb-4">
+
+                                                        <!-- IMAGE SECTION -->
+                                                        <div class="col-md-3 text-center">
+
+                                                            <!-- Clickable Image -->
+                                                            <label for="profile_picture" style="cursor: pointer;">
+                                                                <img id="previewImage" class="rounded-circle border border-3 shadow" width="150" height="150" style="object-fit: cover;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACUCAMAAACa7lTsAAAAY1BMVEX///8AAADz8/P5+fn8/PyGhoednZ7w8PDt7e3b29vPz8/k5ORTU1T29vaBgYK/v7/IyMhpaWqoqKk0NDWOjo91dXZBQUItLS4kJCW3t7hKSkoWFhdkZGUgICBfX2DV1dUPDxLDV9swAAAE6UlEQVR4nO2c23qDKBCAm6hExYjiKZgYff+n3DCYbNocxFY24M5/2dJ8TGCOzPTrC0EQBEEQBEEQBEEQBEEQBEHWji/59Cb+I7ywjxknhHCRxdHu09sxTSTKvNncaCvCwk/vySBxmRw3P2hOfK0i07T4KS0wtNz79N4M4PHmqbhA0n96e4tDT6NsXX0OeBxFUc9IlTTD+GOy/fQOlyUeb3NdCXr3431MzqNWV6vS5EzJ2wTxg7ZScR4lps/+0k1YDSKdsv2z31J+gF/nq5E4VvKWry6tHyfqjFcShkQgzpG/WbKr1FeyCve0TcE4i7eL9iDx8H6RIzA4vHfnK9mB22pXoMZbUOBqch2FuIS4n0NxcL8aJydA0933xnChdXTTAzUOjG/IMBl4WC1/00OYaXpDpjnrHvDVnDtuqHcyiEoivcVgz09mN2QaJlOD8mlE+QiVEUrhtp0u54QTcKc7t1NjaXmLTHc1kY7JaSX2zzNU+OKKLwowEJMbMs1WauVJO16EtNlpTxxKgSvt6k0mw9DU5IZM8xuBp8Nui4ErnWvHx+5faU8KfNbWYSbDlNLkhoyTyyRX27PKzGqYypztJriIcGCaiz0ZpnTaXttK+HFGVg/F+oPblbyom1Fjj6UKt2Y3ZBxpd5tYa6lHoMhjeEOmKUEIrfJr2Mq1rtd4KDyxaDkmVf0yvSHjQBU+0DBbFB5c3LbRkh6qeBqeCWp4iftvDz4IUkyqptD9Yqynhwr7acK9MliVruJZXJ1d/rawBXnSjFKB1UDE+F4a1m1m1YIsJ1SPoW32wiKFBNoeOrfThntoDhJ35bND9mL1fQzc7QLtN6iSaZOQnyLvs2Dsd1mTvF9fu1RJNbSp+NdD+RHPR3G1c0hX2PPNyLFJAsIZ4yRtb21aK7HP36D5VboHinVd5yu+OHXPxK2DFTQ6PGcv0vqHtIecuP2YNMG+F2V+FfqQBDxzPf+dxgtpnzHGsjiiqwidkf8z3o7SKOqzy5XOsjiOIhru3E/5XxD2jJfVuS2aTjnkoWuKNk9LkUXr02UqjfNTL3yhSVY23LITVXt4FWXdhE7ZSi53GBQvY8pvHOsVDD549Hwv00Vr6zap0lKSVklbXzT6fkFKnY6q/Si9iTLU56oUD7N3WzmrltxN+BCHRabkNpnVBjx+bZYoI9UtyC6cnVQTySjCIRXRlEHa9eR6+Ydc7/HNNoLRMHdlr2WL/JDlt0M2vbnlCa/nFcy4oF58vRTO9S71SiWP+g0tI2JUe70Wa2sYJ5XqX4yN0tTBsa24VXv+VS3DF7VrEkcTk2hTjJqcunKr1eCOZp/DU6iS2JVBNWWf/9ScslU64UbrNPm7vBcHpYy1CwXNHozsn1+2I5C4tv9Sb+HZbLb7fQQaTR3o2hIy22sWeBnzQTVq29+c1P82WKQDWH2U7d3T8EbYLpPfwWWp7c6c6IzJu0l8qB6UVtcDYJiuXWqLmSyEWP1yvF92XNIHLbY5Nw6l1h01Jw01ELaH1DAsvOAYzlZGH4XFd1pOOCzaD5su/YELI43MdBvpDNgf0y7DhHCjl1Phy52GT7T2PSIGo7qo35SpdW1tnRrCrGUbzCAVsbbWIwU+LpvCEqsF3i7vNWlhddf4nr/qEP41oVjLszGCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAvyDzAUMwkbtWc0AAAAAElFTkSuQmCC">
+                                                            </label>
+
+                                                            <!-- Hidden File Input -->
+                                                            <input type="file"name="photo" id="profile_picture" accept="image/*" style="display: none;" onchange="previewFile(event)" required>
+                                                            <label class="form-label d-block fw-bold mb-3 mt-2">
+                                                                Profile Picture <span class="text-danger">*</span>
+                                                            </label>
+
+                                                        </div>
+
+                                                        <!-- TEXT SIDE -->
+                                                        <div class="col-md-9">
+
+                                                            <div class="p-4">
+
+                                                                <h4 class="fw-bold mb-3">
+                                                                    Drug User Information
+                                                                </h4>
+
+                                                                <p class="text-muted mb-3">
+                                                                    1.) Please upload a clear profile picture and indicate whether the person is a drug user.
+                                                                </p>
+
+                                                                <p class="text-muted mb-3">
+                                                                    2.) The data will automatically save into your database table when the form is submitted successfully.
+                                                                </p>
+
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <script>
+                                                        function previewFile(event) {
+                                                            const file = event.target.files[0];
+                                                            if (!file) return;
+
+                                                            const reader = new FileReader();
+
+                                                            reader.onload = function(e) {
+                                                                document.getElementById('previewImage').src = e.target.result;
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    </script>
+
+                                                    <!-- First Name (required) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                                        <input name="first_name" type="text" placeholder="John" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Middle Name (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Middle Name </label>
+                                                        <input name="middle_name" type="text"   placeholder="W." class="form-control">
+                                                    </div>
+
+                                                    <!-- Last Name (required) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                                        <input name="last_name" type="text"  placeholder="Blown"  class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Other Name (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Nike Name</label>
+                                                        <input name="other_name"  placeholder="Bee6" type="text" class="form-control">
+                                                    </div>
+
+                                                    <!-- Age (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Age <span class="text-danger">*</span></label>
+                                                        <input name="age" type="text"  placeholder="18"  class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Gender (required) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Gender <span class="text-danger">*</span></label>
+                                                        <select name="gender" class="form-select" required>
+                                                            <option selected disabled>Select Gender</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Date of Birth (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                                        <input name="date_of_birth" type="date" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- Phone Number (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Phone Number</label>
+                                                        <input name="phone_number" placeholder="231"  type="text" class="form-control">
+                                                    </div>
+
+                                                    <!-- Email (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Email</label>
+                                                        <input name="email" type="email"  placeholder="john@gmail.com"  class="form-control">
+                                                    </div>
+
+                                                    <!-- Marital Status (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Marital Status <span class="text-danger">*</span></label>
+                                                        <select name="marital_status" class="form-select" required>
+                                                            <option selected disabled>Select Status</option>
+                                                            <option value="single">Single</option>
+                                                            <option value="married">Married</option>
+                                                            <option value="divorced">Divorced</option>                                                            
+                                                            <option value="separated">Separated</option>
+                                                            <option value="widowed">Widowed</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Educational Level -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Educational Level <span class="text-danger">*</span></label>
+                                                        <select name="educational_level" class="form-select" required>
+                                                            <option selected disabled>Select Educational Level</option>
+                                                            <option> No Formal Education</option>
+                                                            <option>Primary Education</option>
+                                                            <option>Secondary Education</option>                                                            
+                                                            <option>Tertiary Education</option>
+                                                            <option>Vocational Education</option>
+                                                            <option>Other Education</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Educational Level -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Professional Status <span class="text-danger">*</span></label>
+                                                        <select name="professional_status" class="form-select" required>
+                                                            <option selected disabled>Select Educational Level</option>
+                                                            <option>Full-time</option>
+                                                            <option>Part-time</option>
+                                                            <option>Not working/ unemployed</option>                                                            
+                                                            <option>Student/pupil</option>
+                                                            <option>Housewife</option>
+                                                            <option>Retired</option>
+                                                            <option>Other Education</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Nationality (optional, default Liberian) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Nationality <span class="text-danger">*</span></label>
+                                                        <input name="nationality" type="text" class="form-control" value="Liberian" required>
+                                                    </div>
+
+                                                    <!-- National ID (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">National ID</label>
+                                                        <input name="national_id" type="text" class="form-control">
+                                                    </div>
+
+                                                    <!-- Passport Number (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Passport Number</label>
+                                                        <input name="passport_number" type="text" class="form-control">
+                                                    </div>
+
+                                                    <!-- County (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">County of Birth <span class="text-danger">*</span></label>
+                                                        <select name="county" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>Bomi County</option>
+                                                            <option>Bong County</option>
+                                                            <option>Gbarpolu County</option>
+                                                            <option>Grand Bassa County</option>
+                                                            <option>Grand Cape Mount County</option>
+                                                            
+                                                            <option>Grand Gedeh County</option>
+                                                            <option>Grand Kru County</option>
+                                                            <option>Lofa County</option>
+                                                            <option>Margibi County</option>
+                                                            <option>Maryland County</option>
+
+                                                            <option>Montserrado County</option>
+                                                            <option>Nimba County</option>
+                                                            <option>Rivercess County</option>
+                                                            <option>River Gee County</option>
+                                                            <option>Sinoe County</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- District (optional) -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">District of Birth <span class="text-danger">*</span></label>
+                                                        <select name="district" class="form-control" required>
+                                                            <option value="">Select County</option>
+                                                            <option>District - 1</option>
+                                                            <option>District - 2</option>
+                                                            <option>District - 3</option>
+                                                            <option>District - 4</option>
+                                                            <option>District - 5</option>
+                                                            
+                                                            <option>District - 6</option>
+                                                            <option>District - 7</option>
+                                                            <option>District - 8</option>
+                                                            <option>District - 9</option>
+                                                            <option>District - 10</option>
+
+                                                            <option>District - 11</option>
+                                                            <option>District - 12</option>
+                                                            <option>District - 13</option>
+                                                            <option>District - 14</option>
+                                                            <option>District - 15</option>
+
+                                                            <option>District - 16</option>
+                                                            <option>District - 17</option>
+                                                            <option>District - 18</option>
+                                                            <option>District - 19</option>
+                                                            <option>District - 20</option>
+
+                                                        </select>
+                                                    </div> 
+                                                    
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Drug User <span class="text-danger">*</span></label>
+                                                        <select name="drug_user" class="form-control" required>
+                                                            <option>Select Usering</option>                                                            
+                                                            <option>Yes</option>
+                                                            <option>No</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Status: <span class="text-danger">*</span></label>
+                                                        <select name="role" class="form-control" required>
+                                                            <option value="">Select Status</option>                                                            
+                                                            <option value="suspect">Suspect</option>                                                            
+                                                            <option value="victim">Beneficiary</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Under Investigation (optional) -->
+                                                    <div class="col-md-3">
+                                                        <div class="form-check mt-4">
+                                                            <input name="is_under_investigation" type="checkbox" class="form-check-input" id="underInvestigation" required>
+                                                            <label class="form-check-label" for="underInvestigation">Under going Investigation</label>
+                                                        </div>
+                                                    </div>                                                    
+
+                                                    <!-- Address (optional) -->
+                                                    <div class="col-md-12">
+                                                        <label class="form-label">Address</label>
+                                                        <textarea name="address" class="form-control" rows="2"></textarea>
+                                                    </div>                                                                                                        
+                                                    
+                                                    <!-- Remarks (optional) -->
+                                                    <div class="col-12">
+                                                        <label class="form-label">Remarks</label>
+                                                        <textarea name="remarks" class="form-control" rows="2"></textarea>
+                                                    </div>
+
+                                                    <!-- Submit Button -->
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary px-2">Next</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
+
+                                                    

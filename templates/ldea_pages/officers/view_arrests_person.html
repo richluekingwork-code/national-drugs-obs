@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers View Arrests Person Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+            
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                    {% if action is None %}
+                                    <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                        
+                                        <form method="GET" class="drug-form">
+                                            {% csrf_token %}
+                                            <div class="card shadow-sm border-0">
+                                                <div class="card-header bg-white border-bottom">
+                                                    <h5 class="mb-0 fw-semibold">{{page_title}}</h5>
+                                                </div>
+                                                <input type="hidden" name="action" value="view_arrests_person">
+
+                                                <div class="card-body">
+                                                    <div class="row g-4">
+
+                                                        <!-- TITLE -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Year</label>
+                                                            <input type="number" name="year" class="form-control" required>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">County</label>
+                                                            <select name="county" class="form-control" required>
+                                                                <option value="">Select County</option>
+                                                                <option>Bomi County</option>
+                                                                <option>Bong County</option>
+                                                                <option>Gbarpolu County</option>
+                                                                <option>Grand Bassa County</option>
+                                                                <option>Grand Cape Mount County</option>
+                                                                
+                                                                <option>Grand Gedeh County</option>
+                                                                <option>Grand Kru County</option>
+                                                                <option>Lofa County</option>
+                                                                <option>Margibi County</option>
+                                                                <option>Maryland County</option>
+
+                                                                <option>Montserrado County</option>
+                                                                <option>Nimba County</option>
+                                                                <option>Rivercess County</option>
+                                                                <option>River Gee County</option>
+                                                                <option>Sinoe County</option>
+
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Status</label>
+                                                            <select name="role" class="form-control" required>
+                                                                <option value="">Select Status</option>
+                                                                {% if request.user.role == "moh_officers" %}
+                                                                <option value="victim">Beneficiary Status</option>
+                                                                {% elif request.user.role == "moh_head" %}
+                                                                <option value="victim">Beneficiary Status</option>
+                                                                {% else %}
+                                                                <option value="suspect">Suspect</option>
+                                                                <option value="victim">Beneficiary</option>
+                                                                {% endif %}
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- BUTTON -->
+                                                        <div class="col-12 d-flex">
+                                                            <button type="submit" class="btn btn-primary px-4">
+                                                                Next
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% else %} 
+
+                                    <div class="table-responsive scrollbar mx-n1 px-1">
+                                        <div class="card-header bg-white border-bottom">
+                                            <h5 class="mb-0 fw-semibold">{{page_title}}</h5>
+                                        </div>
+                                       <div class="table-responsive">
+                                            <table class="table table-hover align-middle mb-0 border-top">
+
+                                                <!-- HEADER -->
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th class="text-uppercase small fw-bold">Person</th>
+                                                        <th class="text-uppercase small fw-bold">Personal Info</th>
+                                                        <th class="text-uppercase small fw-bold">Education & Location</th>
+                                                        <th class="text-end text-uppercase small fw-bold">Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    {% for a in persons %}
+                                                    <tr>
+
+                                                        <!-- PERSON -->
+                                                        <td style="min-width:280px;">
+
+                                                            <a href="{% url 'arrests_person_detail' a.id %}"
+                                                            class="text-decoration-none text-dark d-flex align-items-center gap-3">
+
+                                                                <!-- IMAGE -->
+                                                                <div>
+                                                                    {% if a.photo %}
+                                                                    <img src="{{ a.photo.url }}"
+                                                                        class="rounded shadow-sm"
+                                                                        style="width:70px; height:70px; object-fit:cover;">
+                                                                    {% else %}
+                                                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                                                                        style="width:70px; height:70px;">
+                                                                        N/A
+                                                                    </div>
+                                                                    {% endif %}
+                                                                </div>
+
+                                                                <!-- NAME -->
+                                                                <div>
+                                                                    <div class="fw-bold">
+                                                                        {{ a.first_name }} {{ a.middle_name }} {{ a.other_name }} {{ a.last_name }}
+                                                                    </div>
+
+                                                                    {% if a.other_name %}
+                                                                    <div class="text-muted small">
+                                                                        Nickname: {{ a.other_name }}
+                                                                    </div>
+                                                                    {% endif %}
+                                                                </div>
+
+                                                            </a>
+
+                                                        </td>
+
+                                                        <!-- PERSONAL INFO -->
+                                                        <td style="min-width:220px;">
+
+                                                            <div class="small">
+
+                                                                <div><strong>Gender:</strong> {{ a.get_gender_display }}</div>
+                                                                <div><strong>Age:</strong> {{ a.age }}</div>
+                                                                <div><strong>DOB:</strong> {{ a.date_of_birth }}</div>
+                                                                <div><strong>Marital:</strong> {{ a.marital_status }}</div>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <!-- EDUCATION & LOCATION -->
+                                                        <td style="min-width:260px;">
+
+                                                            <div class="small">
+
+                                                                <div><strong>Education:</strong> {{ a.educational_level }}</div>
+                                                                <div><strong>Profession:</strong> {{ a.professional_status }}</div>
+                                                                <div><strong>County:</strong> {{ a.county }}</div>
+                                                                <div><strong>Address:</strong> {{ a.address }}</div>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <!-- ACTION -->
+                                                        <td class="text-end">
+
+                                                            <div class="dropdown">
+
+                                                                <button class="btn btn-sm btn-light dropdown-toggle"
+                                                                        data-bs-toggle="dropdown">
+                                                                    Actions
+                                                                </button>
+
+                                                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                                                    <li>
+                                                                        <a class="dropdown-item" href="#">
+                                                                            Edit
+                                                                        </a>
+                                                                    </li>
+
+                                                                </ul>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-between-center pt-3">
+                                        <div class="pagination d-none"></div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button>
+                                            <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+{% endblock content %}

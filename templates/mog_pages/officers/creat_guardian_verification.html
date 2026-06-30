@@ -1,0 +1,672 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Creat Parent/Guardian Verification Page{% endblock %}</title>
+    <style>
+        /* =========================
+           GLOBAL FORM STYLE
+        ========================= */
+
+        .form-label{
+            font-weight:600;
+            color:#1f2937;
+            margin-bottom:6px;
+        }
+
+        .required-star::after{
+            content:" *";
+            color:red;
+            font-weight:bold;
+        }
+
+        .form-control,
+        .form-select,
+        textarea{
+            height:54px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+            padding:12px 16px;
+            font-size:14px;
+            transition:.25s ease;
+            box-shadow:0 2px 8px rgba(0,0,0,.04);
+        }
+
+        textarea.form-control{
+            min-height:120px;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+        .card{
+            border:0;
+            border-radius:18px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 6px 18px rgba(0,0,0,.06);
+        }
+
+        .card-header{
+            font-weight:600;
+            padding:16px 20px;
+        }
+
+        .card-body{
+            padding:24px;
+        }
+
+        .btn-primary{
+            border-radius:12px;
+            padding:12px 28px;
+            font-weight:600;
+        }
+
+        /* SELECT2 */
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+            height:54px !important;
+            border-radius:14px !important;
+            display:flex !important;
+            align-items:center !important;
+            border:1px solid #d1d5db !important;
+        }
+
+        .select2-container--focus .select2-selection{
+            border-color:#0d6efd !important;
+            box-shadow:0 0 0 4px rgba(13,110,253,.15) !important;
+        }
+
+    </style>
+
+    <div class="container py-4">
+        <!-- HEADER -->
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body text-center py-4">
+                <h4 class="fw-bold text-uppercase mb-1">
+                    Government of Liberia
+                </h4>
+
+                <div class="fw-semibold">
+                    Ministry of Gender, Children & Social Protection
+                </div>
+
+                <div class="text-muted small">
+                    Parent/guardian Verification Form
+                </div>
+                {% include 'includes/error.html' %}
+            </div>
+    
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- 1. BASIC INFORMATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">1. Basic Information</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold"> Child Code <span class="text-danger">*</span> </label>
+                                <input type="text" name="child_code" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>County <span class="text-danger">*</span></label>
+                                <select name="follow_county" class="form-control" required>
+                                    <option disabled selected>Select Countyy</option>
+                                    <option value="">Select County</option>
+                                    <option>Bomi County</option>
+                                    <option>Bong County</option>
+                                    <option>Gbarpolu County</option>
+                                    <option>Grand Bassa County</option>
+                                    <option>Grand Cape Mount County</option>
+                                    
+                                    <option>Grand Gedeh County</option>
+                                    <option>Grand Kru County</option>
+                                    <option>Lofa County</option>
+                                    <option>Margibi County</option>
+                                    <option>Maryland County</option>
+
+                                    <option>Montserrado County</option>
+                                    <option>Nimba County</option>
+                                    <option>Rivercess County</option>
+                                    <option>River Gee County</option>
+                                    <option>Sinoe County</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Type of Center <span class="text-danger">*</span> </label>
+                                <select name="center_type" class="form-select" required>
+                                    <option value="">Select Center</option>
+                                    <option value="Orphanage"> Orphanage </option>
+                                    <option value="Adoption Agency/Transit Home"> Adoption Agency / Transit Home </option>
+                                    <option value="Safe Home">Safe Home </option>
+                                    <option value="Specialized Home">Specialized Home </option>
+                                    <option value="Other">Other </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Other Center Type</label>
+                                <input type="text"  name="center_type_other" class="form-control">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold"> Do you have a separated child? <span class="text-danger">*</span> </label>
+                                <div class="d-flex gap-4">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="separated_child" value="True">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="separated_child" value="False">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CHILD IDENTITY -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">2. Identity of the Child</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <label>Related Arrest <span class="text-danger">*</span></label>
+                            <select name="person" class="form-select select2" required>
+                                <option disabled selected>Select Arrest</option>
+                                {% for a in get_persons %}
+                                <option value="{{ a.id }}" data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                    {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. FAMILY HISTORY -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">3. Family History</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- Mother -->
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mother's Name <span class="text-danger">*</span></label>
+                                <input type="text" name="mother_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Mother Alive? <span class="text-danger">*</span></label>
+                                <select name="mother_alive" class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                    <option value="DON'T KNOW">DON'T KNOW</option>
+                                </select>
+                            </div>
+
+                            <!-- Father -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Father's Name <span class="text-danger">*</span></label>
+                                <input type="text" name="father_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Father Alive? <span class="text-danger">*</span></label>
+                                <select name="father_alive" class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                    <option value="DON'T KNOW">DON'T KNOW</option>
+                                </select>
+                            </div>
+
+                            <!-- Guardian -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Guardian Alive? <span class="text-danger">*</span></label>
+                                <select name="guardian_alive" class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                    <option value="DON'T KNOW">DON'T KNOW</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Current Status of Parents <span class="text-danger">*</span></label>
+
+                                <select name="parent_status" class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="Farmer">Farmer</option>
+                                    <option value="Business">Business</option>
+                                    <option value="Worker">Worker</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. OTHER FAMILY MEMBERS -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">4. Other Family Members & Where They Live</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Name <span class="text-danger">*</span></th>
+                                        <th>Relationship <span class="text-danger">*</span></th>
+                                        <th>Address <span class="text-danger">*</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="family_member_name[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_relationship[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_address[]" class="form-control" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="family_member_name[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_relationship[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_address[]" class="form-control" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="family_member_name[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_relationship[]" class="form-control" required>
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="family_member_address[]" class="form-control" required>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. INFORMATION BEFORE SEPARATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">5. Information Before Separation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Location of House </label>
+                                <textarea name="house_location" class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Street  </label>
+                                <input type="text" name="street" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Town</label>
+                                <input type="text" name="town" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">District</label>
+                                <input type="text" name="district" class="form-control">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">County</label>
+                                <input type="text"  name="county" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Country</label>
+                                <input type="text" name="country" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Other Address Information</label>
+                                <input type="text" name="address_information" class="form-control">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Information About Child's Life Before Separation</label>
+                                <textarea name="child_life_information" class="form-control" rows="5"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Important Events Child Might Remember</label>
+                                <textarea name="child_memorable_events" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVIDENCE OF RELATIONSHIP -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Evidence of Relationship</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="child_id_evidence" required>
+                                    <label class="form-check-label">Child ID <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="birth_certificate_evidence" required>
+                                    <label class="form-check-label">Birth Certificate <span class="text-danger">*</span> </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="photos_evidence" required>
+                                    <label class="form-check-label">Photos <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-3">
+                                <label class="form-label fw-bold">Other Evidence <span class="text-danger">*</span></label>
+                                <input type="text" name="other_evidence" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-12 mt-3">
+                                <label class="form-label fw-bold">Child Identification Information <span class="text-danger">*</span></label>
+                                <textarea name="child_identification_information" class="form-control" rows="2" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. CIRCUMSTANCES OF SEPARATION -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">6. Circumstances of Separation</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold"> Date of Separation</label>
+                                <input type="date" name="separation_date" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Place / Address of Separation </label>
+                                <input type="text" name="separation_address" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Name of Person Separated From </label>
+                                <input type="text" name="separated_from_name" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Relationship To Child </label>
+                                <input type="text" name="relationship_to_child" class="form-control">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Circumstances of Separation </label>
+                                <textarea name="separation_circumstances" class="form-control" rows="5"></textarea>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Main Cause of Separation </label>
+                                <textarea name="main_cause_of_separation" class="form-control" rows="4"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 7. INFORMATION ABOUT FAMILY MEMBER TRACED -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            7. Information About Family Member Traced
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" name="traced_person_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Age <span class="text-danger">*</span></label>
+                                <input type="number" name="traced_person_age" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Gender<span class="text-danger">*</span></label>
+
+                                <select name="traced_person_gender" class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Contact Number <span class="text-danger">*</span></label>
+                                <input type="text" name="traced_person_contact" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Relationship To Child <span class="text-danger">*</span></label>
+                                <input type="text" name="traced_person_relationship" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Occupation <span class="text-danger">*</span></label>
+                                <input type="text" name="traced_person_occupation" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. ACCEPTANCE TO TAKE CARE OF CHILD -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            8. Acceptance To Take Care Of Child
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Do You Want The Child To Live With You? </label>
+
+                                <select name="wants_child" class="form-select">
+                                    <option value="">Select</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Are You Able To Take Care Of The Child?</label>
+                                <select name="able_to_take_care" class="form-select">
+                                    <option value="">Select</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Is Another Family Member Available?</label>
+
+                                <select name="alternative_family_available" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Agreement To Take The Child</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="agreement_take_child">
+                            <label class="form-check-label fw-bold">I agree to take this child into my home and care for them.</label>
+                        </div>
+
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Name / Signature / Thumbprint </label>
+                            <input type="text" name="signature_name" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">10. Significant Information For The Child</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <label class="form-label fw-bold">Information the child should know before reunification </label>
+                        <textarea name="child_return_information" class="form-control" rows="6" placeholder="Describe family situation, deaths, changes, education, etc."></textarea>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">11. Caseworker Observations</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <label class="form-label fw-bold">Observations / Comments </label>
+                        <textarea name="caseworker_observation" class="form-control" rows="6"></textarea>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Caseworker Name</label>
+                                <input type="text" name="caseworker_name" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Date</label>
+                                <input type="date" name="caseworker_date" class="form-control">
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Organization</label>
+                                <input type="text" name="organization" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end mb-5">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">Save Case Tracing Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+{% endblock content %}

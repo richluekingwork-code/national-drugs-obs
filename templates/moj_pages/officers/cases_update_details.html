@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}LDEA Officers Cases Detail Page{% endblock %}</title>
+    <div class="mt-4">
+        <div class="row g-4">
+
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div class="container my-5">
+
+                                    <!-- HEADER -->
+                                    <div class="text-center mb-5 border-bottom pb-4">
+                                        <h6 class="text-uppercase text-muted fw-bold mb-1">Republic of Liberia</h6>
+                                        <h3 class="fw-bold mb-2">Ministry of Justice</h3>
+
+                                        <hr class="w-25 mx-auto border-2">
+
+                                        <h5 class="text-primary fw-semibold">Legal Case Report</h5>
+
+                                        <hr class="w-25 mx-auto border-2">
+                                    </div>
+
+                                    <!-- CASE INFO -->
+                                    <div class="card shadow-sm border-0 mb-4">
+                                        <div class="card-body">
+
+                                            <div class="row gy-2">
+                                                <h5 class="text-primary fw-semibold mt-0 mb-2">CASE INFORMATION</h5>
+                                                <hr class="w-205 mx-auto border-2">
+                                                <div class="col-md-4">
+                                                    <h5 class="mb-0">Case Title:</h5>
+                                                    <p class="mt-0">{{view_court_case.court_case.title}}</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <h5>Case No.:</h5>
+                                                    <p>{{view_court_case.court_case.case_number}}</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <h5>Date:</h5>
+                                                    <p>{{view_court_case.court_case.filing_date}}</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <h5>Court Name:</h5>
+                                                    <p>{{view_court_case.court}}</p>
+                                                </div>
+                                                
+                                                <div class="col-md-4">
+                                                    <h5>Location:</h5>
+                                                    <p>{{view_court_case.county}}</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <h5>Case Name:</h5>
+                                                    <p>Republic of Liberia vs.
+                                                        {% for participant in participants %}
+                                                            {% if participant.is_primary %}
+                                                                {{ participant.person.first_name }} 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+                                            <div  class="row gy-2">
+                                                <h5 class="text-primary fw-semibold mt-5 mb-0">PARTIES INVOLVED</h5>
+                                                <hr class="w-205 mx-auto border-2">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover align-middle">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Age</th>
+                                                                <th>Arrest Date</th>
+                                                                <th>Nationality</th>
+                                                                <th>Description</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            {% for participant in participants %}
+                                                            <tr>
+
+                                                                <!-- NAME -->
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <img src="{{ participant.person.photo.url }}" 
+                                                                            class="rounded-circle me-2" 
+                                                                            width="40" height="40">
+
+                                                                        <div>
+                                                                            <div class="fw-bold">
+                                                                                {{ participant.person.first_name }} {{ participant.person.last_name }}
+                                                                            </div>
+                                                                            <small class="text-muted">
+                                                                                {{ participant.person.get_gender_display }}
+                                                                            </small>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <!-- AGE -->
+                                                                <td>{{ participant.person.age }}</td>
+
+                                                                <td>{{ participant.person.created_at }}</td>
+                                                                
+                                                                <!-- NATIONALITY -->
+                                                                <td>{{ participant.person.nationality }}</td>
+
+                                                                <!-- DESCRIPTION -->
+                                                                <td>
+                                                                    {% if participant.is_primary %}
+                                                                        <span class="badge bg-danger">Primary Suspect</span>
+                                                                    {% else %}
+                                                                        <span class="badge bg-secondary">Suspect</span>
+                                                                    {% endif %}
+                                                                </td>
+
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gy-2">
+                                                <h5 class="text-primary fw-semibold mt-5 mb-0">ARREST DETAILS</h5>
+                                                <hr class="w-205 mx-auto border-2">
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-0">Charges:</h5>
+                                                    <ul class="mb-0">
+                                                        {% for charge in charges_list %}
+                                                            <li>{{ charge }}</li>
+                                                        {% empty %}
+                                                            <li>No charges listed</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-0">Evidence:</h5>
+                                                    <ul class="mb-0">
+                                                        {% for evidence in evidence_list %}
+                                                            <li> {{ evidence }}</li>
+                                                        {% empty %}
+                                                            <li>No evidence provided</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gy-2">
+                                                <h4 class="text-primary fw-semibold mt-5 mb-0">STATEMENT OF FACTS</h4>
+                                                <hr class="w-205 mx-auto border-2">
+                                                <div class="col-md-12">
+                                                    <p class="mb-0">{{case.description|linebreaks}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gy-2">
+                                                <h5 class="text-primary fw-semibold mt-5 mb-0">ACTION TAKEN / STATUS</h5>
+                                                <hr class="w-205 mx-auto border-2">
+                                                <div class="col-md-9">
+                                                    <p class="mb-0">{{case.action_taken|linebreaks}}</p>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <h5 class="mb-0">Status:</h5>
+                                                    <p class="mb-0">
+                                                        <span class="badge bg-info text-dark">
+                                                            {{view_court_case.get_status_display}}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,472 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}MoH Officers Create Treatment Page{% endblock %}</title>
+    <style>
+
+        /* LABELS */
+        .form-label{
+            font-weight:600;
+            color:#374151;
+            margin-bottom:8px;
+        }
+
+        /* INPUTS + NORMAL SELECTS + TEXTAREA */
+        .form-control,
+        .form-select,
+        textarea{
+
+            height:56px;
+            border-radius:14px !important;
+            border:1px solid #d1d5db !important;
+
+            background:#fff;
+            padding:12px 18px;
+
+            font-size:15px;
+            font-weight:500;
+
+            transition:.25s ease;
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        /* TEXTAREA */
+        textarea.form-control{
+            min-height:120px;
+            padding-top:15px;
+        }
+
+        /* FOCUS EFFECT */
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+
+            outline:none;
+        }
+
+        /* PLACEHOLDER */
+
+        .form-control::placeholder,
+        textarea::placeholder{
+            color:#9ca3af;
+        }
+
+        /* CARD LOOK */
+
+        .card{
+            border-radius:22px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            padding:20px 24px;
+        }
+
+        .card-body{
+            padding:30px;
+        }
+
+        /* BUTTON */
+
+        .btn-primary{
+
+            border-radius:14px;
+            padding:14px 30px;
+
+            font-weight:600;
+
+            box-shadow:
+                0 8px 20px rgba(13,110,253,.20);
+
+            transition:.25s ease;
+        }
+
+        .btn-primary:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(13,110,253,.28);
+        }
+
+
+        /* SELECT2 MATCHING STYLE */
+
+        .select2-container{
+            width:100%!important;
+        }
+
+        .select2-selection--single{
+
+            height:56px !important;
+
+            border-radius:14px !important;
+
+            border:1px solid #d1d5db !important;
+
+            display:flex !important;
+
+            align-items:center !important;
+
+            padding:0 12px !important;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.04);
+        }
+
+        .select2-container--focus .select2-selection{
+
+            border-color:#0d6efd !important;
+
+            box-shadow:
+                0 0 0 4px rgba(13,110,253,.12),
+                0 8px 18px rgba(13,110,253,.08) !important;
+        }
+
+        .select2-dropdown{
+
+            border:none;
+
+            border-radius:16px;
+
+            overflow:hidden;
+
+            box-shadow:0 12px 35px rgba(0,0,0,.12);
+        }
+
+        .select2-results__option{
+            padding:12px 15px;
+        }
+
+    </style>
+
+    <div class="mt-4">
+        <div class="row g-4">
+            <div class="col-12 col-xl-12 order-1 order-xl-0">
+                <div class="mb-9">
+                    <div class="card shadow-none border my-4" data-component-card="data-component-card">
+                        {% include 'includes/error.html' %}
+                        
+                        <div class="card-body p-0">
+                            <div class="p-4 code-to-copy">
+                                <div id="tableExample" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                                  
+                                    <form action="{% url 'demand_reduction' %}" method="POST" class="drug-form" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        
+                                        <div class="card shadow-sm border-0">
+                                            <div class="card-header bg-white border-bottom">
+                                                <h5 class="mb-0 fw-semibold">Treatment  Info</h5>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="row g-4">
+
+                                                    <!-- Beneficiary -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Related Arrest</label>
+                                                        <select name="persons[]" class="form-select select2" required>
+                                                            <option disabled selected>Select Arrest</option>
+
+                                                            {% for a in get_persons %}
+                                                            <option
+                                                                value="{{ a.id }}"
+                                                                data-image="{% if a.photo %}{{ a.photo.url }}{% endif %}">
+                                                                {{ a.first_name }} {{ a.middle_name }} {{ a.last_name }} - Nick Name {{ a.other_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Cases -->
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Cases <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="cases" required>
+                                                            <option value="">Select Cases...</option>
+                                                            <option>New Cases</option>
+                                                            <option>Follow-up</option>
+                                                            <option>Out Patients</option>
+                                                            <option>Therapeutic Community</option>
+                                                            <option>Residential Counseling</option>
+                                                            <option>Non-residential counseling</option>
+                                                            <option>Relapse early</option>
+                                                            <option>Relapse Late</option>
+                                                            <option>Unknown</option>
+                                                        </select>
+                                                    </div> 
+
+                                                    <!-- Treatment Facility -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Treatment Facility <span class="text-danger">*</span></label>
+                                                        <input type="text" name="treatment_facility" class="form-control" required>
+                                                    </div>
+                                                    <!-- End Treatment Facility -->
+
+                                                    <!-- Type of Treatment Facility -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Type of Treatment Facility  <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1" name="type_of_treatment" required data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                            <option value="">Select Type of Treatment...</option>
+                                                            <option>Out-Patient</option>
+                                                            <option>In-patient</option>
+                                                            <option>Rehabilitation</option>
+                                                            <option>In-patient /Rehabilitation</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Treatment -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Treatment <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1" name="treatment" required data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                            <option value="">Select Treatment...</option>
+                                                            <option>Tobacco</option>
+                                                            <option>Alcoholic beverages</option>
+                                                            <option>Cannabis</option>
+                                                            <option>Cocaine</option>
+                                                            <option>Amphetamines</option>
+                                                            <option>Inhalants</option>
+                                                            <option>Sedatives</option>
+                                                            <option>Hallucinogens</option>
+                                                            <option>Opioids</option>
+                                                            <option>Others (Kush)</option>
+                                                        </select>
+                                                    </div>                                                                                                 
+
+                                                    <!-- Injection -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Injection of Substances <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="injection_substance" required>
+                                                            <option value="">Select...</option>
+                                                            <option>Yes</option>
+                                                            <option>No</option>                                                            
+                                                        </select>
+                                                    </div>  
+                                                </div>
+
+                                                <div class="row g-4">
+                                                    <div class="card-header bg-white border-bottom"></div>
+                                                    
+                                                    <!-- Drug Test -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Drug Test conducted <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1"  multiple name="drug_test" required>
+                                                            <option>Marijuana</option>
+                                                            <option>Cocaine</option> 
+                                                            <option>Amphetamines</option>
+                                                            <option>Opiates</option> 
+                                                            <option>PCP</option>
+                                                            <option>Barbiturates</option> 
+                                                            <option>Benzodiazepines</option>
+                                                            <option>Methadone</option> 
+                                                            <option>Tramadol</option> 
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Psychotherapeutic -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Psychotherapeutic Interve.. <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1"  multiple name="psychotherapeutic_intervention" required>
+                                                            <option value="">Select</option>
+                                                            <option>CBT</option>
+                                                            <option>Motivational interview</option> 
+                                                            <option>Individual therapy</option>                                                            
+                                                            <option>Group Therapy</option> 
+                                                            <option>Psychoeducation</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Psychotropic -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Psychotropic Interventions <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1"  multiple name="psychotropic_interventions" required>
+                                                            <option value="">Select</option>
+                                                            <option>Detoxification</option>
+                                                            <option>Methadone</option> 
+                                                            <option>Buprenorphine</option>                                                            
+                                                            <option>Naltrexone</option> 
+                                                            <option>Naloxone</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Comorbid -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Comorbid Conditions <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="comorbid_conditions" required>
+                                                            <option value="">Select</option>
+                                                            <option>HIV</option>
+                                                            <option>HBV</option> 
+                                                            <option>HCV</option>    
+                                                            <option>TB</option>       
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Route -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Route of administration <span class="text-danger">*</span></label>
+                                                        <select class="form-select" data-choices="data-choices" multiple="multiple" size="1"  multiple name="route_of_administration" required>
+                                                            <option value="">Select</option>
+                                                            <option>Oral</option>
+                                                            <option>Smoking</option> 
+                                                            <option>Inhaling</option>    
+                                                            <option>Sniffing</option>  
+                                                            <option>Intravenous</option>    
+                                                            <option>Intramuscular</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Refer From -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Refer From <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="refer_from" required>
+                                                            <option value="">Select</option>
+                                                            <option>Health Facility</option>
+                                                            <option>Community Health Worker</option> 
+                                                            <option>Traditional Healer</option> 
+                                                            <option>Religious Leader</option>  
+                                                            
+                                                            <option>LDEA</option>
+                                                            <option>MoY&S</option>
+                                                            <option>MoG</option>
+                                                            <option>MoJ</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Admission -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Admission Status <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="admission_status" required>
+                                                            <option value="">Select</option>
+                                                            <option>Outpatient</option>
+                                                            <option>Inpatient</option> 
+                                                            <option>Referred</option> 
+                                                            <option>Discharged</option>                                                            
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Refer To -->
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Refer To <span class="text-danger">*</span></label>
+                                                        <select class="form-select" name="refer_to" required>
+                                                            <option value="">Select</option>
+                                                            <option>Hospitals</option>
+                                                            <option>Health Center</option> 
+                                                            <option>Clinic</option>                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-4">
+                                                    <div class="card-header bg-white border-bottom"></div>
+                                                    
+                                                    <!-- COUNTY -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">County <span class="text-danger">*</span></label>
+                                                        <select name="county" class="form-select" required>
+                                                            <option value="">Select County</option>
+                                                            <option value="Bomi County">Bomi County</option>
+                                                            <option value="Bong County">Bong County</option>
+                                                            <option value="Gbarpolu County">Gbarpolu County</option>
+                                                            <option value="Grand Bassa County">Grand Bassa County</option>
+                                                            <option value="Grand Cape Mount County">Grand Cape Mount County</option>
+                                                            <option value="Grand Gedeh County">Grand Gedeh County</option>
+                                                            <option value="Grand Kru County">Grand Kru County</option>
+                                                            <option value="Lofa County">Lofa County</option>
+                                                            <option value="Margibi County">Margibi County</option>
+                                                            <option value="Maryland County">Maryland County</option>
+                                                            <option value="Montserrado County">Montserrado County</option>
+                                                            <option value="Nimba County">Nimba County</option>
+                                                            <option value="Rivercess County">Rivercess County</option>
+                                                            <option value="River Gee County">River Gee County</option>
+                                                            <option value="Sinoe County">Sinoe County</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- CITY -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">City <span class="text-danger">*</span></label>
+                                                        <input type="text" name="city" class="form-control" required>
+                                                    </div>
+
+                                                    <!-- DISTRICT -->
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">District</label>
+                                                        <input type="text" name="district" class="form-control">
+                                                    </div>
+                                                     
+                                                    <!-- Submit -->
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary px-4">
+                                                            Save
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        function formatState(state) {
+
+            // First option / placeholder
+            if (!state.id || !state.element) {
+                return state.text;
+            }
+
+            var image = $(state.element).data('image');
+
+            // If no image exists, show only text
+            if (!image){
+                return state.text;
+            }
+
+            return $(`
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <img src="${image}"
+                        style="
+                            width:35px;
+                            height:35px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
+
+                    <span>${state.text}</span>
+                </div>
+            `);
+        }
+
+        $('.select2').select2({
+            placeholder:'Select Arrest',
+            templateResult: formatState,
+            templateSelection: formatState
+        });
+    </script>
+
+    <script>
+        document.querySelector(".drug-form").addEventListener("submit", function() {
+            const btn = this.querySelector("button");
+            btn.disabled = true;
+            btn.innerText = "Saving...";
+        });
+    </script>       
+{% endblock content %}
