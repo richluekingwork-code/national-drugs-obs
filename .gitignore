@@ -9,6 +9,7 @@ yarn-error.log*
 pnpm-debug.log*
 *.log
 logs/
+!templates/accounts_pages/logs/
 
 # Environment files
 .env
