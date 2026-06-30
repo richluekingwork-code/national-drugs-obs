@@ -8,6 +8,8 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     zlib1g \
+    ca-certificates \
+    openssl \
  && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
